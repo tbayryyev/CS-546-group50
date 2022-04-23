@@ -1,0 +1,19 @@
+{
+  "name": "cs-546-Final-Project",
+  "version": "1.0.0",
+  "description": "Final Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Tahyr Bayryyev, Ronnie Arvanites, Roshan Narma, Srinivas Srimantula",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "handlebars": "^4.7.7",
+    "mongodb": "^4.4.0",
+    "bcrypt": "^5.0.0",
+    "express-session": "^1.17.0"
+  }
+}

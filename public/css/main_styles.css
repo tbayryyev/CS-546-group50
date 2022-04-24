@@ -1,0 +1,63 @@
+a {
+	color: white;
+	text-decoration: solid;
+	font-size: 15pt;
+    background: black;
+}
+
+a:hover {
+	color: blue;
+	text-decoration: underline;
+}
+
+h2{
+    color: orange;
+    text-decoration: wavy;
+    font-size: 20pt;
+}
+
+h1{
+    color: green;
+    text-decoration: underline;
+    font-size: 40pt;
+}
+
+p{
+    background: black;
+    color: lightblue;
+    font-size: 14pt;
+
+}
+
+button{
+    color: white;
+    background: red;
+}
+
+li{
+    list-style-type:square;
+    color: red;
+    font-size: 15pt;
+}
+
+section{
+    border:ridge;
+    border-color: blue;
+    border-width: 3pt;
+}
+
+dt{
+    color: purple;
+    font-size: 20pt;
+}
+
+dl{
+    border-style: groove;
+    border-color: blue;
+    font-size: 6pt;
+}
+
+dd{
+    color: green;
+    font-size: 14pt;
+}

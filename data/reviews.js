@@ -114,7 +114,7 @@ const exported = {
 
     let newComment = {
       commentID: ObjectId(),
-      userID: ObjectId(userID),
+      userID: userID,
       commentText: commentText,
       likes: [],
       dislikes: []
@@ -129,7 +129,7 @@ const exported = {
     }
 
     newComment.commentID = newComment.commentID.toString();
-    newComment.userID = userID;
+
 
 
     return newComment;

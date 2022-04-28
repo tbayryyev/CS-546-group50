@@ -114,8 +114,7 @@ const exported = {
 
     let newComment = {
       commentID: ObjectId(),
-      userID: userID,
-      reviewID: reviewID,
+      userID: ObjectId(userID),
       commentText: commentText,
       likes: [],
       dislikes: []
@@ -129,17 +128,63 @@ const exported = {
 
     }
 
+    newComment.commentID = newComment.commentID.toString();
+    newComment.userID = userID;
+
 
     return newComment;
 
+  },
+  deleteComment: async (commentID, reviewID) => {
+
+    if (!reviewID) {
+      throw "reviewID parameter not supplied or undefined";
+    }
+    if (typeof reviewID !== 'string' || reviewID.trim().length === 0) {
+      throw "reviewID parameter has to be a nonempty string";
+    }
+    reviewID = reviewID.trim();
+
+    if (!ObjectId.isValid(reviewID)) {
+      throw "reviewID is an Invalid ObjectId";
+    }
 
 
+    const reviewCollection = await REVIEWS();
+
+    const review = await reviewCollection.findOne({ reviewID: ObjectId(reviewID) });
+
+    if (review === null) {
+      throw "no review exists with that id";
+    }
+
+    if (!commentID) {
+      throw "commentID parameter not supplied or undefined";
+    }
+    if (typeof commentID !== 'string' || commentID.trim().length === 0) {
+      throw "commentID parameter has to be a nonempty string";
+    }
+    commentID = commentID.trim();
+
+    if (!ObjectId.isValid(commentID)) {
+      throw "commentID is an Invalid ObjectId";
+    }
+
+    const commentFound = await reviewCollection.findOne({ "comments": { $elemMatch: { "commentID": ObjectId(commentID) } } });
 
 
+    if (commentFound == null) {
+      throw "comment on the review could not be found";
+    }
 
+    const delete1 = await reviewCollection.updateOne({ reviewID: reviewID }, { $pull: { comments: { commentID: ObjectId(commentID) } } });
 
+    if (delete1.modifiedCount === 0) {
+      throw "could not delete the comment successfully";
 
+    }
 
+    return { "commentID": commentID, "deleted": true };
 
 
   }

@@ -1,0 +1,27 @@
+<form >
+<div>
+<label for="doctorId">doctorId</label>
+<input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  readonly>
+</div>
+<div>
+<label for="userId">userId</label>
+<input id="userId" type="text" name="userId" placeholder="userId" value = {{userId}}  readonly>
+</div>
+<div>
+<label for="aptDate">DateTime  </label>
+<input id="aptDate" type="text" name="aptDate"  value = {{aptDate}} readonly>
+<input id="aptTime" type="text" name="aptTime"  value = {{aptTime}} readonly>
+</div>
+<div>
+<label for="message">Message   </label>
+<input id="message" type="text" name="message" placeholder="message"  value = {{message}} readonly>
+</div>
+<div>
+<label for="conditions">Conditions </label>
+<input id="conditions" type="text" name="conditions" placeholder="conditions"  value = {{conditions}}  readonly>
+</div>
+</form>
+{{#if hasError}}
+<p class={{class}}>Error:{{errorMessage}}</p>
+{{/if}}
+<a href="/appointments/userappointmentlist/{{userId}}" id="PatientHomeLink" >Back to PatietHome</a>

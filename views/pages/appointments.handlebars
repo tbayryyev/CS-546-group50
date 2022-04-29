@@ -1,0 +1,25 @@
+<form action="/appointments/{{userId}}" method="POST">
+<label for="doctorId"></label>
+<input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  hidden>
+<label for="userId"></label>
+<input id="userId" type="text" name="userId" placeholder="userId" value = {{userId}}  hidden>
+
+<label for="aptDate">DateTime  </label>
+<input id="aptDate" type="text" name="aptDate"  value = {{aptDate}} readonly>
+<input id="aptTime" type="text" name="aptTime"  value = {{aptTime}} readonly>
+{{#if rescheduleFlag}}
+<button type="submit" formmethod = "POST" formaction="/doctors/reschedule/{{doctorId}}">Change Date</button>
+{{/if}}
+<div>
+<label for="message">Message   </label>
+<input id="message" type="text" name="message" placeholder="message"  value = {{message}} >
+</div>
+<div>
+<label for="conditions">Conditions </label>
+<input id="conditions" type="text" name="conditions" placeholder="conditions"  value = {{conditions}}  >
+</div>
+<button type="submit">Book</button>
+</form>
+{{#if hasError}}
+<p class={{class}}>Error:{{errorMessage}}</p>
+{{/if}}

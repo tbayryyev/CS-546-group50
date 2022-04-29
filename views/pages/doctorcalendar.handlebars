@@ -1,0 +1,37 @@
+<!--<head><title>Shows Found</title></head> -->
+<h1>{{title}}</h1>
+<h2>{{doctorId}}</h2>
+<form>
+  
+    {{#if timeSlotList.length}}
+    <ul>
+        {{#each timeSlotList}}
+
+        <li> {{dt}}
+            <div>
+             {{#each tm}}
+             {{#if ../../rescheduleFlag}}
+             <button type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             {{else}}
+             <button type="submit" formmethod = "GET" formaction="/appointments/schedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             {{/if}}
+             {{/each}}
+             </div>
+        </li>
+
+        {{/each}}
+    </ul>
+    {{else}}
+    <p class="not-found">We're sorry, but no results were found for {{doctorId}}.</p>
+    {{/if}}
+    {{#if rescheduleFlag}}
+    <input name= 'appointmentId' value={{appointmentId}} hidden>
+    <input name= 'aptDatePrvRs' value={{aptDatePrv}} hidden>
+    <input name= 'aptTimePrvRs' value={{aptTimePrv}} hidden>
+    <input name= 'messagePrvRs' value={{messagePrv}} hidden>
+    <input name= 'conditionsPrvRs' value={{conditionsPrv}} hidden>
+    {{/if}}
+</form>
+{{#if hasError}}
+<p class={{class}}>Error:{{errorMessage}}</p>
+{{/if}}

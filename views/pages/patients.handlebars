@@ -1,0 +1,24 @@
+<h1>{{title}}</h1>
+<h2>{{userId}}</h2>
+<form id="appointmentListForm">
+    {{#if appointmentResultSet.length}}
+    
+        {{#each appointmentResultSet}}
+        <div>
+        <label for="appointment">{{aptDate}} {{aptTime}}   </label>
+        <!--<input id="message" type="text" name="message" placeholder="message"  /> -->
+        <!--<li> <a href="/appointments/{{_id}}">{{aptDate}} {{aptTime}}</a></li>-->
+        <button type="submit" formmethod = "GET" formaction="/appointments/{{_id}}">View</button>
+        <button  type="submit" formmethod = "GET" formaction="/appointments/reschedule/{{_id}}" >Reschedule</button>
+        <button  type="submit" formmethod = "POST" formaction="/appointments/delete/{{_id}}" >Delete</button>
+        </div>
+        {{/each}}
+    {{else}}
+    <p class="not-found">We're sorry, but no results were found for {{userId}}.</p>
+    {{/if}}
+     <input name= '_method' value="DELETE" hidden/>
+     
+</form>
+{{#if hasError}}
+<p class={{class}}>Error:{{errorMessage}}</p>
+{{/if}}

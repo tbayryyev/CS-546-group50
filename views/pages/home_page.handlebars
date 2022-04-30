@@ -1,3 +1,15 @@
-<p>Welcome to Find A Doctor! Here you can search for doctors aswell as look at their reviews. </p>
+<a href="/login">Login</a>
+
+<p>Welcome to Find A Doctor! Here you can search for doctors aswell as look at their reviews.</p>
 
 <h2>Top Rated Doctors From Each Category</h2>
+
+{{#if specialities.length}}
+<ul>
+    {{#each specialities}}
+    <li class="speciality">{{this}}</li>
+    {{/each}}
+</ul>
+{{else}}
+<p class="not-found">We're sorry, but there are no current Doctors.</p>
+{{/if}}

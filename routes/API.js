@@ -6,7 +6,13 @@ const doctorData = Data.doctors;
 router
     .route('')
     .get(async (req, res) => {
-        res.render('pages/home_page');
+        try {
+            const specialities = await doctorData.getAllSpecialities();
+            res.render('pages/home_page', { specialities: specialities, });
+        } catch (e) {
+            res.status(404).json(e.message);
+        }
+
     });
 
 module.exports = router;

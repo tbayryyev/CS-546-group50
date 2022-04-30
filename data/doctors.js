@@ -23,6 +23,8 @@ const exported = {
             throw "speciality has to be a nonempty string";
         }
         speciality = speciality.trim();
+        speciality = speciality.toLowerCase();
+
 
         if (!about) {
             throw "about not supplied or undefined";
@@ -122,6 +124,52 @@ const exported = {
 
         return newDoctor;
     },
+    getAllSpecialities: async () => {
+        const doctorCollection = await DOCTORS();
+
+        const docs = await doctorCollection.find({}).toArray();
+
+        let specialities = [];
+
+        for (doctor of docs) {
+            if (specialities.indexOf(doctor.speciality) == -1) {
+                specialities.push(doctor.speciality);
+
+            }
+        }
+        return specialities;
+
+
+    },
+    highestRatedDoctors: async (speciality) => {
+        if (!speciality) {
+            throw "speciality not supplied or undefined";
+        }
+        if (typeof speciality !== 'string' || speciality.trim().length === 0) {
+            throw "speciality has to be a nonempty string";
+        }
+        speciality = speciality.trim();
+        // speciality should be lowercase so that we can always find it when doing the rating system
+        //speciality = speciality.toLowerCase();
+
+        const doctorCollection = await DOCTORS();
+
+        const docs = await doctorCollection.find({ speciality: speciality }).toArray();
+
+        if (docs.length == 0) {
+            throw "No doctors exist with that speciality";
+        }
+
+
+
+        let topRated = docs.sort(function (a, b) {
+            return Number(a.rating) < Number(b.rating) ? 1 : -1;
+        });
+
+        return topRated;
+
+
+    }
 
 
 }

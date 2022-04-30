@@ -25,7 +25,7 @@ async function main() {
     // }
 
     // try {
-    //     const comment = await reviews.addComment("112312", "626c421edd8b8f62efb7f19a", "I agree with your review");
+    //     const comment = await reviews.addComment("112312", "626d9d78cb6ec47a8771eead", "I agree with your review");
     //     console.log(comment);
     // } catch (e) {
     //     console.log("Got an error!");
@@ -33,7 +33,7 @@ async function main() {
     // }
 
     // try {
-    //     const deletecomment = await reviews.deleteComment("626c424692c242ed3d9314be", "626c421edd8b8f62efb7f19a");
+    //     const deletecomment = await reviews.deleteComment("626da05ec65b722cb262fafa", "626d9d78cb6ec47a8771eead");
     //     console.log(deletecomment);
     // } catch (e) {
     //     console.log("Got an error!");

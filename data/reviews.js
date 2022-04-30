@@ -47,6 +47,8 @@ const exported = {
 
     // make sure to also check if userID is valid 
     // make sure to also check if rating is a number between 1 and 5
+
+
     const reviewCollection = await REVIEWS();
 
     const doctorCollection = await DOCTORS();
@@ -102,12 +104,12 @@ const exported = {
 
     }
 
-    const updateInfo2 = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $addToSet: { reviews: newReview } });
+    // const updateInfo2 = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $addToSet: { reviews: newReview } });
 
-    if (updateInfo2.modifiedCount === 0) {
-      throw "could not add review to doctor";
+    // if (updateInfo2.modifiedCount === 0) {
+    //   throw "could not add review to doctor";
 
-    }
+    // }
 
 
     newReview._id = newReview._id.toString();
@@ -184,12 +186,15 @@ const exported = {
     };
 
 
+
     const updateInfo = await reviewCollection.updateOne({ _id: ObjectId(reviewID) }, { $addToSet: { comments: newComment } });
 
     if (updateInfo.modifiedCount === 0) {
       throw "could not add the comment successfully";
 
     }
+
+
 
     newComment.commentID = newComment.commentID.toString();
 

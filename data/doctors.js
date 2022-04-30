@@ -86,6 +86,7 @@ const exported = {
             throw "zip parameter has to be a nonempty string";
         }
         zip = zip.trim();
+        zip = zip.toUpperCase();
 
 
         if (!(/^\d+$/.test(zip)) || zip.length != 5) {
@@ -107,8 +108,6 @@ const exported = {
             state: state,
             zip: zip,
             rating: null,
-            reviews: []
-
 
         }
 

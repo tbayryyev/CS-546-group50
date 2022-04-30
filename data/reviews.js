@@ -126,25 +126,25 @@ const exported = {
 
   addComment: async (userID, reviewID, commentText) => {
 
-    // if (!userID) {
-    //   throw "userID parameter not supplied or undefined";
-    // }
-    // if (typeof userID !== 'string' || userID.trim().length === 0) {
-    //   throw "userID parameter has to be a nonempty string";
-    // }
-    // userID = userID.trim();
+    if (!userID) {
+      throw "userID parameter not supplied or undefined";
+    }
+    if (typeof userID !== 'string' || userID.trim().length === 0) {
+      throw "userID parameter has to be a nonempty string";
+    }
+    userID = userID.trim();
 
-    // if (!ObjectId.isValid(userID)) {
-    //   throw "userID is an Invalid ObjectId";
-    // }
+    if (!ObjectId.isValid(userID)) {
+      throw "userID is an Invalid ObjectId";
+    }
 
-    // const userCollection = await USERS();
+    const userCollection = await USERS();
 
-    // const user = await userCollection.findOne({ _id: ObjectId(userID) });
+    const user = await userCollection.findOne({ _id: ObjectId(userID) });
 
-    // if (user === null) {
-    //   throw "no user exists with that id";
-    // }
+    if (user === null) {
+      throw "no user exists with that id";
+    }
 
     if (!reviewID) {
       throw "reviewID parameter not supplied or undefined";

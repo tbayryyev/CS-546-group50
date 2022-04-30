@@ -56,7 +56,7 @@ const exported = {
 
 
     for (review of reviews) {
-      if ((review.doctorID == doctorID) && (review.userID == userID)) throw 'Review already created'
+      if ((review.doctorID == doctorID) && (review.userID == userID)) throw 'Review already created for this doctor';
     }
 
 
@@ -76,11 +76,19 @@ const exported = {
 
 
     let rating1 = 0;
+    let count = 0;
 
+
+    // update the overall rating for the doctor in the doctors database
+    // loop through all the reviews for the doctor and get the average rating 
     if (reviewList.length != 0) {
       for (review of reviewList) {
         rating1 += review.rating;
+        count++
       }
+
+      rating1 = rating1 / count;
+      rating1 = rating1.toPrecision(2);
       const updateInfo = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $set: { rating: rating1 } });
 
 

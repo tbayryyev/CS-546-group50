@@ -72,6 +72,10 @@ const exported = {
 
     const insertInfo = await reviewCollection.insertOne(newReview);
 
+    if (!insertInfo.acknowledged || !insertInfo.insertedId) {
+      throw 'Review could not be created';
+    }
+
     let reviewList = await getReviews(doctorID);
 
 
@@ -90,11 +94,20 @@ const exported = {
       rating1 = rating1 / count;
       rating1 = rating1.toPrecision(2);
       const updateInfo = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $set: { rating: rating1 } });
+      if (updateInfo.modifiedCount === 0) {
+        throw "could not add rating to doctor";
+
+      }
 
 
     }
 
+    const updateInfo2 = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $addToSet: { reviews: newReview } });
 
+    if (updateInfo2.modifiedCount === 0) {
+      throw "could not add review to doctor";
+
+    }
 
 
     newReview._id = newReview._id.toString();

@@ -8,7 +8,7 @@
 <input id="aptDate" type="text" name="aptDate"  value = {{aptDate}} readonly>
 <input id="aptTime" type="text" name="aptTime"  value = {{aptTime}} readonly>
 {{#if rescheduleFlag}}
-<button type="submit" formmethod = "POST" formaction="/doctors/reschedule/{{doctorId}}">Change Date</button>
+<button class="btn btn-primary btn-sm" type="submit" formmethod = "POST" formaction="/doctors/reschedule/{{doctorId}}">Change Date</button>
 {{/if}}
 <div>
 <label for="message">Message   </label>
@@ -18,7 +18,7 @@
 <label for="conditions">Conditions </label>
 <input id="conditions" type="text" name="conditions" placeholder="conditions"  value = {{conditions}}  >
 </div>
-<button type="submit">Book</button>
+<button class="btn btn-primary btn-sm" type="submit">Book</button>
 </form>
 {{#if hasError}}
 <p class={{class}}>Error:{{errorMessage}}</p>

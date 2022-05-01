@@ -129,14 +129,16 @@ router.route('/:id')
         try{
         
         const appointmentRSI = await appointmentData.get(req.params.id.trim());
-       
+       /*
         res.render('pages/appointmentview',{userId:appointmentRSI.userId,
                                               doctorId:appointmentRSI.doctorId,
                                               aptDate:appointmentRSI.aptDate,
                                               aptTime:appointmentRSI.aptTime,
                                               message:appointmentRSI.message,
                                               conditions:appointmentRSI.conditions}
-        );
+        );*/
+        res.json(appointmentRSI)
+        
         }
         catch(e){
             res.status(404).json(e.message);
@@ -246,7 +248,8 @@ router.route('/:id')
         
         const appointmentRSD = await appointmentData.remove(req.params.id.trim());
 
-        res.redirect('/appointments/userappointmentlist/'+appointmentRSD.userId);
+        res.json(appointmentRSD);
+        //res.redirect('/appointments/userappointmentlist/'+appointmentRSD.userId);
         }
         catch(e){
             res.status(404).json(e.message);

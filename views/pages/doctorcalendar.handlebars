@@ -11,9 +11,9 @@
             <div>
              {{#each tm}}
              {{#if ../../rescheduleFlag}}
-             <button type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             <button class="btn btn-success btn-sm" type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
              {{else}}
-             <button type="submit" formmethod = "GET" formaction="/appointments/schedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             <button class="btn btn-success btn-sm" type="submit" formmethod = "GET" formaction="/appointments/schedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
              {{/if}}
              {{/each}}
              </div>

@@ -3,35 +3,36 @@ const REVIEWS = mongoCollections.reviews;
 const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
-
-async function highestRatedDoctors(speciality) {
-    if (!speciality) {
-        throw "speciality not supplied or undefined";
-    }
-    if (typeof speciality !== 'string' || speciality.trim().length === 0) {
-        throw "speciality has to be a nonempty string";
-    }
-    speciality = speciality.trim();
-    // speciality should be lowercase so that we can always find it when doing the rating system
-    //speciality = speciality.toLowerCase();
-
-    const doctorCollection = await DOCTORS();
-
-    const docs = await doctorCollection.find({ speciality: speciality }).toArray();
-
-    if (docs.length == 0) {
-        throw "No doctors exist with that speciality";
-    }
-
-
-
-    let topRated = docs.sort(function (a, b) {
-        return Number(a.rating) < Number(b.rating) ? 1 : -1;
-    });
-
-    return topRated;
-
-}
+const validation = require('../validation');
+// you can call this function with exported.highestRatedDoctors
+// async function highestRatedDoctors(speciality) {
+//     if (!speciality) {
+//         throw "speciality not supplied or undefined";
+//     }
+//     if (typeof speciality !== 'string' || speciality.trim().length === 0) {
+//         throw "speciality has to be a nonempty string";
+//     }
+//     speciality = speciality.trim();
+//     // speciality should be lowercase so that we can always find it when doing the rating system
+//     //speciality = speciality.toLowerCase();
+//
+//     const doctorCollection = await DOCTORS();
+//
+//     const docs = await doctorCollection.find({ speciality: speciality }).toArray();
+//
+//     if (docs.length == 0) {
+//         throw "No doctors exist with that speciality";
+//     }
+//
+//
+//
+//     let topRated = docs.sort(function (a, b) {
+//         return Number(a.rating) < Number(b.rating) ? 1 : -1;
+//     });
+//
+//     return topRated;
+//
+// }
 
 
 
@@ -201,25 +202,27 @@ const exported = {
 
     },
     highestRatedDoctor: async (specialities) => {
+      //validation checkstringArray
+      specialities = validation.checkStringArray(specialities,"specialities");
 
-        if (!Array.isArray(specialities)) {
-            throw "specialities parameter must be an array";
-        }
-
-        if (specialities.length === 0) {
-            throw "must include at least 1 speciality";
-        }
-
-        specialities.forEach(value => {
-            if (typeof value !== 'string' || value.trim().length == 0) {
-                throw "specialities elements must be non-empty strings";
-            }
-        });
+        // if (!Array.isArray(specialities)) {
+        //     throw "specialities parameter must be an array";
+        // }
+        //
+        // if (specialities.length === 0) {
+        //     throw "must include at least 1 speciality";
+        // }
+        //
+        // specialities.forEach(value => {
+        //     if (typeof value !== 'string' || value.trim().length == 0) {
+        //         throw "specialities elements must be non-empty strings";
+        //     }
+        // });
 
         let highestRatedDocs = [];
 
         for (specialitity of specialities) {
-            const hd = await highestRatedDoctors(specialitity);
+            const hd = await exported.highestRatedDoctors(specialitity);
             highestRatedDocs.push(hd[0]);
 
 

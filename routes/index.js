@@ -7,7 +7,7 @@ const constructorMethod = (app) => {
   app.use('/appointments', appointmentRoutes);
   app.use('/', API);
   app.use('*', (req, res) => {
-    res.sendStatus(404);
+    res.status(404).json({error: 'Not found'});
   });
 
 

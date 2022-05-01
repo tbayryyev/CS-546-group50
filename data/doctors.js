@@ -4,6 +4,36 @@ const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 
+async function highestRatedDoctors(speciality) {
+    if (!speciality) {
+        throw "speciality not supplied or undefined";
+    }
+    if (typeof speciality !== 'string' || speciality.trim().length === 0) {
+        throw "speciality has to be a nonempty string";
+    }
+    speciality = speciality.trim();
+    // speciality should be lowercase so that we can always find it when doing the rating system
+    //speciality = speciality.toLowerCase();
+
+    const doctorCollection = await DOCTORS();
+
+    const docs = await doctorCollection.find({ speciality: speciality }).toArray();
+
+    if (docs.length == 0) {
+        throw "No doctors exist with that speciality";
+    }
+
+
+
+    let topRated = docs.sort(function (a, b) {
+        return Number(a.rating) < Number(b.rating) ? 1 : -1;
+    });
+
+    return topRated;
+
+}
+
+
 
 const exported = {
     createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip) => {
@@ -167,6 +197,44 @@ const exported = {
         });
 
         return topRated;
+
+
+    },
+    highestRatedDoctor: async (specialities) => {
+
+        if (!Array.isArray(specialities)) {
+            throw "specialities parameter must be an array";
+        }
+
+        if (specialities.length === 0) {
+            throw "must include at least 1 speciality";
+        }
+
+        specialities.forEach(value => {
+            if (typeof value !== 'string' || value.trim().length == 0) {
+                throw "specialities elements must be non-empty strings";
+            }
+        });
+
+        let highestRatedDocs = [];
+
+        for (specialitity of specialities) {
+            const hd = await highestRatedDoctors(specialitity);
+            highestRatedDocs.push(hd[0]);
+
+
+        }
+
+        let highestRatedDocs1 = [];
+        let count = 0;
+        for (highest of highestRatedDocs) {
+            highestRatedDocs1.push({ speciality: specialities[count], doctor: highest });
+            count++;
+
+        }
+
+        return highestRatedDocs1;
+
 
 
     }

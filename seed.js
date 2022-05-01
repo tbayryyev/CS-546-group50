@@ -71,13 +71,13 @@ async function main() {
     //     console.log(e);
     // }
 
-    try {
-        const topRated = await doctors.highestRatedDoctors("Cardiologist");
-        console.log(topRated);
-    } catch (e) {
-        console.log("Got an error!");
-        console.log(e);
-    }
+    // try {
+    //     const topRated = await doctors.highestRatedDoctors("Cardiologist");
+    //     console.log(topRated);
+    // } catch (e) {
+    //     console.log("Got an error!");
+    //     console.log(e);
+    // }
 
     try {
         const getSpec = await doctors.getAllSpecialities();
@@ -86,6 +86,16 @@ async function main() {
         console.log("Got an error!");
         console.log(e);
     }
+
+    try {
+        const getDocs = await doctors.highestRatedDoctor(['cardiologist', 'Cardiologist']);
+        console.log(getDocs);
+    } catch (e) {
+        console.log("Got an error!");
+        console.log(e);
+    }
+
+
 
 
 

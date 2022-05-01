@@ -8,7 +8,8 @@ router
     .get(async (req, res) => {
         try {
             const specialities = await doctorData.getAllSpecialities();
-            res.render('pages/home_page', { specialities: specialities, });
+            const topDoctors = await doctorData.highestRatedDoctor(specialities);
+            res.render('pages/home_page', { docs: topDoctors });
         } catch (e) {
             res.status(404).json(e.message);
         }

@@ -37,7 +37,7 @@ button{
 li{
     list-style-type:square;
     color: red;
-    font-size: 15pt;
+    font-size: 18pt;
 }
 
 section{
@@ -48,7 +48,7 @@ section{
 
 dt{
     color: purple;
-    font-size: 20pt;
+    font-size: 15pt;
 }
 
 dl{

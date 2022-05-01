@@ -7,6 +7,19 @@ const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars');
 
 
+Handlebars.registerHelper('ifDateCompare', function(dt1,tm1, options) {
+
+  var date1 = new Date(dt1+" "+tm1);
+  var date2 = new Date();
+
+  if(date1.getTime() >= date2.getTime()){
+
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
+
+
 const handlebarsInstance = exphbs.create({
     defaultLayout: 'main',
     // Specify helpers which are only registered on this instance.

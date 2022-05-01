@@ -33,6 +33,14 @@ button{
     color: white;
     background: red;
 }
+.btn-primary-appointment-view-button,
+.btn-primary-appointment-delete-button,
+.btn-secondary-appointment-view-button,
+.btn-primary-appointment-reschedule-button{
+    color: white;
+    background: rgb(64, 73, 158);;
+}
+
 
 li{
     list-style-type:square;

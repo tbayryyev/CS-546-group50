@@ -11,7 +11,7 @@ Handlebars.registerHelper('ifDateCompare', function (dt1, operator, tm1, options
   var date2 = new Date();
 
   switch (operator) {
-             
+
       case '>=':
         return (date1.getTime() >= date2.getTime()) ? options.fn(this) : options.inverse(this);
       case '<':
@@ -66,5 +66,4 @@ configRoutes(app);
 app.listen(3000, () => {
   console.log("We've now got a server!");
   console.log('Your routes will be running on http://localhost:3000');
-  console.log("not working");
 });

@@ -3,19 +3,50 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="viewModalLabel">Appointment Details</h5>
+        <h4 class="modal-title" id="viewModalLabel">Appointment Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
        
-        <input id="viewUserId" class="form-control border-0" type="text" placeholder="Readonly input here…" readonly>
-        <input id="viewDoctorId" class="form-control" type="text" placeholder="Readonly input here…" readonly>
-        <input id="viewAptDate" class="form-control" type="text" placeholder="Readonly input here…" readonly>
-        <input id="viewAptTime" class="form-control" type="text" placeholder="Readonly input here…" readonly>
-        <input id="viewAptMessage" class="form-control" type="text" placeholder="Readonly input here…" readonly>
-        <input id="viewAptConditions" class="form-control" type="text" placeholder="Readonly input here…" readonly>
+         <div class="form-group row">
+           <label for="viewUserId" class="col-sm-2 col-form-label">Patient: </label>
+           <div class="col-sm-10">
+             <input type="text" readonly class="form-control" id="viewUserId" >
+           </div>
+         </div>
+         <div class="form-group row">
+           <label for="viewDoctorId" class="col-sm-2 col-form-label">Doctor: </label>
+           <div class="col-sm-10">
+             <input type="text" readonly class="form-control" id="viewDoctorId" >
+           </div>
+         </div>
+         <div class="form-group row">
+           <label for="viewAptDate" class="col-sm-2 col-form-label">Date: </label>
+           <div class="col-sm-4">
+             <input type="text" readonly class="form-control" id="viewAptDate" >
+           </div>
+         </div>
+         <div class="form-group row">
+           <label for="viewAptTime" class="col-sm-2 col-form-label">Time:</label>
+           <div class="col-sm-2" >
+             <input type="text" readonly class="form-control" id="viewAptTime" >
+           </div>
+         </div>
+         <div class="form-group row">
+           <label for="viewAptMessage" class="col-sm-2 col-form-label">Message: </label>
+           <div class="col-sm-10">
+             <input type="text" readonly class="form-control" id="viewAptMessage" >
+           </div>
+         </div>
+          <div class="form-group row">
+           <label for="viewAptConditions" class="col-sm-2 col-form-label">Condition: </label>
+           <div class="col-sm-10">
+             <input type="text" readonly class="form-control" id="viewAptConditions" >
+           </div>
+         </div>
+      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary-appointment-view-button" data-dismiss="modal">Close</button>
@@ -30,20 +61,37 @@
 <form id="appointmentListForm">
     {{#if appointmentResultSet.length}}
     
+    <h5 > Future Appointments</h5>
         {{#each appointmentResultSet}}
-        <div>
+         {{#ifDateCompare aptDate '>=' aptTime }}
+         
+        <div id="patientButtons">
         <label for="appointment">{{aptDate}} {{aptTime}}   </label>
        
         <button type="button" class="btn btn-primary-appointment-view-button btn-sm" data-toggle="modal" data-target="#viewModal" id="viewButton{{_id}}"  formmethod = "GET" formaction="/appointments/{{_id}}">View</button>
-  
-    {{#ifDateCompare aptDate aptTime }}
         <button  type="submit" class="btn btn-primary-appointment-reschedule-button btn-sm" formmethod = "GET" formaction="/appointments/reschedule/{{_id}}" >Reschedule</button>
-        <button  type="button" class="btn btn-primary-appointment-delete-button btn-sm"  id="deleteButton{{_id}}"  formaction="/appointments/delete/{{_id}}">Delete</button>
-         {{/ifDateCompare}}
+        <button  type="button" class="btn btn-primary-appointment-delete-button btn-sm"  id="deleteButton{{_id}}"  formaction="/appointments/delete/{{_id}}">Cancel</button>
+        
         </div>
+        {{/ifDateCompare}}
         {{/each}}
+        <h5 > Past Appointments</h5>
+        {{#each appointmentResultSet}}
+         {{#ifDateCompare aptDate '<' aptTime }}
+         
+        <div id="patientButtons">
+        <label for="appointment">{{aptDate}} {{aptTime}}   </label>
+       
+        <button type="button" class="btn btn-primary-appointment-view-button btn-sm" data-toggle="modal" data-target="#viewModal" id="viewButton{{_id}}"  formmethod = "GET" formaction="/appointments/{{_id}}">View</button>
+                
+        </div>
+
+        {{/ifDateCompare}}
+        
+        {{/each}}
+        
     {{else}}
-    <p class="not-found">We're sorry, but no results were found for {{userId}}.</p>
+    <p class="not-found">We're sorry, there no appointments booked for {{userId}}.</p>
     {{/if}}
      <input name= '_method' value="DELETE" hidden/>
      

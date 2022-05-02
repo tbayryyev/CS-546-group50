@@ -1,10 +1,10 @@
 (function ($) {
 
-  //var deleteButtonFormAction = $ ( '#deleteModelButton' ).attr('formaction')
+
  
   $('.btn-primary-appointment-view-button').click(function (event) {
       try{
-        //var button_id = $(this).attr('id');
+        
         var viewButtonFormAction = $(this).attr('formaction');       
         //alert("viewButtonFormAction : "+viewButtonFormAction);
         
@@ -44,15 +44,7 @@
          url: deleteButtonFormAction
      };
      $.ajax(requestConfigSFS).then(function (responseMsg){
-     console.log("responseMsg form delete : "+responseMsg);
-      
-     /*$( '#deleteUserId' ).val(responseMsg.userId);
-      $( '#deleteDoctorId' ).val(responseMsg.doctorId);
-      $( '#deleteAptDate' ).val(responseMsg.aptDate);
-      $( '#deleteAptTime' ).val(responseMsg.aptTime);
-      $( '#deleteAptMessage' ).val(responseMsg.message);
-      $( '#deleteAptConditions' ).val(responseMsg.conditions);
-      */
+    
      alert("Appointment @"+responseMsg.aptDate+":"+responseMsg.aptTime+" got successfully cancelled");
      window.location.replace("/appointments/userappointmentlist/"+responseMsg.userId);
      });

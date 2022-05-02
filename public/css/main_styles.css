@@ -42,6 +42,23 @@ button{
     background: rgb(64, 73, 158);;
 }
 
+#patientButtons,.apt_error_span{
+    margin-top : 12px;
+}
+
+
+.apt_error_class {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 14px;
+    color: rgb(241, 8, 8);  
+   }
+   div.apointmentDiv {
+    margin-bottom: 15px;
+  }
+  label.apointmentLable {
+    display: inline-block;
+    width: 120px;
+  }
 
 li{
     list-style-type:square;

@@ -1,4 +1,5 @@
 <a href="/login">Login</a>
+<a href="/signup"> Sign Up</a>
 
 <p>Welcome to Find A Doctor! Here you can search for doctors aswell as look at their reviews.</p>
 
@@ -9,10 +10,33 @@
     <li>
         <h3 class="speciality">{{this.speciality}}</h3>
         <dl>
-            <dt>Name</dt>
-            <dd>{{this.doctor.name}}</dd>
-            <dt></dt>
-        </dl>
+            <dd class="name">{{this.doctor.name}}</dd>
+            {{#if this.doctor.profilePicture}}
+            <img alt="image" src={{this.doctor.profilePicture}} />
+            {{else}}
+            <img alt="image"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png" />
+            {{/if}}
+
+            <dt>About</dt>
+            <dd>{{this.doctor.about}}</dd>
+            <dt>Languages</dt>
+            {{#if this.doctor.languages.length}}
+            <ul>
+                {{#each this.doctor.languages}}
+                <li class="language">{{this}}</li>
+
+                {{/each}}
+            </ul>
+            {{else}}
+            <dd>N/A</dd>
+            {{/if}}
+            <dt>Address</dt>
+            <dd>{{this.doctor.address}}</dd>
+            <dt>City, State, Zipcode</dt>
+            <dd>{{this.doctor.city}}, {{this.doctor.state}}, {{this.doctor.zip}}</dd>
+            <dt>Rating</dt>
+            <dd>{{this.doctor.rating}} Stars</dd>
     </li>
     {{/each}}
 </ul>

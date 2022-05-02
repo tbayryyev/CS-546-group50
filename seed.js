@@ -21,7 +21,7 @@ async function main() {
     try {
         const doc = await doctors.createDoctor("Ethan Bane", "https://physicians.wustl.edu/wp-content/uploads/2020/09/Elsayed-Omar_Peds300_03-280x386.jpg", "pediatrician", "Graduated from NYU Med school", ["English", "French", "Arabic"], "7th and Madison", "Hoboken", "NJ", "07030", 4.5);
         console.log(doc);
-        doc2ID = doc_.id;
+        doc2ID = doc._id;
     } catch (e) {
         console.log("Got an error!");
         console.log(e);

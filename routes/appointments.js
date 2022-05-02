@@ -19,7 +19,11 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                       });
         }
         catch(e){
-            res.status(404).json(e.message);
+           const errorMessage = typeof e === 'string' ? e : e.message;
+            //res.status(404).json(e.message);
+           
+            res.status(400).render('pages/appointments',{userId:"621c02ba2e53ab2ba3b45f7a",doctorId:doctorId,
+            aptDate: aptDate, aptTime:aptTime,hasError: true, errorMessage : errorMessage});
             return;
         }
     });
@@ -45,7 +49,19 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                         message:messagePrvRs, conditions:conditionsPrvRs});
         }
         catch(e){
-            res.status(404).json(e.message);
+          const errorMessage = typeof e === 'string' ? e : e.message;  
+         // res.status(404).json(e.message);
+            
+            res.status(400).render('pages/appointmentReschedule',{userId:"621c02ba2e53ab2ba3b45f7a",
+            appointmentId:appointmentId
+            //,doctorId:doctorId
+            //,rescheduleFlag:true
+            //,reBookFlag:true
+            ,aptDate: aptDate, aptTime:aptTime,
+           // aptDatePrv:aptDatePrvRs,aptTimePrv:aptTimePrvRs,
+            message:messagePrvRs, conditions:conditionsPrvRs,
+            hasError: true,
+            errorMessage : errorMessage});
             return;
         }
     });
@@ -60,7 +76,14 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         res.render('pages/patients',{title:'Patient Home Page', appointmentResultSet:appointmentRS});
         }
         catch(e){
-            res.status(404).json(e.message);
+            const errorMessage = typeof e === 'string' ? e : e.message;
+            //res.status(404).json(e.message);
+            
+            res.status(400).render('pages/patients',{title:'Patient Home Page'
+            //, appointmentResultSet:appointmentRS
+            ,hasError: true,
+             errorMessage : errorMessage});
+            
             return;
         }
     });
@@ -78,7 +101,11 @@ const { doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
 console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
 " aptTime : "+aptTime+" message :"+message+" conditions : "+conditions)
   if (!doctorId || !aptDate || !aptTime || !message || !conditions ) {
-    res.status(400).json({ error: 'All fields need to have valid values' });
+    
+    //res.status(400).json({ error: 'All fields need to have valid values' });
+    res.status(400).render('pages/appointments',{hasError: true,userId:userId,
+      doctorId:doctorId,aptDate:aptDate,aptTime:aptTime,message:message,conditions:conditions,
+       errorMessage : 'All fields need to have valid values'});
     return;
   }
   
@@ -97,7 +124,9 @@ console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
         
   }
   catch (e) {
-    res.status(400).json({ error: e.message });
+    const errorMessage = typeof e === 'string' ? e : e.message;
+    //res.status(400).json({ error: errorMessage });
+    res.status(400).render('pages/appointments',{hasError: true,class: 'error', errorMessage : errorMessage});
     return;
   }
  
@@ -114,7 +143,9 @@ console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
 
     res.redirect('/appointments/userappointmentlist/'+newAppointmentPost.userId);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    const errorMessage = typeof e === 'string' ? e : e.message;
+    //res.status(500).json({ error: errorMessage });
+    res.status(500).render('pages/appointments',{hasError: true, errorMessage : errorMessage});
     return;
   }
 });
@@ -129,18 +160,21 @@ router.route('/:id')
         try{
         
         const appointmentRSI = await appointmentData.get(req.params.id.trim());
-       
+       /*
         res.render('pages/appointmentview',{userId:appointmentRSI.userId,
                                               doctorId:appointmentRSI.doctorId,
                                               aptDate:appointmentRSI.aptDate,
                                               aptTime:appointmentRSI.aptTime,
                                               message:appointmentRSI.message,
                                               conditions:appointmentRSI.conditions}
-        );
+        );*/
+        res.json(appointmentRSI)
+        
         }
         catch(e){
-            res.status(404).json(e.message);
-            return;
+          const errorMessage = typeof e === 'string' ? e : e.message;  
+          res.status(404).json(errorMessage);
+          return;
         }
     });
 
@@ -164,8 +198,10 @@ router.route('/:id')
                                                   rescheduleFlag:true});
         }
         catch(e){
-            res.status(404).json(e.message);
-            return;
+          const errorMessage = typeof e === 'string' ? e : e.message;  
+          //res.status(404).json(errorMessage);
+          res.status(404).render('pages/appointmentReschedule',{hasError: true, errorMessage : errorMessage});
+          return;
         }
     });
 
@@ -182,7 +218,8 @@ router.route('/:id')
       await appointmentData.get(objId);
       }
       catch(e){
-          res.status(404).json(e.message);
+        const errorMessage = typeof e === 'string' ? e : e.message;  
+        res.status(404).json(errorMessage);
           return;
       }
     
@@ -192,7 +229,8 @@ router.route('/:id')
     const { aptDatePrv,aptTimePrv,aptDate,aptTime } = putAppointmentData;
     
       if (!aptDate || !aptTime  ) {
-        res.status(400).json({ error: 'All fields need to have valid values' });
+        //res.status(400).json({ error: 'All fields need to have valid values' });
+        res.status(404).render('pages/appointmentReschedule',{hasError: true, errorMessage : 'All fields need to have valid values'});
         return;
       }
       
@@ -215,7 +253,9 @@ router.route('/:id')
             
       }
       catch (e) {
-        res.status(400).json(e.message);
+        const errorMessage = typeof e === 'string' ? e : e.message;
+        //res.status(400).json(errorMessage);
+        res.status(400).render('pages/appointmentReschedule',{hasError: true, errorMessage : errorMessage});
         return;
       }
      
@@ -231,7 +271,9 @@ router.route('/:id')
 
         res.redirect('/appointments/userappointmentlist/'+newAppointmentPut.userId);
       } catch (e) {
-        res.status(500).json(e.message );
+        const errorMessage = typeof e === 'string' ? e : e.message;
+        //res.status(500).json(errorMessage );
+        res.status(500).render('pages/appointmentReschedule',{hasError: true, errorMessage : errorMessage});
         return;
       }
     });
@@ -246,10 +288,16 @@ router.route('/:id')
         
         const appointmentRSD = await appointmentData.remove(req.params.id.trim());
 
-        res.redirect('/appointments/userappointmentlist/'+appointmentRSD.userId);
+        res.json(appointmentRSD);
+        //res.redirect('/appointments/userappointmentlist/'+appointmentRSD.userId);
         }
         catch(e){
-            res.status(404).json(e.message);
+          const errorMessage = typeof e === 'string' ? e : e.message;  
+          //res.status(404).json(errorMessage);
+          res.status(400).render('pages/patients',{title:'Patient Home Page'
+            //, appointmentResultSet:appointmentRS
+            ,hasError: true,
+             errorMessage : errorMessage});
             return;
         }
     });
@@ -268,7 +316,12 @@ router.route('/:id')
         res.render('pages/doctorcalendar',{title:'Doctor Home Page',doctorId :doctorRSI._id.toString(),timeSlotList : doctorRSI.timeSlots});
         }
         catch(e){
-            res.status(404).json(e.message);
+          const errorMessage = typeof e === 'string' ? e : e.message;  
+         // res.status(404).json(errorMessage);
+          res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
+          doctorId :doctorRSI._id.toString(),timeSlotList : doctorRSI.timeSlots,
+          hasError: true,
+          errorMessage : errorMessage});
             return;
         }
     });
@@ -293,7 +346,14 @@ router.route('/:id')
                                            conditionsPrv:conditions,timeSlotList : doctorRSI.timeSlots});
         }
         catch(e){
-            res.status(404).json(e.message);
+          const errorMessage = typeof e === 'string' ? e : e.message;  
+          //res.status(404).json(errorMessage);
+          res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
+                                          appointmentId:appointmentId,
+                                           doctorId :doctorId,
+                                          timeSlotList : doctorRSI.timeSlots,
+                                          hasError: true,
+                                          errorMessage : errorMessage});
             return;
         }
     });

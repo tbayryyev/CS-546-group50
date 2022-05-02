@@ -41,6 +41,19 @@ const curDateStr = function curDateStr(){
   
   }
 
+const sortDistinctArray = function sortDistinctArray(timeArr){
+    timeArr.sort(function (a, b) {
+      return new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b);
+    })
+let uniqueElementArr = [];
+timeArr.forEach((c) => {
+    if (!uniqueElementArr.includes(c)) {
+        uniqueElementArr.push(c);
+    }
+});
+  return uniqueElementArr;
+  }
+
 async function updateDoctorCalendar(doctorId,aptDate,aptTime,mode){
   resArray = []
   max_date = "";
@@ -68,13 +81,14 @@ if(mode === "pull"){
     if(x.dt > max_date){
       max_date = x.dt;
     }
-    if(x.dt >= curDateStr()){
-      resArray.push(x);
+   if(x.dt >= curDateStr()){
+      resArray.push({"dt":x.dt,
+     "tm":sortDistinctArray(x.tm)} );
     }
   }
-
+  
   if(resArray.length < 7){
-    resArray.push({"dt":addDaysdateStr(max_date,1),"tm":["8:00","9:00","10:00"]})
+    resArray.push({"dt":addDaysdateStr(max_date,1),"tm":["08:00","09:00","10:00"]})
   }
   
   await doctorCollection.updateOne(
@@ -86,6 +100,7 @@ if(mode === "pull"){
 
 
 module.exports = {
+  /*
     async getAll() {
         var resultArr = [];
         const appointmentCollection = await appointments();
@@ -105,7 +120,7 @@ module.exports = {
         }
         return resultArr;
       },
-
+*/
     async getAllAppointmentsForUser(userId){
       var resultArr = [];
       const appointmentCollection = await appointments();
@@ -293,7 +308,7 @@ module.exports = {
           throw 'Could not delete appointment with id of '+id;
         }
         await updateDoctorCalendar(fetchObj.doctorId,fetchObj.aptDate,fetchObj.aptTime,"push");
-        return {"appointmentId": '+id+',userId:fetchObj.userId, "deleted" : true};
+        return {"appointmentId": id,"userId":fetchObj.userId,"aptDate":fetchObj.aptDate,"aptTime":fetchObj.aptTime, "deleted" : true};
       },
       async getdocCalender(id) {
         if(arguments.length < 1){

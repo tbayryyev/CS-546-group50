@@ -3,6 +3,7 @@ a {
 	text-decoration: solid;
 	font-size: 15pt;
     background: black;
+    padding: 0.4%;
 }
 
 a:hover {
@@ -33,6 +34,31 @@ button{
     color: white;
     background: red;
 }
+.btn-primary-appointment-view-button,
+.btn-primary-appointment-delete-button,
+.btn-secondary-appointment-view-button,
+.btn-primary-appointment-reschedule-button{
+    color: white;
+    background: rgb(64, 73, 158);;
+}
+
+#patientButtons,.apt_error_span{
+    margin-top : 12px;
+}
+
+
+.apt_error_class {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 14px;
+    color: rgb(241, 8, 8);  
+   }
+   div.apointmentDiv {
+    margin-bottom: 15px;
+  }
+  label.apointmentLable {
+    display: inline-block;
+    width: 120px;
+  }
 
 li{
     list-style-type:square;
@@ -59,5 +85,15 @@ dl{
 
 dd{
     color: green;
-    font-size: 14pt;
+    font-size: 12pt;
+}
+img{
+width: 300px;
+  height: 300px;
+  object-fit: contain;
+}
+
+dd.name{
+    color: black;
+    font-size: 17pt;
 }

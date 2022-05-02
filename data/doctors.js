@@ -37,7 +37,7 @@ const validation = require('../validation');
 
 
 const exported = {
-    createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip) => {
+    createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip, rating) => {
 
         if (!name) {
             throw "name not supplied or undefined";
@@ -140,7 +140,7 @@ const exported = {
             city: city,
             state: state,
             zip: zip,
-            rating: null,
+            rating: rating,
 
         }
 

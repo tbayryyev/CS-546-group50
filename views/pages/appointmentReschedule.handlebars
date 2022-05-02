@@ -3,8 +3,10 @@
 <input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  hidden>
 <label for="userId"></label>
 <input id="userId" type="text" name="userId" placeholder="userId" value = {{userId}}  hidden>
-<label for="appointmentId">appointmentId</label>
-<input id="appointmentId" type="text" name="appointmentId" placeholder="appointmentId" value = {{appointmentId}}  >
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="appointmentId">AppointmentId</label>
+<input id="appointmentId" type="text" name="appointmentId" placeholder="appointmentId" value = {{appointmentId}} readonly >
+</div>
 <div>
  {{#if aptDatePrv}}   
 <label for="aptDatePrv"></label>
@@ -12,27 +14,32 @@
 <input id="aptTimePrv" type="text" name="aptTimePrv" placeholder="aptTimePrv" value = {{aptTimePrv}}  hidden>
 {{/if}}
 </div>
-<div>
-<label for="aptDate">DateTime  </label>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="aptDate">DateTime  </label>
 <input id="aptDate" type="text" name="aptDate"  value = {{aptDate}} readonly>
 <input id="aptTime" type="text" name="aptTime"  value = {{aptTime}} readonly>
 
 {{#if rescheduleFlag}}
-<button type="submit" formmethod = "POST" formaction="/appointments/doctorcalendar/reschedule/{{doctorId}}">Change Date</button>
+<button class="btn btn-primary btn-sm" type="submit" formmethod = "POST" formaction="/appointments/doctorcalendar/reschedule/{{doctorId}}">Change Date</button>
 {{/if}}
 </div>
-<div>
-<label for="message">Message   </label>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="message">Message   </label>
 <input id="message" type="text" name="message" placeholder="message"  value = {{message}} readonly>
 </div>
-<div>
-<label for="conditions">Conditions </label>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="conditions">Conditions </label>
 <input id="conditions" type="text" name="conditions" placeholder="conditions"  value = {{conditions}}  readonly>
 </div>
 {{#unless rescheduleFlag}}
-<button type="submit">Reschedule</button>
+<button class="btn btn-primary btn-sm" type="submit">Reschedule</button>
 {{/unless}}
 </form>
+<div class="apt_error_span">
 {{#if hasError}}
-<p class={{class}}>Error:{{errorMessage}}</p>
+<span class="apt_error_class">Error:{{errorMessage}}</span>
 {{/if}}
+</div>
+<div class="apointmentDiv">
+<a class="btn btn-primary" href="/appointments/userappointmentlist/{{userId}}" role="button">Back to Patient Home</a>
+</div>

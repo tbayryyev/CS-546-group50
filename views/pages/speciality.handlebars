@@ -33,6 +33,26 @@
             <dd>{{this.city}}, {{this.state}}, {{this.zip}}</dd>
             <dt>Rating</dt>
             <dd>{{this.rating}} Stars</dd>
+            <dt>Reviews</dt>
+            {{#if this.reviews.length}}
+            <ul>
+                {{#each this.reviews }}
+                <li class="reviews">
+                    <h3 class="userName">{{this.userID}}</h3>
+
+                    <p class="Rating">Rating: {{this.rating}} Stars</p>
+
+                    <p class="reviewText">ReviewText: {{this.reviewText}}</p>
+
+                </li>
+
+                {{/each }}
+            </ul>
+
+
+            {{else}}
+            <dd>Currently there are no reviews for this doctor</dd>
+            {{/if}}
     </li>
     {{/each}}
 </ul>

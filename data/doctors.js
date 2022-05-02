@@ -16,7 +16,7 @@ const exported = {
         doctor._id = doctor._id.toString();
         return doctor;
     },
-    createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip, rating) => {
+    createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip) => {
 
         if (!name) {
             throw "name not supplied or undefined";
@@ -119,7 +119,7 @@ const exported = {
             city: city,
             state: state,
             zip: zip,
-            rating: rating,
+            rating: null,
 
         }
 

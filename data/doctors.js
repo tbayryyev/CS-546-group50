@@ -4,39 +4,18 @@ const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
-// you can call this function with exported.highestRatedDoctors
-// async function highestRatedDoctors(speciality) {
-//     if (!speciality) {
-//         throw "speciality not supplied or undefined";
-//     }
-//     if (typeof speciality !== 'string' || speciality.trim().length === 0) {
-//         throw "speciality has to be a nonempty string";
-//     }
-//     speciality = speciality.trim();
-//     // speciality should be lowercase so that we can always find it when doing the rating system
-//     //speciality = speciality.toLowerCase();
-//
-//     const doctorCollection = await DOCTORS();
-//
-//     const docs = await doctorCollection.find({ speciality: speciality }).toArray();
-//
-//     if (docs.length == 0) {
-//         throw "No doctors exist with that speciality";
-//     }
-//
-//
-//
-//     let topRated = docs.sort(function (a, b) {
-//         return Number(a.rating) < Number(b.rating) ? 1 : -1;
-//     });
-//
-//     return topRated;
-//
-// }
 
 
 
 const exported = {
+    getDoctor : async (doctorId) => {
+      doctorId = validation.checkId(doctorId,"doctorId");
+      const doctorCollection = await DOCTORS();
+      const doctor = await doctorCollection.findOne({ _id: ObjectId(doctorId) });
+      if (doctor === null || doctor === undefined) throw 'No doctor with that id';
+      doctor._id = doctor._id.toString();
+      return doctor;
+    },
     createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip, rating) => {
 
         if (!name) {

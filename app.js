@@ -6,19 +6,20 @@ const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars');
 
-
-Handlebars.registerHelper('ifDateCompare', function(dt1,tm1, options) {
-
+Handlebars.registerHelper('ifDateCompare', function (dt1, operator, tm1, options) {
   var date1 = new Date(dt1+" "+tm1);
   var date2 = new Date();
 
-  if(date1.getTime() >= date2.getTime()){
-
-    return options.fn(this);
+  switch (operator) {
+             
+      case '>=':
+        return (date1.getTime() >= date2.getTime()) ? options.fn(this) : options.inverse(this);
+      case '<':
+        return (date1.getTime() < date2.getTime()) ? options.fn(this) : options.inverse(this);
+      default:
+        return options.inverse(this);
   }
-  return options.inverse(this);
 });
-
 
 const handlebarsInstance = exphbs.create({
     defaultLayout: 'main',

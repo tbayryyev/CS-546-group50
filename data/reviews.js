@@ -3,25 +3,8 @@ const REVIEWS = mongoCollections.reviews;
 // const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
-// const { doctors } = require("../config/mongoCollections");
 const validation = require('../validation');
-// upload the validation module to the github aswell otherwise we can not run this code
 
-// async function getReviews(doctorID) {
-//   const reviewCollection = await REVIEWS();
-//
-//   const reviews = await reviewCollection.find({}).toArray();
-//
-//   reviewList = [];
-//
-//   for (review of reviews) {
-//     if (review.doctorID == doctorID) {
-//       reviewList.push(review)
-//     }
-//   }
-//   return reviewList;
-//
-// }
 
 const exported = {
   getReviews: async (doctorID) => {
@@ -45,9 +28,9 @@ const exported = {
   createReview: async (doctorID, reviewText, userID, rating) => {
     doctorID = validation.checkId(doctorID, "doctorID");
     reviewText = validation.checkString(reviewText, "reviewText");
-    userID = validation.checkId(userID,"userID");
-    rating = validation.errorCheckingFunc("rating",rating,"number");
-    if(rating > 5 || rating < 1) throw 'rating out of range'
+    userID = validation.checkId(userID, "userID");
+    rating = validation.errorCheckingFunc("rating", rating, "number");
+    if (rating > 5 || rating < 1) throw 'rating out of range'
 
 
 

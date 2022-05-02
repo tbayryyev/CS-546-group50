@@ -8,13 +8,13 @@ const validation = require('../validation');
 
 
 const exported = {
-    getDoctor : async (doctorId) => {
-      doctorId = validation.checkId(doctorId,"doctorId");
-      const doctorCollection = await DOCTORS();
-      const doctor = await doctorCollection.findOne({ _id: ObjectId(doctorId) });
-      if (doctor === null || doctor === undefined) throw 'No doctor with that id';
-      doctor._id = doctor._id.toString();
-      return doctor;
+    getDoctor: async (doctorId) => {
+        doctorId = validation.checkId(doctorId, "doctorId");
+        const doctorCollection = await DOCTORS();
+        const doctor = await doctorCollection.findOne({ _id: ObjectId(doctorId) });
+        if (doctor === null || doctor === undefined) throw 'No doctor with that id';
+        doctor._id = doctor._id.toString();
+        return doctor;
     },
     createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip, rating) => {
 
@@ -152,6 +152,7 @@ const exported = {
 
     },
     highestRatedDoctors: async (speciality) => {
+        // gets a sorted list of doctors from that speciality
         if (!speciality) {
             throw "speciality not supplied or undefined";
         }
@@ -167,7 +168,7 @@ const exported = {
         const docs = await doctorCollection.find({ speciality: speciality }).toArray();
 
         if (docs.length == 0) {
-            throw "No doctors exist with that speciality";
+            throw "No doctors exist with the supplied speciality";
         }
 
 
@@ -181,22 +182,11 @@ const exported = {
 
     },
     highestRatedDoctor: async (specialities) => {
-      //validation checkstringArray
-      specialities = validation.checkStringArray(specialities,"specialities");
+        //validation checkstringArray
+        // gets the highest rated doctor from each speciality provided
+        specialities = validation.checkStringArray(specialities, "specialities");
 
-        // if (!Array.isArray(specialities)) {
-        //     throw "specialities parameter must be an array";
-        // }
-        //
-        // if (specialities.length === 0) {
-        //     throw "must include at least 1 speciality";
-        // }
-        //
-        // specialities.forEach(value => {
-        //     if (typeof value !== 'string' || value.trim().length == 0) {
-        //         throw "specialities elements must be non-empty strings";
-        //     }
-        // });
+
 
         let highestRatedDocs = [];
 

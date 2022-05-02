@@ -3,14 +3,15 @@
 
 <p>Welcome to Find A Doctor! Here you can search for doctors aswell as look at their reviews.</p>
 
-<h2>Top Rated Doctors From Each Category</h2>
 {{#if docs.length}}
+<h2>Top Rated Doctors From Each Category</h2>
 <ul>
     {{#each docs}}
     <li>
-        <h3 class="speciality">{{this.speciality}}</h3>
+        <a class="speciality" href="/doctor/speciality/{{this.doctor.speciality}}">{{this.speciality}}</a>
         <dl>
-            <dd class="name">{{this.doctor.name}}</dd>
+            <dt> <a class="name" href="/doctor/{{this.doctor._id}}">{{this.doctor.name}}</a>
+            </dt>
             {{#if this.doctor.profilePicture}}
             <img alt="image" src={{this.doctor.profilePicture}} />
             {{else}}

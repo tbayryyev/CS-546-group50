@@ -3,7 +3,6 @@ const REVIEWS = mongoCollections.reviews;
 const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
-// const { doctors } = require("../config/mongoCollections");
 const validation = require('../validation');
 
 const exported = {

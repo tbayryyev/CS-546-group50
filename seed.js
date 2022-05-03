@@ -19,6 +19,14 @@ async function main() {
     }
 
     try {
+        const newUser2 = await users.createUser("Mary", "Johnson", "Mary@gmail.com", "Mary", "02/20/1988", "23 Green Street", "Middletown", "NY", "10940", "7283748372", "12345678");
+        console.log(newUser2);
+    } catch (e) {
+        console.log("Got an error.");
+        console.log(e);
+    }
+
+    try {
         const doc = await doctors.createDoctor("Stephanie Rose", "https://images.theconversation.com/files/304957/original/file-20191203-66986-im7o5.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop", "Cardiologist", "Graduated from Stanford med", ["English", "Spanish"], "8th and Washington street", "Hoboken", "NJ", "07030", 5.0);
         console.log(doc);
         docID = doc._id;

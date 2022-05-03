@@ -4,16 +4,16 @@
 <form>
   
     {{#if timeSlotList.length}}
-    <ul>
+    <ul class="doc_calendar_ul">
         {{#each timeSlotList}}
 
-        <li> {{dt}}
+        <li class="doc_calendar_li"> {{dt}}
             <div>
              {{#each tm}}
              {{#if ../../rescheduleFlag}}
-             <button class="btn btn-success btn-sm" type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             <button class="btn btn-success btn-xs" type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
              {{else}}
-             <button class="btn btn-success btn-sm" type="submit" formmethod = "GET" formaction="/appointments/schedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             <button class="btn btn-success btn-xs" type="submit" formmethod = "GET" formaction="/appointments/schedule/{{../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
              {{/if}}
              {{/each}}
              </div>

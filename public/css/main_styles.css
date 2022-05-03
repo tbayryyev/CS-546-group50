@@ -39,7 +39,7 @@ button{
 .btn-secondary-appointment-view-button,
 .btn-primary-appointment-reschedule-button{
     color: white;
-    background: rgb(64, 73, 158);;
+    background: rgb(55, 113, 195);;
 }
 
 #patientButtons,.apt_error_span{
@@ -54,10 +54,19 @@ button{
    }
    div.apointmentDiv {
     margin-bottom: 15px;
+    margin-top: 10px;
   }
   label.apointmentLable {
     display: inline-block;
     width: 120px;
+  }
+  .doc_calendar_li{
+
+    color: red;
+    font-size: 10pt;
+  }
+  .doc_calendar_ul{
+    list-style-image: url("/public/images/calendar.png");
   }
 
 li{

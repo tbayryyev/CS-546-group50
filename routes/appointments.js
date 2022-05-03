@@ -1,6 +1,8 @@
+
 const express = require('express');
 const router = express.Router();
 const appointmentData = require('../data/appointments');
+const flash = require('connect-flash');
 
 let { ObjectId, ConnectionClosedEvent } = require('mongodb');
 
@@ -139,8 +141,9 @@ console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
                                                              message.trim(),
                                                              conditions.trim()
                                                              );
-
-
+  req.flash('success',"Appointment on "+
+  newAppointmentPost.aptDate+" "+newAppointmentPost.aptTime+
+  " created successfully");
     res.redirect('/appointments/userappointmentlist/'+newAppointmentPost.userId);
   } catch (e) {
     const errorMessage = typeof e === 'string' ? e : e.message;
@@ -268,8 +271,12 @@ router.route('/:id')
                                                                aptTime.trim()
                                                                );
 
+      req.flash('success',"Appointment on "+
+      newAppointmentPut.aptDate+" "+newAppointmentPut.aptTime+
+                " rescheduled successfully");
+      
+      res.redirect('/appointments/userappointmentlist/'+newAppointmentPut.userId);
 
-        res.redirect('/appointments/userappointmentlist/'+newAppointmentPut.userId);
       } catch (e) {
         const errorMessage = typeof e === 'string' ? e : e.message;
         //res.status(500).json(errorMessage );

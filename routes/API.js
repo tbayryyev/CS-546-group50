@@ -11,7 +11,7 @@ router
             const topDoctors = await doctorData.highestRatedDoctor(specialities);
             res.render('pages/home_page', { docs: topDoctors });
         } catch (e) {
-            res.status(404).json(e);
+            res.status(404).json({ error: e });
         }
 
     });

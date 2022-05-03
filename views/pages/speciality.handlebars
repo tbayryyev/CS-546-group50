@@ -1,30 +1,25 @@
-<a href="/login">Login</a>
-<a href="/signup"> Sign Up</a>
-
-<p>Welcome to Find A Doctor! Here you can search for doctors aswell as look at their reviews.</p>
+<h2>Top Rated {{spec}}s</h2>
 
 {{#if docs.length}}
-<h2>Top Rated Doctors From Each Category</h2>
 <ul>
     {{#each docs}}
     <li>
-        <a class="speciality" href="/doctor/speciality/{{this.doctor.speciality}}">{{this.speciality}}</a>
         <dl>
-            <dt> <a class="name" href="/doctor/{{this.doctor._id}}">{{this.doctor.name}}</a>
+            <dt> <a class="name" href="/doctor/{{this._id}}">{{this.name}}</a>
             </dt>
-            {{#if this.doctor.profilePicture}}
-            <img alt="image" src={{this.doctor.profilePicture}} />
+            {{#if this.profilePicture}}
+            <img alt="image" src={{this.profilePicture}} />
             {{else}}
             <img alt="image"
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png" />
             {{/if}}
 
             <dt>About</dt>
-            <dd>{{this.doctor.about}}</dd>
+            <dd>{{this.about}}</dd>
             <dt>Languages</dt>
-            {{#if this.doctor.languages.length}}
+            {{#if this.languages.length}}
             <ul>
-                {{#each this.doctor.languages}}
+                {{#each this.languages}}
                 <li class="language">{{this}}</li>
 
                 {{/each}}
@@ -33,15 +28,15 @@
             <dd>N/A</dd>
             {{/if}}
             <dt>Address</dt>
-            <dd>{{this.doctor.address}}</dd>
+            <dd>{{this.address}}</dd>
             <dt>City, State, Zipcode</dt>
-            <dd>{{this.doctor.city}}, {{this.doctor.state}}, {{this.doctor.zip}}</dd>
+            <dd>{{this.city}}, {{this.state}}, {{this.zip}}</dd>
             <dt>Rating</dt>
-            <dd>{{this.doctor.rating}} Stars</dd>
+            <dd>{{this.rating}} Stars</dd>
             <dt>Reviews</dt>
-            {{#if this.doctor.reviews.length}}
+            {{#if this.reviews.length}}
             <ul>
-                {{#each this.doctor.reviews }}
+                {{#each this.reviews }}
                 <li class="reviews">
                     <h3 class="userName">{{this.userID}}</h3>
 
@@ -58,7 +53,6 @@
             {{else}}
             <dd>Currently there are no reviews for this doctor</dd>
             {{/if}}
-
     </li>
     {{/each}}
 </ul>

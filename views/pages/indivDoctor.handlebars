@@ -1,5 +1,4 @@
-
-<h3 class="speciality">{{speciality}}</h3>
+<a class="speciality" href="/doctor/speciality/{{speciality}}">{{speciality}}</a>
 <dl>
     <dd class="name">{{name}}</dd>
     {{#if profilePicture}}
@@ -28,3 +27,23 @@
     <dd>{{city}}, {{state}}, {{zip}}</dd>
     <dt>Rating</dt>
     <dd>{{rating}} Stars</dd>
+    <dt>Reviews</dt>
+    {{#if reviews.length}}
+    <ul>
+        {{#each reviews }}
+        <li class="reviews">
+            <h3 class="userName">{{this.userID}}</h3>
+
+            <p class="Rating">Rating: {{this.rating}} Stars</p>
+
+            <p class="reviewText">ReviewText: {{this.reviewText}}</p>
+
+        </li>
+
+        {{/each }}
+    </ul>
+
+
+    {{else}}
+    <dd>Currently there are no reviews for this doctor</dd>
+    {{/if}}

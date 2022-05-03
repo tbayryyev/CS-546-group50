@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const static = express.static(__dirname + '/public');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
@@ -52,13 +54,29 @@ const handlebarsInstance = exphbs.create({
       //console.log("["+new Date().toUTCString()+"]: "+req.method+" "+req.originalUrl);
 next();
   });
+
+  app.use(session({
+    name: 'AuthCookie',
+    secret: 'some secret string!',
+    resave: true,
+    saveUninitialized: true
+  }))
+
+app.use(flash());
+// Custom flash middleware -- from Ethan Brown's book, 'Web Development with Node & Express'
+
+app.use((req, res, next)=>{
+  app.locals.success = req.flash('success')
+  next();
+});
+
 app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(rewriteUnsupportedBrowserMethods);
+
 app.engine('handlebars', handlebarsInstance.engine);
 app.set('view engine', 'handlebars');
-
 
 
 configRoutes(app);

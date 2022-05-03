@@ -58,6 +58,16 @@
 
 <h1><small>{{title}}</small></h1>
 
+{{#if success}}
+<div class="alert alert-success" role="alert">
+  <strong>{{success}}<strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/if}}
+
+</div>
 <form id="appointmentListForm">
     {{#if appointmentResultSet.length}}
     

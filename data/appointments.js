@@ -88,7 +88,9 @@ if(mode === "pull"){
   }
   
   if(resArray.length < 7){
-    resArray.push({"dt":addDaysdateStr(max_date,1),"tm":["08:00","09:00","10:00"]})
+    resArray.push({"dt":addDaysdateStr(max_date,1),"tm":["08:00","09:00","10:00",
+                                                          "11:00","12:00","13:00",
+                                                          "14:00","15:00","16:00"]})
   }
   
   await doctorCollection.updateOne(

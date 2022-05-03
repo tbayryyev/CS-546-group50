@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const appointmentData = require('../data/appointments');
 const flash = require('connect-flash');
+const Data = require('../data');
+const doctorData = Data.doctors;
 
 let { ObjectId, ConnectionClosedEvent } = require('mongodb');
 
@@ -340,27 +342,42 @@ router.route('/:id')
             return;
         }
         try{
-
-        const doctorRSI = await appointmentData.getdocCalender(req.params.id.trim());
+       //Commented below for integration of doc clendar with doc home page
+        //const doctorRSI = await appointmentData.getdocCalender(req.params.id.trim());
+        const doctorRSI = await doctorData.getDoctor(req.params.id.trim());
         const postAppointmentData = req.body;
         const { appointmentId,doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
         console.log("From reschedule => "+" appointmentId: "+appointmentId+" doctorId : "+doctorId +" aptDate : "+aptDate+
     " aptTime : "+aptTime+" message :"+message+" conditions : "+conditions)
-
+//Commented below for integration of doc clendar with doc home page
+    /*
         res.render('pages/doctorcalendar',{title:'Doctor Home Page',appointmentId:appointmentId,
                                            doctorId :doctorId,rescheduleFlag:true,
                                            aptDatePrv:aptDate,aptTimePrv:aptTime,messagePrv:message,
                                            conditionsPrv:conditions,timeSlotList : doctorRSI.timeSlots});
-        }
+       */
+         res.render('pages/indivDoctor',{name:doctorRSI.name,profilePicture:doctorRSI.profilePicture,
+                                            about:doctorRSI.about,languages:doctorRSI.languages,
+                                            address:doctorRSI.address,
+                                            city:doctorRSI.city,state:doctorRSI.state,zip:doctorRSI.zip,
+                                            rating:doctorRSI.rating,
+                                            reviews:doctorRSI.reviews,timeSlots:doctorRSI.timeSlots,
+                                            appointmentId:appointmentId,
+                                            doctorId :doctorId,rescheduleFlag:true,aptDatePrv:aptDate,
+                                            aptTimePrv:aptTime,
+                                            messagePrv:message,conditionsPrv:conditions,doctorRSI});
+                                          }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
-          //res.status(404).json(errorMessage);
-          res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
+          res.status(404).json(errorMessage);
+          //Commented below for integration of doc clendar with doc home page
+          /* res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
                                           appointmentId:appointmentId,
                                            doctorId :doctorId,
                                           timeSlotList : doctorRSI.timeSlots,
                                           hasError: true,
                                           errorMessage : errorMessage});
+                                          */
             return;
         }
     });

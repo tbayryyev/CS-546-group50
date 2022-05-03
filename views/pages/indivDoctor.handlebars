@@ -47,3 +47,41 @@
     {{else}}
     <dd>Currently there are no reviews for this doctor</dd>
     {{/if}}
+
+      <!--- Doc calendar integrated with doctor hompage-->
+<dt>Doctor calendar</dt>
+    <form>
+  
+    {{#if timeSlots.length}}
+    <ul class="doc_calendar_ul">
+        {{#each timeSlots}}
+
+        <li class="doc_calendar_li"> {{dt}}
+            <div>
+             {{#each tm}}
+             {{#if ../../rescheduleFlag}}
+             <button class="btn btn-success btn-xs" type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{toString ../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+             {{else}}
+             <button class="btn btn-success btn-xs" type="submit" formmethod = "GET" formaction="/appointments/schedule/{{toString ../../_id}}/{{../dt}}/{{this}}">{{this}}</button>
+             {{/if}}
+             {{/each}}
+             </div>
+        </li>
+
+        {{/each}}
+    </ul>
+    {{else}}
+    <p class="not-found">We're sorry, but no results were found for {{doctorId}}.</p>
+    {{/if}}
+    {{#if rescheduleFlag}}
+    <input name= 'appointmentId' value={{appointmentId}} hidden>
+    <input name= 'aptDatePrvRs' value={{aptDatePrv}} hidden>
+    <input name= 'aptTimePrvRs' value={{aptTimePrv}} hidden>
+    <input name= 'messagePrvRs' value={{messagePrv}} hidden>
+    <input name= 'conditionsPrvRs' value={{conditionsPrv}} hidden>
+    {{/if}}
+</form>
+</dl>
+{{#if hasError}}
+<p >Error:{{errorMessage}}</p>
+{{/if}}

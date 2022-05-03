@@ -8,6 +8,11 @@ const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars');
 
+Handlebars.registerHelper('toString', function(inputString) {
+  var transformedString = inputString.toString();
+  return new Handlebars.SafeString(transformedString)
+});
+
 Handlebars.registerHelper('ifDateCompare', function (dt1, operator, tm1, options) {
   var date1 = new Date(dt1+" "+tm1);
   var date2 = new Date();

@@ -76,6 +76,22 @@ const exported = {
 
     }
 
+    // const doctorCollection = await DOCTORS();
+
+    // const updatedReview = await reviewCollection.findOne({ _id: ObjectId(reviewID) });
+
+
+    // const updateInfo2 = await doctorCollection.findOne({ 'reviews': { _id: ObjectId(reviewID) } });
+    // console.log(updateInfo2);
+
+    // if (updateInfo2.modifiedCount === 0) {
+    //   throw "could not add review to doctor";
+
+    // }
+
+
+
+
 
 
     newComment.commentID = newComment.commentID.toString();

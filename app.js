@@ -56,6 +56,7 @@ const handlebarsInstance = exphbs.create({
   };
   app.use(async (req, res, next) => {
 
+    //console.log("req.session.user : "+req.session)
       //console.log("["+new Date().toUTCString()+"]: "+req.method+" "+req.originalUrl);
 next();
   });

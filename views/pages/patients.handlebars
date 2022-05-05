@@ -1,11 +1,11 @@
 <!-- Modal for Appointment View -->
-<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="viewModalLabel">Appointment Details</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <!--<span aria-hidden="true">&times;</span>-->
         </button>
       </div>
       <div class="modal-body">
@@ -25,7 +25,7 @@
          </div>
          <div class="form-group row">
            <label for="viewAptTime" class="col-sm-2 col-form-label">Time:</label>
-           <div class="col-sm-2" >
+           <div class="col-sm-4" >
              <input type="text" readonly class="form-control" id="viewAptTime" >
            </div>
          </div>
@@ -44,7 +44,7 @@
       
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary-appointment-view-button" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary-appointment-view-button" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -54,10 +54,10 @@
 <h1><small>{{title}}</small></h1>
 
 {{#if success}}
-<div class="alert alert-success" role="alert">
+<div class="alert alert-success alert-dismissible fade show" role="alert">
   <strong>{{success}}</strong>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+    <!--<span aria-hidden="true">&times;</span>-->
   </button>
 </div>
 {{/if}}
@@ -104,7 +104,7 @@
              <td>{{aptTime}}</td>
              <td>{{doctorName}}</td>
              <td>
-               <button type="button" class="btn btn-primary-appointment-view-button btn-sm" data-toggle="modal" data-target="#viewModal" id="viewButton{{_id}}"  value="/appointments/{{_id}}">View</button>
+               <button type="button" class="btn btn-primary-appointment-view-button btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal" id="viewButton{{_id}}"  value="/appointments/{{_id}}">View</button>
                <button  type="submit" class="btn btn-primary-appointment-reschedule-button btn-sm" formmethod = "GET" formaction="/appointments/reschedule/{{_id}}" >Reschedule</button>
                <button  type="button" class="btn btn-primary-appointment-delete-button btn-sm"  id="deleteButton{{_id}}"  value="/appointments/delete/{{_id}}">Cancel</button>
               </td>
@@ -129,7 +129,7 @@
              <td>{{aptTime}}</td>
              <td>{{doctorName}}</td>
              <td>
-               <button type="button" class="btn btn-primary-appointment-view-button btn-sm" data-toggle="modal" data-target="#viewModal" id="viewButton{{_id}}"  value="/appointments/{{_id}}">View</button>
+               <button type="button" class="btn btn-primary-appointment-view-button btn-sm" data-bs-toggle="modal" data-bs-target="#viewModal" id="viewButton{{_id}}"  value="/appointments/{{_id}}">View</button>
               </td>
           </tr>
     

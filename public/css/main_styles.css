@@ -56,8 +56,9 @@ button{
 .btn-primary-appointment-delete-button,
 .btn-secondary-appointment-view-button,
 .btn-primary-appointment-reschedule-button{
-    color: white;
-    background: rgb(55, 113, 195);;
+    color: white !important;;
+    
+background-color: hsl(226, 82%, 56%) !important;
 }
 
 .apt_error_span{

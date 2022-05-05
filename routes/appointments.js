@@ -43,9 +43,10 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         const aptTime = req.params.aptTime.trim();
         const doctorId = req.params.doctorId.trim();
         const doctorRSI = await doctorData.getDoctor(doctorId);
-console.log("doctorName############ "+doctorRSI.name);
+
         const postResAppointmentData = req.body;
         const { appointmentId,aptDatePrvRs,aptTimePrvRs,messagePrvRs,conditionsPrvRs} = postResAppointmentData;
+        
         console.log("From rescheduleAppointment => "+" appointmentId :"+appointmentId+" aptDatePrvRs : "+aptDatePrvRs +" aptTimePrvRs : "+aptTimePrvRs+
         " messagePrvRS : "+messagePrvRs+" conditionsPrvRS :"+conditionsPrvRs+" doctorId : "+doctorRSI.name)
 
@@ -84,7 +85,7 @@ console.log("doctorName############ "+doctorRSI.name);
         const userId = req.params.userId.trim();
         const appointmentRS = await appointmentData.getAllAppointmentsForUser(userId);
         const userRS = await userData.getUser(userId);
-        console.log("userRS : "+JSON.stringify(userRS));
+        
         res.render('pages/patients',{title:'Patient Home Page',
                                      appointmentResultSet:appointmentRS,
                                     userFullName: userRS.firstName+" "+userRS.lastName,

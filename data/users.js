@@ -101,6 +101,7 @@ module.exports = {
             reviews: [],
             comment: []
         }
+        
         // Adds newUser to the user collection
         const insertInfo = await userCollection.insertOne(newUser);
         // Checks if newUser was added to the database

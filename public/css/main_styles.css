@@ -6,6 +6,18 @@ a {
     padding: 0.4%;
 }
 
+.speciality {
+    text-decoration: none;
+    background-color: white;
+    color: red;
+}
+
+.name {
+    background-color: white;
+    color: black;
+    text-decoration: solid;
+}
+
 a:hover {
 	color: blue;
 	text-decoration: underline;
@@ -18,7 +30,7 @@ h2{
 }
 
 h1{
-    color: green;
+    color: black;
     text-decoration: underline;
     font-size: 40pt;
 }
@@ -145,4 +157,76 @@ dd.name{
 a.home_page{
     color: black;
     font-size: 20pt;
+}
+
+#no-account-link a {
+    background-color: white;
+    font-size: 14px;
+}
+
+#no-account-link a:hover {
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+#already-have-account-link a {
+    background-color: white;
+    font-size: 14px;
+}
+
+#already-have-account-link a:hover {
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+#account_creation_toast {
+    background-color: black;
+    color: white;
+}
+
+#error_toast {
+    background-color: red;
+    color: white;
+}
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height:100%;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    background-color: gray;
+    opacity: .90;
+    top: 0;
+}
+
+#loading_icon {
+    display: flex;
+    margin: 0 auto;
+    color: black;
+}
+
+#login_btn {
+    background-color: black;
+}
+
+#sign_up_btn {
+    background-color: black;
+}
+
+#username_btn{
+    background-color: black;
+}
+
+.top_corner {
+    padding-top: 10px;
+    padding-right: 10px;
+    position: absolute;
+    top:0;
+    right:0;
+}
+
+#user_dropdown li {
+    list-style-type: none;
 }

@@ -132,6 +132,7 @@ module.exports = {
           let resObj = {
               _id : x._id.toString(),
               doctorId: x.doctorId,
+              doctorName: x.doctorName,
               userId: x.userId,
               aptDate: x.aptDate,
               aptTime: x.aptTime,
@@ -181,11 +182,17 @@ module.exports = {
         //conditions check
         errChkIsString(conditions);
         errChkStringIsEmpty(conditions); 
-               
-         const newAppointmentObjId = new ObjectId();
+        
+        const doctorCollection = await doctors();
+        const doctorOne = await doctorCollection.findOne({ _id: ObjectId(doctorId) });
+        if (doctorOne === null || doctorOne === undefined) throw 'No doctor with that id';
+
+        const doctorName = doctorOne.name;
+        const newAppointmentObjId = new ObjectId();
         const newAppointment ={
             _id: newAppointmentObjId,
             doctorId: doctorId,
+            doctorName:doctorName,
             userId: userId,
             aptDate: aptDate,
             aptTime: aptTime,
@@ -224,6 +231,7 @@ module.exports = {
         result = {
             _id : appointmentOne._id.toString(),
             doctorId: appointmentOne.doctorId,
+            doctorName:appointmentOne.doctorName,
             userId: appointmentOne.userId,
             aptDate: appointmentOne.aptDate,
             aptTime: appointmentOne.aptTime,

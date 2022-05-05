@@ -5,6 +5,8 @@ const appointmentData = require('../data/appointments');
 const flash = require('connect-flash');
 const Data = require('../data');
 const doctorData = Data.doctors;
+const userData = Data.users;
+
 
 let { ObjectId, ConnectionClosedEvent } = require('mongodb');
 
@@ -16,8 +18,9 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         const aptDate = req.params.aptDate.trim();
         const aptTime = req.params.aptTime.trim();
         const doctorId = req.params.doctorId.trim();
+        
 
-        res.render('pages/appointments',{userId:"621c02ba2e53ab2ba3b45f7a",doctorId:doctorId,
+        res.render('pages/appointments',{userId:"627193ee6aba42d2ee7b0ce5",doctorId:doctorId,
                                         aptDate: aptDate, aptTime:aptTime
                                         //,message:"", conditions:""
                                       });
@@ -26,7 +29,7 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
            const errorMessage = typeof e === 'string' ? e : e.message;
             //res.status(404).json(e.message);
 
-            res.status(400).render('pages/appointments',{userId:"621c02ba2e53ab2ba3b45f7a",doctorId:doctorId,
+            res.status(400).render('pages/appointments',{userId:"627193ee6aba42d2ee7b0ce5",doctorId:doctorId,
             aptDate: aptDate, aptTime:aptTime,hasError: true, errorMessage : errorMessage});
             return;
         }
@@ -39,23 +42,26 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         const aptDate = req.params.aptDate.trim();
         const aptTime = req.params.aptTime.trim();
         const doctorId = req.params.doctorId.trim();
+        const doctorRSI = await doctorData.getDoctor(doctorId);
+console.log("doctorName############ "+doctorRSI.name);
         const postResAppointmentData = req.body;
         const { appointmentId,aptDatePrvRs,aptTimePrvRs,messagePrvRs,conditionsPrvRs} = postResAppointmentData;
         console.log("From rescheduleAppointment => "+" appointmentId :"+appointmentId+" aptDatePrvRs : "+aptDatePrvRs +" aptTimePrvRs : "+aptTimePrvRs+
-        " messagePrvRS : "+messagePrvRs+" conditionsPrvRS :"+conditionsPrvRs+" doctorId : "+doctorId)
+        " messagePrvRS : "+messagePrvRs+" conditionsPrvRS :"+conditionsPrvRs+" doctorId : "+doctorRSI.name)
 
         res.render('pages/appointmentReschedule',{userId:"621c02ba2e53ab2ba3b45f7a",appointmentId:appointmentId,
-                                        doctorId:doctorId
+                                        doctorId:doctorId,
+                                        doctorName:doctorRSI.name,
                                         //,rescheduleFlag:true
-                                        ,reBookFlag:true
-                                        ,aptDate: aptDate, aptTime:aptTime,
+                                        //,reBookFlag:true
+                                        aptDate: aptDate, aptTime:aptTime,
                                         aptDatePrv:aptDatePrvRs,aptTimePrv:aptTimePrvRs,
                                         message:messagePrvRs, conditions:conditionsPrvRs});
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
-         // res.status(404).json(e.message);
-
+          res.status(404).json(e.message);
+/*
             res.status(400).render('pages/appointmentReschedule',{userId:"621c02ba2e53ab2ba3b45f7a",
             appointmentId:appointmentId
             //,doctorId:doctorId
@@ -66,6 +72,7 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
             message:messagePrvRs, conditions:conditionsPrvRs,
             hasError: true,
             errorMessage : errorMessage});
+            */
             return;
         }
     });
@@ -76,8 +83,16 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         try{
         const userId = req.params.userId.trim();
         const appointmentRS = await appointmentData.getAllAppointmentsForUser(userId);
-        //console.log("appointmentRS : "+JSON.stringify(appointmentRS));
-        res.render('pages/patients',{title:'Patient Home Page', appointmentResultSet:appointmentRS});
+        const userRS = await userData.getUser(userId);
+        console.log("userRS : "+JSON.stringify(userRS));
+        res.render('pages/patients',{title:'Patient Home Page',
+                                     appointmentResultSet:appointmentRS,
+                                    userFullName: userRS.firstName+" "+userRS.lastName,
+                                    //userFirstName : userRS.firstName,
+                                    //userLastName: userRS.lastName,
+                                    userEmail: userRS.email,
+                                    userPhoneNumber:userRS.phoneNumber,
+                                  userProfilePicture:userRS.profilePicture});
         }
         catch(e){
             const errorMessage = typeof e === 'string' ? e : e.message;
@@ -196,6 +211,7 @@ router.route('/:id')
         res.render('pages/appointmentReschedule',{appointmentId:appointmentRSI._id.toString(),
                                                   userId:appointmentRSI.userId,
                                                   doctorId:appointmentRSI.doctorId,
+                                                  doctorName:appointmentRSI.doctorName,
                                                   aptDate: appointmentRSI.aptDate,
                                                   aptTime:appointmentRSI.aptTime,
                                                   message:appointmentRSI.message,
@@ -326,11 +342,12 @@ router.route('/:id')
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
-         // res.status(404).json(errorMessage);
-          res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
+          res.status(404).json(errorMessage);
+         /* res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
           doctorId :doctorRSI._id.toString(),timeSlotList : doctorRSI.timeSlots,
           hasError: true,
           errorMessage : errorMessage});
+          */
             return;
         }
     });

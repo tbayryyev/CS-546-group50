@@ -5,7 +5,7 @@
   $('.btn-primary-appointment-view-button').click(function (event) {
       try{
         
-        var viewButtonFormAction = $(this).attr('formaction');       
+        var viewButtonFormAction = $(this).attr('value');       
         //alert("viewButtonFormAction : "+viewButtonFormAction);
         
         var requestConfigSFS = {
@@ -14,11 +14,14 @@
      };
      $.ajax(requestConfigSFS).then(function (responseMsg){
       $( '#viewUserId' ).val(responseMsg.userId);
-      $( '#viewDoctorId' ).val(responseMsg.doctorId);
+      $( '#viewDoctorName' ).val(responseMsg.doctorName);
       $( '#viewAptDate' ).val(responseMsg.aptDate);
       $( '#viewAptTime' ).val(responseMsg.aptTime);
       $( '#viewAptMessage' ).val(responseMsg.message);
       $( '#viewAptConditions' ).val(responseMsg.conditions);
+
+      console.log("responseMsg.doctorName : "+responseMsg.doctorName);
+      console.log("responseMsg.aptDate : "+responseMsg.aptDate);
           
          $( '#viewModal' ).modal('show');
      });
@@ -35,7 +38,7 @@
   $('.btn-primary-appointment-delete-button').click(function (event) {
     try{
       //var button_id = $(this).attr('id');
-      var deleteButtonFormAction = $(this).attr('formaction');       
+      var deleteButtonFormAction = $(this).attr('value');       
       //alert("deleteButtonFormAction : "+ deleteButtonFormAction);
 
       if(confirm("Are you sure you want to delete")){

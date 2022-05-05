@@ -47,9 +47,10 @@
     {{else}}
     <dd>Currently there are no reviews for this doctor</dd>
     {{/if}}
-
+</dl>
       <!--- Doc calendar integrated with doctor hompage-->
-<dt>Doctor calendar</dt>
+<h4>Doctor calendar</h4>
+
     <form>
   
     {{#if timeSlots.length}}
@@ -81,7 +82,7 @@
     <input name= 'conditionsPrvRs' value={{conditionsPrv}} hidden>
     {{/if}}
 </form>
-</dl>
+
 {{#if hasError}}
 <p >Error:{{errorMessage}}</p>
 {{/if}}

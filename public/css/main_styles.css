@@ -34,6 +34,12 @@ h1{
     text-decoration: underline;
     font-size: 40pt;
 }
+.furtureApt{
+  color: green;
+}
+.pastApt{
+  color: rgb(230, 17, 17);
+}
 
 p{
     background: black;
@@ -50,12 +56,13 @@ button{
 .btn-primary-appointment-delete-button,
 .btn-secondary-appointment-view-button,
 .btn-primary-appointment-reschedule-button{
-    color: white;
-    background: rgb(55, 113, 195);;
+    color: white !important;;
+    
+background-color: hsl(226, 82%, 56%) !important;
 }
 
-#patientButtons,.apt_error_span{
-    margin-top : 12px;
+.apt_error_span{
+    margin-top : 4px;
 }
 
 
@@ -81,6 +88,35 @@ button{
     list-style-image: url("/public/images/calendar.png");
   }
 
+  .patientTable tr td:first-child {
+    width: 200px;
+   
+  }
+ 
+  .patientTable tr td:last-child {
+    width: 300px;
+    height: 40px;
+  }
+  .patientAppointmentTable tr td:first-child {
+    width: 100px;
+   
+  }
+  .patientAppointmentTable tr td:nth-child(2) {
+    width: 100px;
+
+  }
+  .patientAppointmentTable tr td:nth-child(3) {
+    width: 150px;
+
+  }
+  .patientAppointmentTable tr td:last-child {
+    width: 300px;
+    height: 40px;
+  }
+  #patientPic {
+    width: 50%;
+    height: auto;
+  }
 li{
     list-style-type:square;
     color: red;

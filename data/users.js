@@ -3,6 +3,9 @@ const users = mongoCollections.users;
 const validation = require('../validation');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+let { ObjectId } = require('mongodb');
+
+
 
 module.exports = {
     async createUser(firstName, lastName, email, username, dateOfBirth, address, city, state, zip, phoneNumber, password) {
@@ -98,6 +101,7 @@ module.exports = {
             reviews: [],
             comment: []
         }
+        
         // Adds newUser to the user collection
         const insertInfo = await userCollection.insertOne(newUser);
         // Checks if newUser was added to the database
@@ -194,5 +198,25 @@ module.exports = {
             // Throws an error
             throw `Either the username or password is invalid.`;
         }
+    },
+    async getUser(id){
+      if(arguments.length < 1){
+        throw "All fields need to have valid values";
+    }
+    if(arguments.length > 1){
+        throw "Too many Aruguments, should pass one argument";
+    }
+        var result = {};
+      if (!id) throw 'Must Provide an id to search for';
+      if (typeof id !== 'string') throw 'Id must be a string';
+      if (id.trim().length === 0)
+        throw 'Id cannot be an empty string or just spaces';
+      id = id.trim();
+      if (!ObjectId.isValid(id)) throw 'Invalid object ID';
+      const userCollection = await users();
+      const userOne = await userCollection.findOne({ _id: ObjectId(id) });
+      if (userOne === null || userOne === undefined) throw 'No user with that id';
+      userOne._id = userOne._id.toString();
+      return userOne;
     }
 }

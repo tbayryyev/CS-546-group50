@@ -3,9 +3,13 @@
 <input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  hidden>
 <label for="userId"></label>
 <input id="userId" type="text" name="userId" placeholder="userId" value = {{userId}}  hidden>
-<div class="apointmentDiv">
-<label class = "apointmentLable" for="appointmentId">AppointmentId</label>
-<input id="appointmentId" type="text" name="appointmentId" placeholder="appointmentId" value = {{appointmentId}} readonly >
+
+<input id="appointmentId" type="text" name="appointmentId" placeholder="appointmentId" value = {{appointmentId}} hidden >
+
+<div >
+<label  class = "apointmentLable" for="doctorName">Doctor</label>
+
+<input id="doctorName" type="text" name="doctorName" placeholder="doctorName" value = {{doctorName}} readonly >
 </div>
 <div>
  {{#if aptDatePrv}}   

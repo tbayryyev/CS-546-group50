@@ -61,6 +61,14 @@
 
         </li>
 
+        <form action="/doctor/addComment/{{this._id}}" method="POST" class="new-comment">
+            <label for="new-comment">Add a comment to this review</label>
+            <input type="text" id="new-comment" name="commentText" />
+            <button type="submit">Post Comment</button>
+        </form>
+
+
+
         {{/each }}
     </ul>
 

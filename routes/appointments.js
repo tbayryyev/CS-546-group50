@@ -380,12 +380,7 @@ router.route('/:id')
                                            aptDatePrv:aptDate,aptTimePrv:aptTime,messagePrv:message,
                                            conditionsPrv:conditions,timeSlotList : doctorRSI.timeSlots});
        */
-         res.render('pages/indivDoctor',{name:doctorRSI.name,profilePicture:doctorRSI.profilePicture,
-                                            about:doctorRSI.about,languages:doctorRSI.languages,
-                                            address:doctorRSI.address,
-                                            city:doctorRSI.city,state:doctorRSI.state,zip:doctorRSI.zip,
-                                            rating:doctorRSI.rating,
-                                            reviews:doctorRSI.reviews,timeSlots:doctorRSI.timeSlots,
+         res.render('pages/indivDoctor',{doctor:doctorRSI,
                                             appointmentId:appointmentId,
                                             doctorId :doctorId,rescheduleFlag:true,aptDatePrv:aptDate,
                                             aptTimePrv:aptTime,

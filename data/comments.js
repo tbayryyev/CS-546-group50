@@ -4,6 +4,7 @@ const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
+const { validateEmail } = require("../validation");
 
 const exported = {
   addComment: async (userID, reviewID, commentText) => {
@@ -76,7 +77,23 @@ const exported = {
 
     }
 
+    const doctorCollection = await DOCTORS();
 
+    const updatedReview = await reviewCollection.findOne({ _id: ObjectId(reviewID) });
+
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.push(newComment);
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
 
     newComment.commentID = newComment.commentID.toString();
 
@@ -133,6 +150,41 @@ const exported = {
       throw "could not delete the comment successfully";
 
     }
+
+
+
+    const doctorCollection = await DOCTORS();
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+    let counter = 0;
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.forEach(value1 => {
+          if (value1.commentID.toString() == commentID) {
+            value.comments.splice(counter);
+
+
+          }
+          counter++;
+        })
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+
+
+
+
+    // const updateInfo2 = await doctorCollection.updateMany({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, {
+    //   $pull: { reviews: { comments: { $elemMatch: { commentID: ObjectId(commentID) } } } }
+    // });
+
+
+
 
     return { "commentID": commentID, "deleted": true };
 
@@ -193,33 +245,70 @@ const exported = {
       throw "commentID is an Invalid ObjectId";
     }
 
-    const commentFound = await reviewCollection.findOne({ "comments": { $elemMatch: { "commentID": ObjectId(commentID) } } });
+    let reviewWithComment = await reviewCollection.findOne({ "comments": { $elemMatch: { "commentID": ObjectId(commentID) } } });
 
-
-    if (commentFound == null) {
+    if (reviewWithComment == null) {
       throw "comment on the review could not be found";
     }
 
-    let likeArray = commentFound.likes;
-    let dislikeArray = commentFound.dislikes;
+    let comment = []
+    reviewWithComment.comments.forEach(value => {
+      if (value.commentID.toString() == commentID) {
+        comment.push(value);
+      }
 
-    if (likeArray.indexof(ObjectId(userID)) != -1) {
+    })
+
+
+
+    let likeArray = comment[0].likes;
+    let dislikeArray = comment[0].dislikes;
+
+    if (likeArray.indexOf(userID) != -1) {
       throw "you have already liked or disliked this review";
     }
 
-    if (dislikeArray.indexof(ObjectId(userID)) != -1) {
+    if (dislikeArray.indexOf(userID) != -1) {
       throw "you have already liked or disliked this review";
     }
 
 
+    reviewWithComment.comments.forEach(value => {
+      if (value.commentID.toString() == commentID) {
+        value.likes.push(userID);
+      }
+    })
 
 
-    const updateInfo = await reviewCollection.updateOne({ _id: ObjectId(reviewID), commentID: ObjectId(commentID) }, { $addToSet: { comments: { likes: ObjectId(userID) } } });
+    const updateInfo = await reviewCollection.replaceOne({ _id: ObjectId(reviewID) }, reviewWithComment);
 
     if (updateInfo.modifiedCount === 0) {
       throw "could not like comment successfully";
 
     }
+
+    const doctorCollection = await DOCTORS();
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.forEach(value1 => {
+          if (value1.commentID.toString() == commentID) {
+            value1.likes.push(userID);
+          }
+        })
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+
+
+
+
 
     return { "userID": userID, "liked": true };
 
@@ -284,42 +373,76 @@ const exported = {
       throw "commentID is an Invalid ObjectId";
     }
 
-    const commentFound = await reviewCollection.findOne({ "comments": { $elemMatch: { "commentID": ObjectId(commentID) } } });
+    let reviewWithComment = await reviewCollection.findOne({ "comments": { $elemMatch: { "commentID": ObjectId(commentID) } } });
 
-
-    if (commentFound == null) {
+    if (reviewWithComment == null) {
       throw "comment on the review could not be found";
     }
 
-    let likeArray = commentFound.likes;
-    let dislikeArray = commentFound.dislikes;
+    let comment = []
+    reviewWithComment.comments.forEach(value => {
+      if (value.commentID.toString() == commentID) {
+        comment.push(value);
+      }
 
-    if (likeArray.indexof(ObjectId(userID)) != -1) {
+    })
+
+
+
+    let likeArray = comment[0].likes;
+    let dislikeArray = comment[0].dislikes;
+
+    if (likeArray.indexOf(userID) != -1) {
       throw "you have already liked or disliked this review";
     }
 
-    if (dislikeArray.indexof(ObjectId(userID)) != -1) {
+    if (dislikeArray.indexOf(userID) != -1) {
       throw "you have already liked or disliked this review";
     }
 
 
+    reviewWithComment.comments.forEach(value => {
+      if (value.commentID.toString() == commentID) {
+        value.dislikes.push(userID);
+      }
+    })
 
 
-    const updateInfo = await reviewCollection.updateOne({ _id: ObjectId(reviewID), commentID: ObjectId(commentID) }, { $addToSet: { comments: { dislikes: ObjectId(userID) } } });
+    const updateInfo = await reviewCollection.replaceOne({ _id: ObjectId(reviewID) }, reviewWithComment);
 
     if (updateInfo.modifiedCount === 0) {
-      throw "could not dislikelike comment successfully";
+      throw "could not dislike comment successfully";
 
     }
+
+    const doctorCollection = await DOCTORS();
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.forEach(value1 => {
+          if (value1.commentID.toString() == commentID) {
+            value1.dislikes.push(userID);
+          }
+        })
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+
+
+
 
     return { "userID": userID, "disliked": true };
 
+
+
+
   }
-
-
-
-
-
 }
 
 module.exports = exported;

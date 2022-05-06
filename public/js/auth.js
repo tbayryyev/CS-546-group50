@@ -17,6 +17,7 @@ let zipInput = $('#zip');
 let signUpFormBtn = $('#sign_up_form_btn');
 let accountCreationToast = $('#account_creation_toast');
 let alreadyHaveAccountLink = $('#already-have-account-link');
+let states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
 // Log in Data
 let loginBtn = $('#login_btn');
@@ -28,7 +29,8 @@ let loginFormBtn = $('#log_in_form_btn');
 let noAccountLink = $('#no-account-link');
 
 // Request Error
-let requestErrorDiv = $('#request_error');
+let signUpRequestErrorDiv = $('#sign_up_request_error');
+let loginRequestErrorDiv = $('#login_request_error');
 
 // Loading Spinner
 let loadingSpinner = $('#loading_spinner');
@@ -46,6 +48,11 @@ let logoutLink = $('#logout_link');
 
 // Declares a variable named didFocus and sets it equal to false
 let didFocus = false;
+
+$(document).ready(function() {
+    // Add states for sign up form
+    addStatesToForm();
+});
 
 // Sign up button click event
 signUpBtn.click(function() {
@@ -121,7 +128,7 @@ function resetSignUpErrors() {
     // Resets zip errors
     resetFieldError("zip");
     // Hides request error
-    requestErrorDiv.hide();
+    signUpRequestErrorDiv.hide();
 }
 
 function resetLogInErrors() {
@@ -130,7 +137,7 @@ function resetLogInErrors() {
     // Resets log_in_password errors
     resetFieldError("log_in_password");
     // Hides request error
-    requestErrorDiv.hide();
+    loginRequestErrorDiv.hide();
 }
 
 function addFieldError(fieldId, fieldError) {
@@ -154,6 +161,14 @@ function resetFieldError(fieldId) {
     $(`#${fieldId}`).css("border-color","black");
     // Hides last name error
     $(`#${fieldId}_error`).hide();
+}
+
+function addStatesToForm() {
+    // Loops through states array
+    states.forEach(state => {
+        // Add option to select
+        stateInput.append(`<option>${state}</option>`);
+    });
 }
 
 signUpForm.submit((event) => {
@@ -544,7 +559,7 @@ signUpForm.submit((event) => {
 
     // Checks if no field errors
     if (!firstNameError && !lastNameError && !emailError && !usernameError && !passwordError && !confirmPasswordError && !phoneNumberError && !dateOfBirthError && !addressError && !cityError && !stateError && !zipError) {
-        // Declares a variable called newUser and sets it equal to an object with the users information
+        // Declares a variable called newUser and sets it equal to an object with the user's information
         let newUser = {
             firstName: firstName,
             lastName: lastName,
@@ -585,11 +600,11 @@ signUpForm.submit((event) => {
                 // Checks if requestError
                 if (apiResponse.errors.requestError) {
                     // Adds error to html
-                    requestErrorDiv.html(apiResponse.errors.requestError);
+                    signUpRequestErrorDiv.html(apiResponse.errors.requestError);
                     // Changes font color to red
-                    requestErrorDiv.css("color", "#DC3545");
+                    signUpRequestErrorDiv.css("color", "#DC3545");
                     // Shows error
-                    requestErrorDiv.show();
+                    signUpRequestErrorDiv.show();
                 }
                 // Checks if firstName error
                 if (apiResponse.errors.firstNameError) {
@@ -773,11 +788,11 @@ loginForm.submit((event) => {
                     // Adds error to password
                     addFieldError("log_in_password", '');
                     // Adds error to html
-                    requestErrorDiv.html(apiResponse.errors.requestError);
+                    loginRequestErrorDiv.html(apiResponse.errors.requestError);
                     // Changes font color to red
-                    requestErrorDiv.css("color", "#DC3545");
+                    loginRequestErrorDiv.css("color", "#DC3545");
                     // Shows error
-                    requestErrorDiv.show();
+                    loginRequestErrorDiv.show();
                 }
             } else {
                 // Checks if user was authenticated
@@ -928,7 +943,7 @@ function validateCity(city) {
     // Checks that one argument was passed
     if (arguments.length !== 1) throw `This function takes 1 argument but ${arguments.length} were given.`;
     // Checks if city contains only letters
-    if (/[^a-z]/i.test(city)) throw 'Invalid city.';
+    if (/[^a-z ]/i.test(city)) throw 'Invalid city.';
     // Checks if city is at least 2 characters
     if (city.length < 2) throw 'Invalid city.';
 }

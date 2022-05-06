@@ -1,4 +1,11 @@
+{{#if username}}
+<p>Welcome to Find A Doctor, {{username}}! Here you can search for doctors aswell as look at their reviews.</p>
+
+{{else}}
 <p>Welcome to Find A Doctor! Here you can search for doctors aswell as look at their reviews.</p>
+
+{{/if}}
+
 
 {{#if docs.length}}
 <h2>Top Rated Doctors From Each Category</h2>
@@ -40,11 +47,34 @@
             <ul>
                 {{#each this.doctor.reviews }}
                 <li class="reviews">
-                    <h3 class="userName">{{this.userID}}</h3>
+                    <h3 class="userName"> userID: {{this.userID}}</h3>
 
                     <p class="Rating">Rating: {{this.rating}} Stars</p>
 
-                    <p class="reviewText">ReviewText: {{this.reviewText}}</p>
+                    <p class="reviewText">Review Text: {{this.reviewText}}</p>
+
+                    {{#if this.comments.length}}
+                    <p class="commentLabel">Comments:</p>
+                    <ul>
+                        {{#each this.comments}}
+                        <li class="comments">
+                            <p class="userName">userID: {{this.userID}}</p>
+
+                            <p class="commentText">Comment: {{this.commentText}}</p>
+
+
+                            <p class="likes">Likes: {{this.likes.length}}</p>
+                            <p class="dislikes">Dislikes: {{this.dislikes.length}}</p>
+
+
+
+
+                        </li>
+                        {{/each}}
+                    </ul>
+                    {{/if}}
+
+
 
                 </li>
 

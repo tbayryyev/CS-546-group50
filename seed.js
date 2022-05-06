@@ -12,6 +12,8 @@ async function main() {
 
     try {
         const newUser = await users.createUser("James", "Mills", "JMills@gmail.com", "JMills", "12/10/1978", "12 Parker Road", "Tulsa", "OK", "74008", "8374847747", "12345678");
+        const newUser1 = await users.getUserByUsername("JMills");
+        newUserId = newUser1._id.toString();
         console.log(newUser);
     } catch (e) {
         console.log("Got an error.");
@@ -20,6 +22,8 @@ async function main() {
 
     try {
         const newUser2 = await users.createUser("Mary", "Johnson", "Mary@gmail.com", "Mary", "02/20/1988", "23 Green Street", "Middletown", "NY", "10940", "7283748372", "12345678");
+        const newUser3 = await users.getUserByUsername("Mary");
+        newUserId2 = newUser3._id.toString();
         console.log(newUser2);
     } catch (e) {
         console.log("Got an error.");
@@ -45,7 +49,7 @@ async function main() {
     }
 
     try {
-        const review = await reviews.createReview(docID, "This doctor was ok", "userID_here2", 2.5);
+        const review = await reviews.createReview(docID, "This doctor was ok", newUserId, 2.5);
         console.log(review);
         reviewId = review._id;
     } catch (e) {
@@ -53,23 +57,18 @@ async function main() {
         console.log(e);
     }
     try {
-        const review = await reviews.createReview(doc2ID, "This doctor was amazing", "userID_here2", 5.0);
-        console.log(review);
+        const review2 = await reviews.createReview(doc2ID, "This doctor was amazing", newUserId2, 5.0);
+        review2Id = review2._id;
+        console.log(review2);
     } catch (e) {
         console.log("Got an error!");
         console.log(e);
     }
 
-    try {
-        const review = await reviews.createReview(docID, "This doctor was ok", "userID_here1", 1.0);
-        console.log(review);
-    } catch (e) {
-        console.log("Got an error!");
-        console.log(e);
-    }
 
     try {
-        const comment = await comments.addComment("userID_here1", reviewId, "I agree with your review");
+        const comment = await comments.addComment(newUserId, review2Id, "I agree with your review");
+        comment1Id = comment.commentID;
         console.log(comment);
     } catch (e) {
         console.log("Got an error!");
@@ -77,28 +76,35 @@ async function main() {
     }
 
     // try {
-    //     const deletecomment = await reviews.deleteComment("626da05ec65b722cb262fafa", "626d9d78cb6ec47a8771eead");
-    //     console.log(deletecomment);
+    //     const deleted = await comments.deleteComment(comment1Id, review2Id);
+
+    //     console.log(deleted);
     // } catch (e) {
     //     console.log("Got an error!");
     //     console.log(e);
     // }
 
-    // try {
-    //     const reviewList = await reviews.getReviews("626c3b17ab1e6d2f41a7aedcs");
-    //     console.log(reviewList);
-    // } catch (e) {
-    //     console.log("Got an error!");
-    //     console.log(e);
-    // }
+    try {
+        const commentLike = await comments.addLikeComment(comment1Id, review2Id, newUserId2);
+        console.log(commentLike);
+    } catch (e) {
+        console.log("Got an error!");
+        console.log(e);
+    }
 
-    // try {
-    //     const topRated = await doctors.highestRatedDoctors("Cardiologist");
-    //     console.log(topRated);
-    // } catch (e) {
-    //     console.log("Got an error!");
-    //     console.log(e);
-    // }
+
+    try {
+        const dislike = await comments.addDislikeComment(comment1Id, review2Id, newUserId);
+        console.log(dislike);
+    } catch (e) {
+        console.log("Got an error!");
+        console.log(e);
+    }
+
+
+
+
+
 
     // try {
     //     const getSpec = await doctors.getAllSpecialities();

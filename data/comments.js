@@ -265,11 +265,11 @@ const exported = {
     let dislikeArray = comment[0].dislikes;
 
     if (likeArray.indexOf(userID) != -1) {
-      throw "you have already liked or disliked this review";
+      throw "you have already liked or disliked this comment";
     }
 
     if (dislikeArray.indexOf(userID) != -1) {
-      throw "you have already liked or disliked this review";
+      throw "you have already liked or disliked this comment";
     }
 
 
@@ -393,11 +393,11 @@ const exported = {
     let dislikeArray = comment[0].dislikes;
 
     if (likeArray.indexOf(userID) != -1) {
-      throw "you have already liked or disliked this review";
+      throw "you have already liked or disliked this comment";
     }
 
     if (dislikeArray.indexOf(userID) != -1) {
-      throw "you have already liked or disliked this review";
+      throw "you have already liked or disliked this comment";
     }
 
 

@@ -56,6 +56,11 @@
                         <button type="submit">Like</button>
                     </form>
 
+                    <form action="/comment/addDislike/{{../this._id}}/{{../this.doctorID}}/{{this.commentID}}"
+                        method="POST" id="new-like">
+                        <button type="submit">Dislike</button>
+                    </form>
+
 
                 </li>
                 {{/each}}

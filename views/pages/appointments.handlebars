@@ -1,3 +1,4 @@
+{{#unless hasError}}
 <form action="/appointments/{{userId}}" method="POST">
 <!--<label for="doctorId"></label>-->
 <input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  hidden>
@@ -29,12 +30,49 @@
 </div>
 <button class="btn btn-primary btn-sm" type="submit">Book</button>
 </form>
+{{/unless}}
+
 <div class="apt_error_span">
+
+<!--- Error Part --->
 {{#if hasError}}
-<span class="apt_error_class">Error:{{errorMessage}}</span>
+<form action="/appointments/{{userId}}" method="POST">
+<!--<label for="doctorId"></label>-->
+<input id="doctorId" type="text" name="doctorId" placeholder="" value = ""  hidden>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="doctorName">Doctor</label>
+<input id="doctorName" type="text" name="doctorName" placeholder="" value = "" readonly>
+</div>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="userFullName">Patient</label>
+<input id="userFullName" type="text" name="userFullName" placeholder="" value = ""  readonly>
+</div>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="aptDate">DateTime  </label>
+<input id="aptDate" type="text" name="aptDate"  value = "" readonly>
+<input id="aptTime" type="text" name="aptTime"  value = "" readonly>
+
+{{#if rescheduleFlag}}
+<button class="btn btn-primary btn-sm" type="submit" formmethod = "POST" formaction="/doctors/reschedule/{{doctorId}}">Change Date</button>
 {{/if}}
 </div>
 <div class="apointmentDiv">
-<!--<a href="/appointments/userappointmentlist/{{userId}}" id="PatientHomeLink" >Back to PatietHome</a>-->
-<a class="btn btn-primary" href="/appointments/userappointmentlist/{{userId}}" role="button">Back to Patient Home</a>
+<label class = "apointmentLable" for="message">Message</label>
+<input id="message" type="text" name="message" placeholder=""   >
 </div>
+
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="conditions">Conditions </label>
+<input id="conditions" type="text" name="conditions" placeholder=""   >
+</div>
+
+</form>
+<span class="apt_error_class">Error:{{errorMessage}}</span>
+
+
+</div>
+<div class="apointmentDiv">
+<!--<a href="/appointments/userappointmentlist/{{userId}}" id="PatientHomeLink" >Back to PatietHome</a>-->
+<a class="btn btn-primary" href="/" role="button">Create New Appointment</a>
+</div>
+{{/if}}

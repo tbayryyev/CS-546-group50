@@ -124,6 +124,12 @@ module.exports = {
       },
 */
     async getAllAppointmentsForUser(userId){
+      if(arguments.length < 1){
+        throw "All fields need to have valid values";
+    }
+    if(arguments.length > 1){
+        throw "Too many Aruguments, should pass One argument";
+    }
       var resultArr = [];
       const appointmentCollection = await appointments();
       const appointmentList = await appointmentCollection.find({userId:userId.trim()}).toArray();
@@ -264,6 +270,16 @@ module.exports = {
         errChkStringIsEmpty(aptTime);
         const aptTimeMod = aptTime.trim();
 
+         //aptDatePrv check
+         errChkIsString(aptDatePrv);
+         errChkStringIsEmpty(aptDatePrv);
+        const aptDatePrvMod = aptDatePrv.trim();
+ 
+         //aptTimePrv check
+         errChkIsString(aptTimePrv);
+         errChkStringIsEmpty(aptTimePrv);
+         const aptTimePrvMod = aptTimePrv.trim();
+
          try{
             fetchObj = await this.get(id);
             
@@ -287,7 +303,7 @@ module.exports = {
             throw 'could not update band successfully';
           }
           */
-          await updateDoctorCalendar(fetchObj.doctorId,aptDatePrv,aptTimePrv,"push");
+          await updateDoctorCalendar(fetchObj.doctorId,aptDatePrvMod,aptTimePrvMod,"push");
           await updateDoctorCalendar(fetchObj.doctorId,aptDateMod,aptTimeMod,"pull");
           return await this.get(id);  
         },

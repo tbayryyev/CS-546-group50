@@ -1,3 +1,4 @@
+{{#unless hasError}}
 <form action="/appointments/update/{{appointmentId}}" method="POST">
 <label for="doctorId"></label>
 <input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  hidden>
@@ -14,8 +15,8 @@
 <div>
  {{#if aptDatePrv}}   
 <label for="aptDatePrv"></label>
-<input id="aptDatePrv" type="text" name="aptDatePrv" placeholder="aptDatePrv" value = {{aptDatePrv}}  hidden>
-<input id="aptTimePrv" type="text" name="aptTimePrv" placeholder="aptTimePrv" value = {{aptTimePrv}}  hidden>
+<input id="aptDatePrv" type="text" name="aptDatePrv" placeholder="aptDatePrv" value = "{{aptDatePrv}}"  hidden>
+<input id="aptTimePrv" type="text" name="aptTimePrv" placeholder="aptTimePrv" value = "{{aptTimePrv}}"  hidden>
 {{/if}}
 </div>
 <div class="apointmentDiv">
@@ -29,21 +30,65 @@
 </div>
 <div class="apointmentDiv">
 <label class = "apointmentLable" for="message">Message   </label>
-<input id="message" type="text" name="message" placeholder="message"  value = {{message}} readonly>
+<input id="message" type="text" name="message" placeholder="message"  value = "{{message}}" readonly>
 </div>
 <div class="apointmentDiv">
 <label class = "apointmentLable" for="conditions">Conditions </label>
-<input id="conditions" type="text" name="conditions" placeholder="conditions"  value = {{conditions}}  readonly>
+<input id="conditions" type="text" name="conditions" placeholder="conditions"  value = "{{conditions}}"  readonly>
 </div>
 {{#unless rescheduleFlag}}
 <button class="btn btn-primary btn-sm" type="submit">Reschedule</button>
 {{/unless}}
 </form>
-<div class="apt_error_span">
-{{#if hasError}}
-<span class="apt_error_class">Error:{{errorMessage}}</span>
-{{/if}}
-</div>
 <div class="apointmentDiv">
 <a class="btn btn-primary" href="/appointments/userappointmentlist/{{userId}}" role="button">Back to Patient Home</a>
 </div>
+{{/unless}}
+
+<!-- Error Part-->
+<div class="apt_error_span">
+{{#if hasError}}
+<label for="doctorId"></label>
+<input id="doctorId" type="text" name="doctorId" placeholder="" value = ""  hidden>
+<label for="userId"></label>
+<input id="userId" type="text" name="userId" placeholder="" value = ""  hidden>
+
+<input id="appointmentId" type="text" name="appointmentId" placeholder="" value = "" hidden >
+
+<div >
+<label  class = "apointmentLable" for="doctorName">Doctor</label>
+
+<input id="doctorName" type="text" name="doctorName" placeholder="" value = "" readonly >
+</div>
+<div>
+ {{#if aptDatePrv}}   
+<label for="aptDatePrv"></label>
+<input id="aptDatePrv" type="text" name="aptDatePrv" placeholder="aptDatePrv" value = "{{aptDatePrv}}"  hidden>
+<input id="aptTimePrv" type="text" name="aptTimePrv" placeholder="aptTimePrv" value = "{{aptTimePrv}}"  hidden>
+{{/if}}
+</div>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="aptDate">DateTime  </label>
+<input id="aptDate" type="text" name="aptDate"  value = "" readonly>
+<input id="aptTime" type="text" name="aptTime"  value = "" readonly>
+
+{{#if rescheduleFlag}}
+<button class="btn btn-primary btn-sm" type="submit" formmethod = "POST" formaction="/appointments/doctorcalendar/reschedule/{{doctorId}}">Change Date</button>
+{{/if}}
+</div>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="message">Message   </label>
+<input id="message" type="text" name="message" placeholder=""  value = "" readonly>
+</div>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="conditions">Conditions </label>
+<input id="conditions" type="text" name="conditions" placeholder=""  value = ""  readonly>
+</div>
+
+<span class="apt_error_class">Error:{{errorMessage}}</span>
+
+</div>
+<div class="apointmentDiv">
+<a class="btn btn-primary" href="/" role="button">Create New Appointment</a>
+</div>
+{{/if}}

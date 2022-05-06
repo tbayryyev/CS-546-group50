@@ -1,19 +1,19 @@
-<a class="speciality" href="/doctor/speciality/{{speciality}}">{{speciality}}</a>
+<a class="speciality" href="/doctor/speciality/{{doctor.speciality}}">{{doctor.speciality}}</a>
 <dl>
-    <dd class="name">{{name}}</dd>
-    {{#if profilePicture}}
-    <img alt="image" src={{profilePicture}} />
+    <dd class="name">{{doctor.name}}</dd>
+    {{#if doctor.profilePicture}}
+    <img alt="image" src={{doctor.profilePicture}} />
     {{else}}
     <img alt="image"
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png" />
     {{/if}}
 
     <dt>About</dt>
-    <dd>{{about}}</dd>
+    <dd>{{doctor.about}}</dd>
     <dt>Languages</dt>
-    {{#if languages.length}}
+    {{#if doctor.languages.length}}
     <ul>
-        {{#each languages}}
+        {{#each doctor.languages}}
         <li class="language">{{this}}</li>
 
         {{/each}}
@@ -22,15 +22,15 @@
     <dd>N/A</dd>
     {{/if}}
     <dt>Address</dt>
-    <dd>{{address}}</dd>
+    <dd>{{doctor.address}}</dd>
     <dt>City, State, Zipcode</dt>
-    <dd>{{city}}, {{state}}, {{zip}}</dd>
+    <dd>{{doctor.city}}, {{doctor.state}}, {{doctor.zip}}</dd>
     <dt>Rating</dt>
-    <dd>{{rating}} Stars</dd>
+    <dd>{{doctor.rating}} Stars</dd>
     <dt>Reviews</dt>
-    {{#if reviews.length}}
+    {{#if doctor.reviews.length}}
     <ul>
-        {{#each reviews }}
+        {{#each doctor.reviews }}
         <li class="reviews">
             <h3 class="userName">{{this.userID}}</h3>
 
@@ -48,25 +48,27 @@
     <dd>Currently there are no reviews for this doctor</dd>
     {{/if}}
 </dl>
-      <!--- Doc calendar integrated with doctor hompage-->
+<!--- Doc calendar integrated with doctor hompage-->
 <h4>Doctor calendar</h4>
 
-    <form>
-  
+<form>
+
     {{#if timeSlots.length}}
     <ul class="doc_calendar_ul">
         {{#each timeSlots}}
 
         <li class="doc_calendar_li"> {{dt}}
             <div>
-             {{#each tm}}
-             {{#if ../../rescheduleFlag}}
-             <button class="btn btn-success btn-xs" type="submit" formmethod = "POST" formaction="/appointments/reschedule/{{toString ../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
-             {{else}}
-             <button class="btn btn-success btn-xs" type="submit" formmethod = "GET" formaction="/appointments/schedule/{{toString ../../_id}}/{{../dt}}/{{this}}">{{this}}</button>
-             {{/if}}
-             {{/each}}
-             </div>
+                {{#each tm}}
+                {{#if ../../rescheduleFlag}}
+                <button class="btn btn-success btn-xs" type="submit" formmethod="POST"
+                    formaction="/appointments/reschedule/{{toString ../../doctorId}}/{{../dt}}/{{this}}">{{this}}</button>
+                {{else}}
+                <button class="btn btn-success btn-xs" type="submit" formmethod="GET"
+                    formaction="/appointments/schedule/{{toString ../../_id}}/{{../dt}}/{{this}}">{{this}}</button>
+                {{/if}}
+                {{/each}}
+            </div>
         </li>
 
         {{/each}}
@@ -75,14 +77,14 @@
     <p class="not-found">We're sorry, but no results were found for {{doctorId}}.</p>
     {{/if}}
     {{#if rescheduleFlag}}
-    <input name= 'appointmentId' value={{appointmentId}} hidden>
-    <input name= 'aptDatePrvRs' value={{aptDatePrv}} hidden>
-    <input name= 'aptTimePrvRs' value={{aptTimePrv}} hidden>
-    <input name= 'messagePrvRs' value={{messagePrv}} hidden>
-    <input name= 'conditionsPrvRs' value={{conditionsPrv}} hidden>
+    <input name='appointmentId' value={{appointmentId}} hidden>
+    <input name='aptDatePrvRs' value={{aptDatePrv}} hidden>
+    <input name='aptTimePrvRs' value={{aptTimePrv}} hidden>
+    <input name='messagePrvRs' value={{messagePrv}} hidden>
+    <input name='conditionsPrvRs' value={{conditionsPrv}} hidden>
     {{/if}}
 </form>
 
 {{#if hasError}}
-<p >Error:{{errorMessage}}</p>
+<p>Error:{{errorMessage}}</p>
 {{/if}}

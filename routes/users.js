@@ -284,8 +284,8 @@ router.post('/login', async (req, res) => {
     // Declares a variable named errors and sets it equal to an empty dictionary
     let errors = {};
 
-     // Checks if extra fields were passed in the body
-     if (Object.keys(userInfo).length != 2) {
+    // Checks if extra fields were passed in the body
+    if (Object.keys(userInfo).length != 2) {
         // Add error to errors
         errors["requestError"] = 'An extra field was passed.';
     }
@@ -451,16 +451,16 @@ router.get('/edit', async (req, res) => {
                 phoneNumber: user.phoneNumber
             }
             // Declares a variable named date and sets it equal to moment date used for formatting
-            let date = moment(user.dateOfBirth,'MM/DD/YYYY');
+            let date = moment(user.dateOfBirth, 'MM/DD/YYYY');
             // Declares a variable named formattedDateOfBirth and sets it user's date of birth in the format "YYYY-MM-DD"
             let formattedDateOfBirth = date.format("YYYY-MM-DD");
             // Declares a variable named phoneNumber and sets it equal to the user's phone number
             let phoneNumber = user.phoneNumber;
             // Declares a variable named formattedPhoneNumber and sets it equal to user's phone number in the format (xxx) xxx-xxxx
-            let formattedPhoneNumber = `(${phoneNumber.substring(0,3)}) ${phoneNumber.substring(3,6)}-${phoneNumber.substring(6,10)}`;
-            let states = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+            let formattedPhoneNumber = `(${phoneNumber.substring(0, 3)}) ${phoneNumber.substring(3, 6)}-${phoneNumber.substring(6, 10)}`;
+            let states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
             // Returns the edit_account handlebar with the users information
-            return res.render('pages/edit_account', {authenticated: true, username: user.username, states: states, user: userObj, formattedDateOfBirth: formattedDateOfBirth, formattedPhoneNumber: formattedPhoneNumber, jsURL: '/public/js/account_edit.js' });
+            return res.render('pages/edit_account', { authenticated: true, username: user.username, states: states, user: userObj, formattedDateOfBirth: formattedDateOfBirth, formattedPhoneNumber: formattedPhoneNumber, jsURL: '/public/js/account_edit.js' });
         } catch (e) {
             // Handle error
             console.log(e);
@@ -708,13 +708,13 @@ router.post('/edit', async (req, res) => {
             } else {
                 // Declares a variable named errorResponse and sets to the a response object
                 let errorResponse = {
-                        errors: {
-                            requestError: 'Internal Server Error.'
+                    errors: {
+                        requestError: 'Internal Server Error.'
                     }
                 }
                 // Returns errors as json object
                 return res.json(JSON.stringify(errorResponse));
-                
+
             }
             // Declares a variable named errorResponse and sets to the a response object
             let errorResponse = {
@@ -740,7 +740,7 @@ router.post('/upload-profile-picture', upload.single('image'), async function (r
         const imagePath = path.join(__dirname, '../public/images');
         // const fileUpload = new Resize(imagePath);
         if (!req.file) {
-            res.status(401).json({error: 'Please provide an image'});
+            res.status(401).json({ error: 'Please provide an image' });
         }
         try {
             const fileName = await resize.saveFile(req.file.buffer, imagePath);
@@ -754,7 +754,7 @@ router.post('/upload-profile-picture', upload.single('image'), async function (r
             }
         } catch (e) {
             console.log(e);
-            return res.status(500).json(JSON.stringify({error: "Internal Server Error"}));
+            return res.status(500).json(JSON.stringify({ error: "Internal Server Error" }));
         }
     } else {
         return res.status(401).json({ error: "Unauthorized Error." });

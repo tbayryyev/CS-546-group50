@@ -24,7 +24,11 @@ router.get('/:doctorId', async (req, res) => {
     // console.log("broke here");
   }
   const info = await doctorData.getDoctor(doctorId);
-  res.render("pages/indivDoctor", info);
+  if (req.session.username) {
+    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username });
+  } else {
+    res.render('pages/indivDoctor', { doctor: info, authenticated: false });
+  }
   return;
 });
 
@@ -32,7 +36,11 @@ router.get('/speciality/:speciality', async (req, res) => {
   try {
     let docSpeciality = validation.checkString(req.params.speciality, "speciality");
     const topDoctors = await doctorData.highestRatedDoctors(docSpeciality);
-    res.render('pages/speciality', { docs: topDoctors, spec: docSpeciality });
+    if (req.session.username) {
+      res.render('pages/speciality', { docs: topDoctors, spec: docSpeciality, authenticated: true, username: req.session.username });
+    } else {
+      res.render('pages/speciality', { docs: topDoctors, spec: docSpeciality, authenticated: false });
+    }
   } catch (e) {
     res.status(404).json({ error: e });
   }

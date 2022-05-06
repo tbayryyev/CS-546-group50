@@ -38,6 +38,27 @@
 
             <p class="reviewText">ReviewText: {{this.reviewText}}</p>
 
+            {{#if this.comments.length}}
+            <p class="commentLabel">Comments:</p>
+            <ul>
+                {{#each this.comments}}
+                <li class="comments">
+                    <p class="userName">userID: {{this.userID}}</p>
+
+                    <p class="commentText">Comment: {{this.commentText}}</p>
+
+
+                    <p class="likes">Likes: {{this.likes.length}}</p>
+                    <p class="dislikes">Dislikes: {{this.dislikes.length}}</p>
+
+
+
+
+                </li>
+                {{/each}}
+            </ul>
+            {{/if}}
+
         </li>
 
         {{/each }}

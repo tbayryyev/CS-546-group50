@@ -100,7 +100,7 @@ next();
 app.use('/appointments/*', (req, res, next) => {
 
   if (!req.session.username) {
-    res.status(403).render('pages/error',{errorMessage:'User is not logged in'});
+    res.status(403).render('pages/error',{errorMessage:'User not logged in ! Go to home to login'});
     return;
   } else {
     next();

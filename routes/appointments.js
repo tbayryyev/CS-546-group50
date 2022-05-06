@@ -13,64 +13,89 @@ let { ObjectId, ConnectionClosedEvent } = require('mongodb');
 
 router.route('/schedule/:doctorId/:aptDate/:aptTime')
     .get(async (req,res) => {
-        try{
+      var aptDate = "";
+      var aptTime = "";
+      var doctorId = "";
+      var userId = "";
+      var userFullName = "";
+      var doctorName = "";
+      var authenticateFlag = false;
 
-        const aptDate = req.params.aptDate.trim();
-        const aptTime = req.params.aptTime.trim();
-        const doctorId = req.params.doctorId.trim();
-        var authenticateFlag = false;
+      try{
+      
+         aptDate = req.params.aptDate.trim();
+         aptTime = req.params.aptTime.trim();
+         doctorId = req.params.doctorId.trim();
         
-        console.log("req.username : schedule "+req.session.username);
+         if(!aptDate || !aptTime || !doctorId){
+          throw "apointment Date/Time or doctorId is mising in the request"
+        }
+        
+        //console.log("req.username : schedule "+req.session.username);
         
         //if(req.session.username === undefined || req.session.username === ""){
           if(!req.session.username){
           throw "No User Logged in";
         }
-        
-        userOne = await userData.getUserByUsername(req.session.username);
-        const doctorRSI = await doctorData.getDoctor(doctorId);
-        if (req.session.username) {
+       else {
           authenticateFlag = true;
         }
+        let userOne = await userData.getUserByUsername(req.session.username);
+        userId = userOne._id.toString();
+        userFullName = userOne.firstName+" "+userOne.lastName;
+        const doctorRSI = await doctorData.getDoctor(doctorId);
+        doctorName = doctorRSI.name;
+      
  
-       res.render('pages/appointments',{userId:userOne._id.toString(),
-                                        userFullName:userOne.firstName+" "+userOne.lastName,
+       res.render('pages/appointments',{userId:userId,
+                                        userFullName:userFullName,
                                         doctorId:doctorId,
-                                        doctorName:doctorRSI.name,
+                                        doctorName:doctorName,
                                         aptDate: aptDate, aptTime:aptTime,
                                         authenticated:authenticateFlag
                                     });
         }
         catch(e){
-           const errorMessage = typeof e === 'string' ? e : e.message;
-            res.status(404).json(e.message);
+          
+          const errorMessage = typeof e === 'string' ? e : e.message;
+          //console.log("In catch block ********* "+errorMessage); 
+            //res.status(404).json(e.message);
+            res.status(404).render('pages/appointments',{
+              userId:userId,
+              userFullName:userFullName,
+              doctorId:doctorId,
+              doctorName:doctorName,
+              aptDate: aptDate, aptTime:aptTime,
+              authenticated:authenticateFlag,
+              hasError: true, errorMessage:errorMessage
+          });
             return;
         }
     });
 
     router.route('/reschedule/:doctorId/:aptDate/:aptTime')
     .post(async (req,res) => {
+      var authenticateFlag = false;
         try{
 
         const aptDate = req.params.aptDate.trim();
         const aptTime = req.params.aptTime.trim();
         const doctorId = req.params.doctorId.trim();
         const doctorRSI = await doctorData.getDoctor(doctorId);
-        var authenticateFlag = false;
+      
 
         const postResAppointmentData = req.body;
         const { appointmentId,aptDatePrvRs,aptTimePrvRs,messagePrvRs,conditionsPrvRs} = postResAppointmentData;
         console.log("req.username : "+req.session.username);
 
-        if(req.session.username === undefined || req.session.username === ""){
+        if(!req.session.username ){
           throw "No User Logged in";
         }
-        userOne = await userData.getUserByUsername(req.session.username)
-        
-        if (req.session.username) {
+        else{
           authenticateFlag = true;
         }
-
+        userOne = await userData.getUserByUsername(req.session.username)
+      
         console.log("From rescheduleAppointment => "+" appointmentId :"+appointmentId+" aptDatePrvRs : "+aptDatePrvRs +" aptTimePrvRs : "+aptTimePrvRs+
         " messagePrvRS : "+messagePrvRs+" conditionsPrvRS :"+conditionsPrvRs+" doctorId : "+doctorRSI.name)
 
@@ -84,7 +109,9 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
-          res.status(404).json(e.message);
+          //res.status(404).json(e.message);
+          res.status(404).render('pages/appointmentReschedule',{hasError: true, 
+          errorMessage:errorMessage,authenticated:authenticateFlag});
             return;
         }
     });
@@ -92,13 +119,17 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
 
     router.route('/userappointmentlist/:userId')
     .get(async (req,res) => {
+      var authenticateFlag = false;
         try{
         const userId = req.params.userId.trim();
         const appointmentRS = await appointmentData.getAllAppointmentsForUser(userId);
         const userRS = await userData.getUser(userId);
-        var authenticateFlag = false;
+        
 
-        if (req.session.username) {
+        if(!req.session.username ){
+          throw "No User Logged in";
+        }
+        else{
           authenticateFlag = true;
         }
         
@@ -112,7 +143,10 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
         }
         catch(e){
             const errorMessage = typeof e === 'string' ? e : e.message;
-            res.status(404).json(e.message);
+            //res.status(404).json(e.message);
+            res.status(404).render('pages/patients',{hasError: true, 
+              errorMessage:errorMessage,
+              authenticated:authenticateFlag});
             return;
         }
     });
@@ -210,7 +244,10 @@ router.route('/:id')
             res.status(400).json({ error: 'Invalid ObjectId' });
             return;
         }
-        if (req.session.username) {
+        if (!req.session.username) {
+          "No user logged in";
+        }
+        else{
           authenticateFlag = true;
         }
         try{
@@ -229,7 +266,10 @@ router.route('/:id')
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
-          res.status(404).json(errorMessage);
+         // res.status(404).json(errorMessage);
+          res.status(404).render('pages/appointmentReschedule',{hasError: true, 
+            errorMessage:errorMessage,
+            authenticated:authenticateFlag});
           return;
         }
     });
@@ -326,7 +366,7 @@ router.route('/:id')
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
           //res.status(404).json(errorMessage);
-          res.status(400).render('pages/patients',{title:'Patient Home Page'
+          res.status(404).render('pages/patients',{title:'Patient Home Page'
             //, appointmentResultSet:appointmentRS
             ,hasError: true,
              errorMessage : errorMessage});
@@ -361,7 +401,10 @@ router.route('/:id')
             return;
         }
 
-        if (req.session.username) {
+        if (!req.session.username) {
+          "No user logged in";
+        }
+        else{
           authenticateFlag = true;
         }
 
@@ -389,7 +432,10 @@ router.route('/:id')
                                           }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
-          res.status(404).json(errorMessage);
+          //res.status(404).json(errorMessage);
+          res.status(404).render('pages/indivDoctor',{hasError: true, 
+            errorMessage:errorMessage,
+            authenticated:authenticateFlag});
           //Commented below for integration of doc clendar with doc home page
           /* res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
                                           appointmentId:appointmentId,

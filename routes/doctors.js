@@ -48,10 +48,13 @@ router.post('/addReview',async(req,res) => {
       let doctorID = validation.checkId(req.body.doctorID, "doctorID");
       let reviewText = validation.checkString(req.body.reviewText, "reviewText");
       let userID = await userData.getUserByUsername(req.session.username)
-      console.log(userID._id.toString());
+      // console.log(userID._id.toString());
       let rating = validation.errorCheckingFunc("rating",Number(req.body.rating),'number');
       // console.log(userID);
       const review = await reviewData.createReview(doctorID, reviewText, userID._id.toString(), rating);
+
+      let url = '/doctor/' + doctorID
+      res.redirect(url);
 
     } else {
       res.status(401).send("You must be logged in to post a review")

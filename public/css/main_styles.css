@@ -5,6 +5,17 @@ a {
     background: black;
     padding: 0.4%;
 }
+label.commentLabel{
+  font-size: 17pt;
+}
+
+#new-commentText {
+  height:40px;
+  width: 800px;
+  font-size:14pt;
+
+
+}
 
 .speciality {
     text-decoration: none;

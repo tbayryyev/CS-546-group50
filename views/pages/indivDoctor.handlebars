@@ -93,6 +93,8 @@
         <label for="new-review">Add a review to this Doctor</label>
         <input type="text" id="new-review" name="reviewText" />
 
+        <input type="hidden" name="doctorID" value={{doctor._id}} />
+
         <button type="submit">Post review</button>
       </form>
     </div>

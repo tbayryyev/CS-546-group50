@@ -3,6 +3,7 @@ const router = express.Router();
 const Data = require('../data');
 const doctorData = Data.doctors;
 const reviewData = Data.reviews
+const userData = Data.users;
 const validation = require('../validation');
 
 
@@ -44,12 +45,13 @@ router.get('/speciality/:speciality', async (req, res) => {
 router.post('/addReview',async(req,res) => {
   try{
     if (req.session.username) {
-      console.log(req.body);
-      let doctorID = validation.checkId(req.params.doctorID, "doctorID");
+      let doctorID = validation.checkId(req.body.doctorID, "doctorID");
       let reviewText = validation.checkString(req.body.reviewText, "reviewText");
-      let rating = validation.errorCheckingFunc(req.body.rating, "rating","number");
-      const review = await reviews.createReview(doctorID, reviewText, req.session.username, rating);
-      // const review = await reviews.createReview(docID, "This doctor was ok", newUserId, 2.5);
+      let userID = await userData.getUserByUsername(req.session.username)
+      console.log(userID._id.toString());
+      let rating = validation.errorCheckingFunc("rating",Number(req.body.rating),'number');
+      // console.log(userID);
+      const review = await reviewData.createReview(doctorID, reviewText, userID._id.toString(), rating);
 
     } else {
       res.status(401).send("You must be logged in to post a review")

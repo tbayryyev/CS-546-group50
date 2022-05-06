@@ -1,3 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const Data = require('../data');
+const doctorData = Data.doctors;
+const userData = Data.users;
+const commentData = Data.comments;
+const validation = require('../validation');
+
 router
     .route('/addComment/:reviewID')
     .post(async (req, res) => {
@@ -30,3 +38,6 @@ router
 
         }
     });
+
+
+module.exports = router;

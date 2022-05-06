@@ -10,7 +10,7 @@ const constructorMethod = (app) => {
   app.use('/appointments', appointmentRoutes);
   app.use('/doctor', doctorRoutes);
   app.use('/account', userRoutes);
-  app.use('/comments', commentRoutes);
+  app.use('/comment', commentRoutes);
   app.use('/', API);
   // app.use('/doctor',doctorRoutes);
   app.use('*', (req, res) => {

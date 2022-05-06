@@ -42,4 +42,41 @@ router
     });
 
 
+router
+    .route('/addLike/:reviewID/:doctorID/:commentID')
+    .post(async (req, res) => {
+        try {
+            let reviewId = validation.checkId(req.params.reviewID, "reviewID");
+            let docID = validation.checkId(req.params.doctorID, "doctorID");
+            let commentID = validation.checkId(req.params.commentID, "commentID");
+
+            if (req.session.username) {
+                const user = await userData.getUserByUsername(req.session.username);
+                const userID = validation.checkId(user._id.toString(), "userID");
+
+                const newLike = await commentData.addLikeComment(commentID, reviewId, userID);
+
+
+                let url = '/doctor/' + docID
+                res.redirect(url);
+
+
+
+
+            } else {
+                res.status(401).send("You must be logged in to like a comment");
+                return;
+
+            }
+
+
+
+        } catch (e) {
+            res.status(404).json({ error: e });
+            return;
+
+        }
+    });
+
+
 module.exports = router;

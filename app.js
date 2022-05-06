@@ -8,6 +8,8 @@ const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
 const Handlebars = require('handlebars');
 
+var CircularJSON = require('circular-json');
+
 Handlebars.registerHelper('toString', function(inputString) {
   var transformedString = inputString.toString();
   return new Handlebars.SafeString(transformedString)
@@ -54,22 +56,16 @@ const handlebarsInstance = exphbs.create({
       // let the next middleware run:
     next();
   };
-  app.use(async (req, res, next) => {
-
-    //console.log("req.session.user : "+req.session)
-      //console.log("["+new Date().toUTCString()+"]: "+req.method+" "+req.originalUrl);
-next();
-  });
+  
 
   app.use(session({
     name: 'AuthCookie',
     secret: 'some secret string!',
-    resave: true,
+    resave: false,
     saveUninitialized: true
   }))
 
 app.use(flash());
-// Custom flash middleware -- from Ethan Brown's book, 'Web Development with Node & Express'
 
 app.use((req, res, next)=>{
   app.locals.success = req.flash('success')
@@ -90,6 +86,24 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+app.use(async (req, res, next) => {
+
+  //console.log("req.username in app.js: "+req.session.username);
+  
+  //console.log("req.session.user : "+CircularJSON.stringify(req))
+    console.log("["+new Date().toUTCString()+"]: "+req.method+" "+req.originalUrl);
+next();
+});
+
+app.use('/appointments/*', (req, res, next) => {
+
+  if (!req.session.username) {
+    res.status(403).render('pages/error',{errorMessage:'User is not logged in'});
+    return;
+  } else {
+    next();
+  }
+});
 
 configRoutes(app);
 

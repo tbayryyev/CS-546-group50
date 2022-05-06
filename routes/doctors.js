@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Data = require('../data');
 const doctorData = Data.doctors;
+const userData = Data.users;
+const commentData = Data.comments;
 const validation = require('../validation');
 
 
@@ -54,6 +56,14 @@ router
       let commentText = validation.checkString(req.body.commentText, "commentText");
 
       if (req.session.username) {
+        const user = await userData.getUserByUsername(req.session.username);
+        const userID = validation.checkId(user._id.toString(), "userID");
+
+        const newComment = await commentData.addComment(userID, reviewId, commentText);
+
+        res.redirect('/doctor/')
+
+
 
 
       } else {

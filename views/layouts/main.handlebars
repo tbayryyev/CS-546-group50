@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Find A Doctor</title>
@@ -21,49 +22,49 @@
         {{#if authenticated}}
         {{! Auth Buttons }}
         <div id="auth_btns" class="top_corner" hidden>
-        <div class="container">
-            <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                data-bs-target="#login-modal">Log In</button>
-            <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                data-bs-target="#sign-up-modal">Sign
-                Up</button>
-        </div>
+            <div class="container">
+                <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                    data-bs-target="#login-modal">Log In</button>
+                <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                    data-bs-target="#sign-up-modal">Sign
+                    Up</button>
+            </div>
         </div>
         {{! Username Dropdown }}
         <div id="user_dropdown_div" class="top_corner">
-        <div id="user_dropdown" class="dropdown">
-            <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false">{{username}}</button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
-                <li><a class="dropdown-item" href="#">Patient Page</a></li>
-                <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
-            </ul>
-        </div>
+            <div id="user_dropdown" class="dropdown">
+                <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">{{username}}</button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
+                    <li><a class="dropdown-item" href="#">Patient Page</a></li>
+                    <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
+                </ul>
+            </div>
         </div>
         {{else}}
         {{! Auth Buttons }}
         <div id="auth_btns" class="top_corner">
-        <div class="container">
-            <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                data-bs-target="#login-modal">Log In</button>
-            <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                data-bs-target="#sign-up-modal">Sign
-                Up</button>
-        </div>
+            <div class="container">
+                <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                    data-bs-target="#login-modal">Log In</button>
+                <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                    data-bs-target="#sign-up-modal">Sign
+                    Up</button>
+            </div>
         </div>
 
         {{!-- User Dropdown --}}
         <div id="user_dropdown_div" class="top_corner" hidden>
-        <div id="user_dropdown" class="dropdown">
-            <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button"
-                data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
-                <li><a class="dropdown-item" href="#">Patient Page</a></li>
-                <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
-            </ul>
-        </div>
+            <div id="user_dropdown" class="dropdown">
+                <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"></button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
+                    <li><a class="dropdown-item" href="#">Patient Page</a></li>
+                    <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
+                </ul>
+            </div>
         </div>
         {{/if}}
 
@@ -81,8 +82,9 @@
                     <div class="toast-body">
                         Account created! Please login.
                     </div>
-                    <button id="confirmation_toast_close_btn" type="button" class="btn-close me-2 m-auto btn-close-white"
-                        data-bs-dismiss="toast" aria-label="Close"></button>
+                    <button id="confirmation_toast_close_btn" type="button"
+                        class="btn-close me-2 m-auto btn-close-white" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
                 </div>
             </div>
         </div>
@@ -252,6 +254,7 @@
     <script src="/public/js/appointments_scripts.js"></script>
     <script src="/public/js/auth.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+    <script src="/public/js/comments.js"></script>
     {{#if jsURL}}
     <script src={{jsURL}}></script>
     {{/if}}

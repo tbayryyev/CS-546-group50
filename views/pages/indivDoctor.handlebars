@@ -61,7 +61,7 @@
 
         </li>
 
-        <form action="/comment/addComment/{{this._id}}" method="POST" id="new-comment">
+        <form action="/comment/addComment/{{this._id}}/{{this.doctorID}}" method="POST" id="new-comment">
             <label for="new-comment">Add a comment to this review</label>
             <input type="text" id="new-commentText" name="commentText" />
             <button type="submit">Post Comment</button>
@@ -77,24 +77,18 @@
     <dd>Currently there are no reviews for this doctor</dd>
     {{/if}}
     <div class=addingReview>
-      <form action = "/doctor/addReview" method = "POST" >
-        <label class="rating-label">Stars
-          <input
-            name="rating"
-            class="rating"
-            max="5"
-            oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
-            step="1"
-            style="--value:0"
-            type="range"
-            value="0">
-        </label>
+        <form action="/doctor/addReview" method="POST">
+            <label class="rating-label">Stars
+                <input name="rating" class="rating" max="5"
+                    oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" step="1" style="--value:0"
+                    type="range" value="0">
+            </label>
 
-        <label for="new-review">Add a review to this Doctor</label>
-        <input type="text" id="new-review" name="reviewText" />
+            <label for="new-review">Add a review to this Doctor</label>
+            <input type="text" id="new-review" name="reviewText" />
 
-        <button type="submit">Post review</button>
-      </form>
+            <button type="submit">Post review</button>
+        </form>
     </div>
 </dl>
 <!--- Doc calendar integrated with doctor hompage-->

@@ -75,6 +75,15 @@ async function main() {
         console.log(e);
     }
 
+    // try {
+    //     const deleted = await comments.deleteComment(comment1Id, review2Id);
+
+    //     console.log(deleted);
+    // } catch (e) {
+    //     console.log("Got an error!");
+    //     console.log(e);
+    // }
+
     try {
         const commentLike = await comments.addLikeComment(comment1Id, review2Id, newUserId2);
         console.log(commentLike);

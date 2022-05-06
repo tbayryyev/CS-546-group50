@@ -4,6 +4,7 @@ const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
+const { validateEmail } = require("../validation");
 
 const exported = {
   addComment: async (userID, reviewID, commentText) => {
@@ -76,23 +77,23 @@ const exported = {
 
     }
 
-    // const doctorCollection = await DOCTORS();
+    const doctorCollection = await DOCTORS();
 
-    // const updatedReview = await reviewCollection.findOne({ _id: ObjectId(reviewID) });
-
-
-    // const updateInfo2 = await doctorCollection.findOne({ 'reviews': { _id: ObjectId(reviewID) } });
-    // console.log(updateInfo2);
-
-    // if (updateInfo2.modifiedCount === 0) {
-    //   throw "could not add review to doctor";
-
-    // }
+    const updatedReview = await reviewCollection.findOne({ _id: ObjectId(reviewID) });
 
 
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
 
 
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.push(newComment);
+      }
 
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
 
     newComment.commentID = newComment.commentID.toString();
 
@@ -149,6 +150,41 @@ const exported = {
       throw "could not delete the comment successfully";
 
     }
+
+
+
+    const doctorCollection = await DOCTORS();
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+    let counter = 0;
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.forEach(value1 => {
+          if (value1.commentID.toString() == commentID) {
+            value.comments.splice(counter);
+
+
+          }
+          counter++;
+        })
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+
+
+
+
+    // const updateInfo2 = await doctorCollection.updateMany({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, {
+    //   $pull: { reviews: { comments: { $elemMatch: { commentID: ObjectId(commentID) } } } }
+    // });
+
+
+
 
     return { "commentID": commentID, "deleted": true };
 
@@ -243,7 +279,6 @@ const exported = {
       }
     })
 
-    console.log(reviewWithComment);
 
     const updateInfo = await reviewCollection.replaceOne({ _id: ObjectId(reviewID) }, reviewWithComment);
 
@@ -251,6 +286,29 @@ const exported = {
       throw "could not like comment successfully";
 
     }
+
+    const doctorCollection = await DOCTORS();
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.forEach(value1 => {
+          if (value1.commentID.toString() == commentID) {
+            value1.likes.push(userID);
+          }
+        })
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+
+
+
+
 
     return { "userID": userID, "liked": true };
 
@@ -356,6 +414,28 @@ const exported = {
       throw "could not dislike comment successfully";
 
     }
+
+    const doctorCollection = await DOCTORS();
+
+    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+
+
+    doctor.reviews.forEach(value => {
+      if (value._id.toString() == reviewID) {
+        value.comments.forEach(value1 => {
+          if (value1.commentID.toString() == commentID) {
+            value1.dislikes.push(userID);
+          }
+        })
+      }
+
+    })
+
+
+    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+
+
+
 
     return { "userID": userID, "disliked": true };
 

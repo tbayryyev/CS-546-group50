@@ -148,7 +148,7 @@ validateCity(city) {
     // Checks that one argument was passed
     if (arguments.length !== 1) throw `This function takes 1 argument but ${arguments.length} were given.`;
     // Checks if city contains only letters
-    if (/[^a-z]/i.test(city)) throw 'Invalid city';
+    if (/[^a-z ]/i.test(city)) throw 'Invalid city';
     // Checks if city is at least 2 characters
     if (city.length < 2) throw 'Invalid city.';
 },

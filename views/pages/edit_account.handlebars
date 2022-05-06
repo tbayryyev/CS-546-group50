@@ -1,1 +1,158 @@
-<h1>{{user.username}}</h1>
+<section id="account_section">
+    <h2 id="edit_title">Account Information</h2>
+    {{!-- Edit Account Modal --}}
+    <div class="modal fade" id="edit-account-modal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="edit_account_modal_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="edit_account_modal_label">Edit Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit_account_form" class="row g-3 needs-validation" novalidate>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="edit_first_name" class="form-label">First name</label>
+                                <input id="edit_first_name" type="text" class="form-control" value="{{user.firstName}}" required>
+                                <div id="edit_first_name_error" class="invalid-feedback"></div>
+                            </div>
+                            <div class="col">
+                                <label for="edit_last_name" class="form-label">Last name</label>
+                                <input id="edit_last_name" type="text" class="form-control" value="{{user.lastName}}" required>
+                                <div id="edit_last_name_error" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="edit_email" class="form-label">Email Address</label>
+                                <input id="edit_email" type="text" class="form-control" value="{{user.email}}" required>
+                                <div id="edit_email_error" class="invalid-feedback"></div>
+                            </div>
+                            <div class="col">
+                                <label for="edit_username" class="form-label">Username</label>
+                                <input id="edit_username" type="text" class="form-control" value="{{user.username}}" maxlength="30"
+                                    required>
+                                <div id="edit_username_help" class="form-text">Must be under 30 characters.</div>
+                                <div id="edit_username_error" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="edit_phone_number" class="form-label">Phone Number</label>
+                                <input id="edit_phone_number" type="text" class="form-control" value="{{formattedPhoneNumber}}" required>
+                                <div id="edit_phone_number_error" class="invalid-feedback"></div>
+                            </div>
+                            <div class="col">
+                                <label for="edit_date_of_birth" class="form-label">Date of Birth</label>
+                                <input id="edit_date_of_birth" class="form-control" type="date" value="{{formattedDateOfBirth}}" required>
+                                <div id="edit_date_of_birth_error" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <label for="edit_address" class="form-label">Address</label>
+                            <input id="edit_address" type="text" class="form-control" value="{{user.address}}"
+                                required>
+                            <div id="edit_address_error" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <label for="edit_city" class="form-label">City</label>
+                            <input id="edit_city" type="text" class="form-control" value="{{user.city}}" required>
+                            <div id="edit_city_error" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <label for="edit_state" class="form-label">State</label>
+                            <select id="edit_state" class="form-select" required>
+                                <option value="">Choose</option>
+                            </select>
+                            <div id="edit_state_error" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-3 mt-3">
+                            <label for="edit_zip" class="form-label">Zip Code</label>
+                            <input id="edit_zip" type="text" class="form-control" maxlength="5"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                value="{{user.zip}}" required>
+                            <div id="edit_zip_error" class="invalid-feedback"></div>
+                        </div>
+                        <div id="edit_request_error" class="w-100 text-center"></div>
+                        <div class="col-12 w-100 text-center">
+                            <button id="confirm_edit_btn" class="btn btn-dark w-100 mb-3" type="submit">Confirm Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Edit Profile Picture Modal --}}
+    <div class="modal fade" id="edit-profile-picture-modal" data-bs-backdrop="static" tabindex="-1"
+        aria-labelledby="edit_profile_picture_modal_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="edit_profile_picture_modal_label">Upload Profile Picture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="profile_picture_form" class="needs-validation" novalidate>
+                        <div class="vstack gap-2 col-md-5 mx-auto">
+                            <div id="upload_container" class="custom-file">
+                                <input type="file" accept="image/*" name="image" id="profile_picture_input"
+                                    style="display: none;">
+                                <label for="profile_picture_input">Upload Image</label>
+                            </div>
+                            <img id="temp_image" class="profile_picture" src="/public/images/clear_image.png" alt="profile picture preview" />
+                            <div id="upload_error" class="invalid-feedback"></div>
+                            <button id="submit_profile_picture" class="btn btn-dark" type="submit">Submit Picture</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Profile Picture --}}
+    <div class="profile_picture_container">
+        <img class="profile_picture" src={{user.profilePicture}} alt="Profile Picture">
+        <svg id="profile_picture_edit_btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="bi bi-pencil-fill" viewBox="0 0 16 16">
+            <path
+                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+        </svg>
+    </div>
+
+    {{!-- User Information --}}
+    <ul id="user_info">
+        <li>
+            <h3 class="account_field_item"><strong>First Name: </strong> {{user.firstName}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Last Name: </strong> {{user.lastName}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Email Account: </strong> {{user.email}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Username: </strong> {{user.username}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Date of Birth: </strong> {{user.dateOfBirth}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Address: </strong> {{user.address}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>City: </strong> {{user.city}}</h3>
+        </li>
+         <li>
+            <h3 id="users_state" class="account_field_item"><strong>State: </strong> {{user.state}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Zip: </strong> {{user.zip}}</h3>
+        </li>
+        <li>
+            <h3 class="account_field_item"><strong>Phone Number: </strong> {{formattedPhoneNumber}}</h3>
+        </li>
+    </ul>
+    <button id="edit_account_btn" class="btn btn-dark" type="submit">Edit Information</button>
+</section>

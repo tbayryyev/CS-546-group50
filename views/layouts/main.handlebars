@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Find A Doctor</title>
@@ -35,7 +34,7 @@
         <div id="user_dropdown" class="dropdown">
             <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false">{{username}}</button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
                 <li><a class="dropdown-item" href="#">Patient Page</a></li>
                 <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
@@ -59,7 +58,7 @@
         <div id="user_dropdown" class="dropdown">
             <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
                 <li><a class="dropdown-item" href="#">Patient Page</a></li>
                 <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
@@ -82,7 +81,7 @@
                     <div class="toast-body">
                         Account created! Please login.
                     </div>
-                    <button id="toast_close_btn" type="button" class="btn-close me-2 m-auto btn-close-white"
+                    <button id="confirmation_toast_close_btn" type="button" class="btn-close me-2 m-auto btn-close-white"
                         data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
@@ -95,7 +94,7 @@
                     <div class="toast-body">
                         Server Error. Please try again.
                     </div>
-                    <button id="toast_close_btn" type="button" class="btn-close me-2 m-auto btn-close-white"
+                    <button id="error_toast_close_btn" type="button" class="btn-close me-2 m-auto btn-close-white"
                         data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
@@ -121,7 +120,7 @@
                                 <input id="log_in_password" type="password" class="form-control" required>
                                 <div id="log_in_password_error" class="invalid-feedback"></div>
                             </div>
-                            <div id="request_error" class="w-100 text-center"></div>
+                            <div id="login_request_error" class="w-100 text-center"></div>
                             <div class="col-12 w-100 text-center">
                                 <button id="log_in_form_btn" class="btn btn-dark w-100 mb-3" type="submit">Log
                                     In</button>
@@ -170,7 +169,7 @@
                                     <label for="sign_up_username" class="form-label">Username</label>
                                     <input id="sign_up_username" type="text" class="form-control" value=""
                                         maxlength="30" required>
-                                    <div id="usernameHelp" class="form-text">Must be under 30 characters.</div>
+                                    <div id="username_help" class="form-text">Must be under 30 characters.</div>
                                     <div id="sign_up_username_error" class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -212,11 +211,8 @@
                             </div>
                             <div class="col-md-3 mt-3">
                                 <label for="state" class="form-label">State</label>
-                                <select id="state" class="form-select" value="" required>
-                                    <option selected disabled value="">Choose</option>
-                                    {{#each states}}
-                                    <option>{{this}}</option>
-                                    {{/each}}
+                                <select id="state" class="form-select" required>
+                                    <option value="">Choose</option>
                                 </select>
                                 <div id="state_error" class="invalid-feedback"></div>
                             </div>
@@ -227,7 +223,7 @@
                                     required>
                                 <div id="zip_error" class="invalid-feedback"></div>
                             </div>
-                            <div id="request_error" class="w-100 text-center"></div>
+                            <div id="sign_up_request_error" class="w-100 text-center"></div>
                             <div class="col-12 w-100 text-center">
                                 <button id="sign_up_form_btn" class="btn btn-dark w-100 mb-3" type="submit">Sign
                                     Up</button>
@@ -256,6 +252,9 @@
     <script src="/public/js/appointments_scripts.js"></script>
     <script src="/public/js/auth.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+    {{#if jsURL}}
+    <script src={{jsURL}}></script>
+    {{/if}}
     <footer class="text-center text-lg-start bg-light text-muted">Final Project-CS546_WS, 2022</footer>
 </body>
 

@@ -3,6 +3,7 @@ const app = express();
 const static = express.static(__dirname + '/public');
 const session = require('express-session');
 const flash = require('connect-flash');
+const bodyParser = require('body-parser');
 
 const configRoutes = require('./routes');
 const exphbs = require('express-handlebars');
@@ -76,6 +77,8 @@ app.use((req, res, next)=>{
   next();
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use('/public', static);
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

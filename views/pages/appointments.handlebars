@@ -1,9 +1,14 @@
 <form action="/appointments/{{userId}}" method="POST">
-<label for="doctorId"></label>
+<!--<label for="doctorId"></label>-->
 <input id="doctorId" type="text" name="doctorId" placeholder="doctorId" value = {{doctorId}}  hidden>
-<label for="userId"></label>
-<input id="userId" type="text" name="userId" placeholder="userId" value = {{userId}}  hidden>
-
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="doctorName">Doctor</label>
+<input id="doctorName" type="text" name="doctorName" placeholder="doctorName" value = "{{doctorName}}" readonly>
+</div>
+<div class="apointmentDiv">
+<label class = "apointmentLable" for="userFullName">Patient</label>
+<input id="userFullName" type="text" name="userFullName" placeholder="userFullName" value = "{{userFullName}}"  readonly>
+</div>
 <div class="apointmentDiv">
 <label class = "apointmentLable" for="aptDate">DateTime  </label>
 <input id="aptDate" type="text" name="aptDate"  value = {{aptDate}} readonly>

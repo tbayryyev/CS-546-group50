@@ -76,6 +76,26 @@
     {{else}}
     <dd>Currently there are no reviews for this doctor</dd>
     {{/if}}
+    <div class=addingReview>
+      <form action = "/doctor/addReview" method = "POST" >
+        <label class="rating-label">Stars
+          <input
+            name="rating"
+            class="rating"
+            max="5"
+            oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)"
+            step="1"
+            style="--value:0"
+            type="range"
+            value="0">
+        </label>
+
+        <label for="new-review">Add a review to this Doctor</label>
+        <input type="text" id="new-review" name="reviewText" />
+
+        <button type="submit">Post review</button>
+      </form>
+    </div>
 </dl>
 <!--- Doc calendar integrated with doctor hompage-->
 <h4>Doctor calendar</h4>
@@ -113,6 +133,7 @@
     <input name='conditionsPrvRs' value={{conditionsPrv}} hidden>
     {{/if}}
 </form>
+
 
 {{#if hasError}}
 <p>Error:{{errorMessage}}</p>

@@ -2,17 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Data = require('../data');
 const doctorData = Data.doctors;
+const reviewData = Data.reviews
 const validation = require('../validation');
 
 
-// router.get('',async(req,res) =>{
-//   console.log("broke in get empty doctor");
-//   res.status(404).json({error: 'here for no reason'});
-//   return;
-// })
+
 
 router.get('/:doctorId', async (req, res) => {
-  // console.log("hello");
   var doctorId;
   try {
     doctorId = validation.checkId(req.params.doctorId, "doctorId");
@@ -21,7 +17,6 @@ router.get('/:doctorId', async (req, res) => {
     console.log("broke in get doctorId");
     res.status(404).json({ error: 'can not validate' });
     return;
-    // console.log("broke here");
   }
   const info = await doctorData.getDoctor(doctorId);
   if (req.session.username) {
@@ -45,6 +40,27 @@ router.get('/speciality/:speciality', async (req, res) => {
     res.status(404).json({ error: e });
   }
 });
+
+router.post('/addReview',async(req,res) => {
+  try{
+    if (req.session.username) {
+      console.log(req.body);
+      let doctorID = validation.checkId(req.params.doctorID, "doctorID");
+      let reviewText = validation.checkString(req.body.reviewText, "reviewText");
+      let rating = validation.errorCheckingFunc(req.body.rating, "rating","number");
+      const review = await reviews.createReview(doctorID, reviewText, req.session.username, rating);
+      // const review = await reviews.createReview(docID, "This doctor was ok", newUserId, 2.5);
+
+    } else {
+      res.status(401).send("You must be logged in to post a review")
+      return;
+    }
+  }catch (e){
+    res.status(404).json({ error: e });
+  }
+})
+
+
 
 router
   .route('/addComment/:reviewID')

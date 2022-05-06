@@ -7,11 +7,12 @@ const commentData = Data.comments;
 const validation = require('../validation');
 
 router
-    .route('/addComment/:reviewID')
+    .route('/addComment/:reviewID/:doctorID')
     .post(async (req, res) => {
         try {
             let reviewId = validation.checkId(req.params.reviewID, "reviewID");
             let commentText = validation.checkString(req.body.commentText, "commentText");
+            let docID = validation.checkId(req.params.doctorID, "doctorID");
 
             if (req.session.username) {
                 const user = await userData.getUserByUsername(req.session.username);
@@ -19,13 +20,14 @@ router
 
                 const newComment = await commentData.addComment(userID, reviewId, commentText);
 
-                res.redirect('/doctor/')
+                let url = '/doctor/' + docID
+                res.redirect(url);
 
 
 
 
             } else {
-                res.status(401).send("You must be logged in to post a comment")
+                res.status(401).send("You must be logged in to post a comment");
                 return;
 
             }

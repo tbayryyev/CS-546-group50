@@ -5,6 +5,12 @@ a {
     background: black;
     padding: 0.4%;
 }
+
+button.like{
+  background: green
+  
+}
+
 label.commentLabel{
   font-size: 17pt;
 }

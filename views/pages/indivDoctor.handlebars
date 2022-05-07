@@ -26,7 +26,11 @@
     <dt>City, State, Zipcode</dt>
     <dd>{{doctor.city}}, {{doctor.state}}, {{doctor.zip}}</dd>
     <dt>Rating</dt>
-    <dd>{{doctor.rating}} Stars</dd>
+    {{#if this.doctor.rating}}
+    <dd>{{this.doctor.rating}} Stars</dd>
+    {{else}}
+    <dd>Doctor has not been rated yet</dd>
+    {{/if}}
     <dt>Reviews</dt>
     {{#if doctor.reviews.length}}
     <ul>

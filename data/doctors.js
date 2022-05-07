@@ -119,6 +119,7 @@ const exported = {
             city: city,
             state: state,
             zip: zip,
+            rating: 0
 
         }
 

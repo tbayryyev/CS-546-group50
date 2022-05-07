@@ -2,7 +2,7 @@
 Welcome to Find A Doctor! A website that allows you to search for doctors aswell as look at their reviews and comments.
 
 # How to run
-1. Clone the repository using git and then install the needed packages using:
+1. Clone the repository using git or download a zip of it and then install the needed packages using:
 ```
 npm install
 ```

@@ -4,6 +4,8 @@ const REVIEWS = mongoCollections.reviews;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
+const users = require("./users");
+
 
 
 const exported = {
@@ -34,6 +36,8 @@ const exported = {
 
 
 
+
+
     const reviewCollection = await REVIEWS();
 
     const doctorCollection = await DOCTORS();
@@ -46,12 +50,14 @@ const exported = {
       if ((review.doctorID == doctorID) && (review.userID == userID)) throw 'Review already created for this doctor';
     }
 
+    const user2 = await users.getUser(userID);
 
 
     const newReview = {
       _id: ObjectId(),
       doctorID: doctorID,
       userID: userID,
+      username: user2.username,
       reviewText: reviewText,
       rating: rating,
       comments: []

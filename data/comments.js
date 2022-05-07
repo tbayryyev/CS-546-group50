@@ -5,6 +5,8 @@ const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
 const { validateEmail } = require("../validation");
+const users = require("./users");
+
 
 const exported = {
   addComment: async (userID, reviewID, commentText) => {
@@ -60,9 +62,13 @@ const exported = {
 
     commentText = commentText.trim();
 
+    const user1 = await users.getUser(userID);
+
+
     let newComment = {
       commentID: ObjectId(),
       userID: userID,
+      username: user1.username,
       commentText: commentText,
       likes: [],
       dislikes: []

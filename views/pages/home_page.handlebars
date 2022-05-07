@@ -47,7 +47,7 @@
             <ul>
                 {{#each this.doctor.reviews }}
                 <li class="reviews">
-                    <h3 class="userName"> userID: {{this.userID}}</h3>
+                    <h3 class="userName">Username: {{this.username}}</h3>
 
                     <p class="Rating">Rating: {{this.rating}} Stars</p>
 
@@ -58,8 +58,7 @@
                     <ul>
                         {{#each this.comments}}
                         <li class="comments">
-                            <p class="userName">userID: {{this.userID}}</p>
-
+                            <p class="userName">Username: {{this.username}}</p>
                             <p class="commentText">Comment: {{this.commentText}}</p>
 
 

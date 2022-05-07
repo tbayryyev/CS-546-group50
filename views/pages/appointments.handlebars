@@ -33,10 +33,9 @@
 </form>
 {{/unless}}
 
-<div class="apt_error_span">
-
 <!--- Error Part --->
 {{#if hasError}}
+<div class="apt_error_span">
 <form action="/appointments/{{userId}}" method="POST">
 <!--<label for="doctorId"></label>-->
 {{#if doctorId}}

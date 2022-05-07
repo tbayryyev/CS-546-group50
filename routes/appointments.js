@@ -53,7 +53,8 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                         doctorName:doctorName,
                                         aptDate: aptDate, aptTime:aptTime,
                                         authenticated:authenticateFlag,
-                                        username:req.session.username
+                                        username:req.session.username,
+                                        userId: req.session.userId
                                     });
         }
         catch(e){
@@ -69,7 +70,8 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
               aptDate: aptDate, aptTime:aptTime,
               authenticated:authenticateFlag,
               hasError: true, errorMessage:errorMessage,
-              username:req.session.username
+              username:req.session.username,
+              userId: req.session.userId
           });
             return;
         }
@@ -108,14 +110,17 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                         aptDatePrv:aptDatePrvRs,aptTimePrv:aptTimePrvRs,
                                         message:messagePrvRs, conditions:conditionsPrvRs,
                                         authenticated:authenticateFlag,
-                                        username:req.session.username});
+                                        username:req.session.username,
+                                        userId: req.session.userId
+                                      });
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
           //res.status(404).json(e.message);
           res.status(404).render('pages/appointmentReschedule',{hasError: true, 
           errorMessage:errorMessage,authenticated:authenticateFlag,
-          username:req.session.username});
+          username:req.session.username,
+          userId: req.session.userId});
             return;
         }
     });
@@ -143,7 +148,9 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                     userEmail: userRS.email,
                                     userPhoneNumber:userRS.phoneNumber,
                                   userProfilePicture:userRS.profilePicture,
-                                  authenticated:authenticateFlag,username:req.session.username
+                                  authenticated:authenticateFlag,
+                                  username:req.session.username,
+                                  userId: req.session.userId
                                 });
         }
         catch(e){
@@ -152,7 +159,8 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
             res.status(404).render('pages/patients',{hasError: true, 
               errorMessage:errorMessage,
               authenticated:authenticateFlag,
-              username:req.session.username});
+              username:req.session.username,
+              userId: req.session.userId});
             return;
         }
     });
@@ -187,7 +195,8 @@ console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
       doctorId:doctorId,aptDate:aptDate,aptTime:aptTime,message:message,conditions:conditions,
        errorMessage : 'All fields need to have valid values',
        authenticated:authenticateFlag,
-       username:req.session.username});
+       username:req.session.username,
+       userId: req.session.userId});
        
     return;
   }
@@ -280,7 +289,8 @@ router.route('/:id')
                                                   conditions:appointmentRSI.conditions,
                                                   rescheduleFlag:true,
                                                   authenticated:authenticateFlag,
-                                                  username:req.session.username});
+                                                  username:req.session.username,
+                                                  userId: req.session.userId});
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
@@ -288,7 +298,8 @@ router.route('/:id')
           res.status(404).render('pages/appointmentReschedule',{hasError: true, 
             errorMessage:errorMessage,
             authenticated:authenticateFlag,
-            username:req.session.username});
+            username:req.session.username,
+            userId: req.session.userId});
           return;
         }
     });
@@ -329,7 +340,8 @@ router.route('/:id')
         res.status(404).render('pages/appointmentReschedule',{hasError: true, 
           errorMessage : 'All fields need to have valid values',
           authenticated:authenticateFlag,
-          username:req.session.username});
+          username:req.session.username,
+          userId: req.session.userId});
         return;
       }
 
@@ -459,7 +471,8 @@ router.route('/:id')
                                             aptTimePrv:aptTime,
                                             messagePrv:message,conditionsPrv:conditions,doctorRSI,
                                             authenticated:authenticateFlag,
-                                            username:req.session.username});
+                                            username:req.session.username,
+                                            userId: req.session.userId});
                                           }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
@@ -467,7 +480,8 @@ router.route('/:id')
           res.status(404).render('pages/indivDoctor',{hasError: true, 
             errorMessage:errorMessage,
             authenticated:authenticateFlag,
-            username:req.session.username});
+            username:req.session.username,
+            userId: req.session.userId});
           //Commented below for integration of doc clendar with doc home page
           /* res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
                                           appointmentId:appointmentId,

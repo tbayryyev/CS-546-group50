@@ -21,7 +21,7 @@ router.get('/:doctorId', async (req, res) => {
   }
   const info = await doctorData.getDoctor(doctorId);
   if (req.session.username) {
-    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username });
+    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username, userId: req.session.userId });
   } else {
     res.render('pages/indivDoctor', { doctor: info, authenticated: false });
   }
@@ -33,7 +33,7 @@ router.get('/speciality/:speciality', async (req, res) => {
     let docSpeciality = validation.checkString(req.params.speciality, "speciality");
     const topDoctors = await doctorData.highestRatedDoctors(docSpeciality);
     if (req.session.username) {
-      res.render('pages/speciality', { docs: topDoctors, spec: docSpeciality, authenticated: true, username: req.session.username });
+      res.render('pages/speciality', { docs: topDoctors, spec: docSpeciality, authenticated: true, username: req.session.username, userId: req.session.userId });
     } else {
       res.render('pages/speciality', { docs: topDoctors, spec: docSpeciality, authenticated: false });
     }

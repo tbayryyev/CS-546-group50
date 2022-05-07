@@ -35,6 +35,11 @@ let loginRequestErrorDiv = $('#login_request_error');
 // Loading Spinner
 let loadingSpinner = $('#loading_spinner');
 
+//Search Data
+let searchFrom = $('#search_form');
+let searchTermInput = $('#search_term');
+let searchBtn = $('#search_btn');
+
 // Error Toast
 let errorToast = $('#error_toast');
 
@@ -170,6 +175,51 @@ function addStatesToForm() {
         stateInput.append(`<option>${state}</option>`);
     });
 }
+
+
+searchTermInput.on('input', function()  {
+    // Declares a variable named searchTerm and sets it equal to the searchTermInput value
+    let searchTerm = searchTermInput.val();
+    // Checks if input is not an empty string or a string with just spaces
+    if (searchTerm.length !== 0 && searchTerm.trim() != '') {
+        // Enable search button
+        searchBtn.attr("disabled", false);
+        // searchBtn.removeClass('disabled');
+    } else {
+        // Disables search button
+        searchBtn.attr("disabled", true);
+    }
+});
+
+searchFrom.submit((event) => {
+    // Stops the form from being submitted
+    event.preventDefault();
+    // Declares a variable named searchTerm and sets it equal to the searchTermInput value
+    let searchTerm = searchTermInput.val();
+    // Trims searchTerm
+    searchTerm = searchTerm.trim();
+    // Replaces spaces with _
+    searchTerm =  searchTerm.replace(' ', "_");
+    // Check if searchTerm is not undefined
+    if (searchTerm) {
+        // Declares a variable called requestConfig and sets it to the request parameters
+        var requestConfig = {
+            method: 'GET',
+            url: `/doctor/speciality/${searchTerm}`
+        }
+
+        // Checks if page exist
+        $.ajax(requestConfig).then(function (apiResponse) {
+            // Redirects to speciality that user searched
+            window.location.href = `/doctor/speciality/${searchTerm}`;
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $('#error_toast_body').html(`Speciality not found. Please check available specialities on home page.`)
+            // Shows error toast
+            var toast = new bootstrap.Toast(errorToast);
+            toast.show();
+        });
+    }
+});
 
 signUpForm.submit((event) => {
     // Sets didFocus to false
@@ -801,10 +851,12 @@ loginForm.submit((event) => {
                     loginModal.modal('toggle');
                     // Hides login and sign up buttons
                     authBtns.attr('hidden', true);
-                    // authBtns.hide();
                     // Shows user dropdown
                     userDropdown.attr('hidden', false);
+                    // Adds username to usernameBtn
                     usernameBtn.html(apiResponse.username);
+                    // Adds url to patient item in dropdown
+                    $('#patient_page_link').attr("href", `/appointments/userappointmentlist/${apiResponse.userId}`);
                 }
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -841,10 +893,14 @@ logoutLink.click(function(e) {
             userDropdown.attr('hidden', true);
             // Show auth buttons
             authBtns.attr('hidden', false);
-            // authBtns.show();
             // Checks if user is on edit account page
             let pathname = window.location.pathname;
-            if (pathname == '/account/edit') {
+            // Splits the path based on /
+            let pathArr = pathname.split('/');
+            // Reconfigures the path
+            let basePath = `/${pathArr[1]}/${pathArr[2]}/`;
+            // Checks if user is on edit account page or patient page
+            if (pathname == '/account/edit' || basePath == '/appointments/userappointmentlist/') {
                 // Redirects to home page
                 window.location.replace("/");
             }

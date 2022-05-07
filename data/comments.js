@@ -83,23 +83,23 @@ const exported = {
 
     }
 
-    const doctorCollection = await DOCTORS();
+    // const doctorCollection = await DOCTORS();
 
-    const updatedReview = await reviewCollection.findOne({ _id: ObjectId(reviewID) });
-
-
-    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+    // const updatedReview = await reviewCollection.findOne({ _id: ObjectId(reviewID) });
 
 
-    doctor.reviews.forEach(value => {
-      if (value._id.toString() == reviewID) {
-        value.comments.push(newComment);
-      }
-
-    })
+    // const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
 
 
-    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+    // doctor.reviews.forEach(value => {
+      // if (value._id.toString() == reviewID) {
+        // value.comments.push(newComment);
+      // }
+
+    // })
+
+
+    // const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
 
     newComment.commentID = newComment.commentID.toString();
 
@@ -159,28 +159,28 @@ const exported = {
 
 
 
-    const doctorCollection = await DOCTORS();
-
-    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
-
-    let counter = 0;
-
-    doctor.reviews.forEach(value => {
-      if (value._id.toString() == reviewID) {
-        value.comments.forEach(value1 => {
-          if (value1.commentID.toString() == commentID) {
-            value.comments.splice(counter);
-
-
-          }
-          counter++;
-        })
-      }
-
-    })
-
-
-    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+    // const doctorCollection = await DOCTORS();
+    //
+    // const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+    //
+    // let counter = 0;
+    //
+    // doctor.reviews.forEach(value => {
+    //   if (value._id.toString() == reviewID) {
+    //     value.comments.forEach(value1 => {
+    //       if (value1.commentID.toString() == commentID) {
+    //         value.comments.splice(counter);
+    //
+    //
+    //       }
+    //       counter++;
+    //     })
+    //   }
+    //
+    // })
+    //
+    //
+    // const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
 
 
 
@@ -293,24 +293,24 @@ const exported = {
 
     }
 
-    const doctorCollection = await DOCTORS();
-
-    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
-
-
-    doctor.reviews.forEach(value => {
-      if (value._id.toString() == reviewID) {
-        value.comments.forEach(value1 => {
-          if (value1.commentID.toString() == commentID) {
-            value1.likes.push(userID);
-          }
-        })
-      }
-
-    })
-
-
-    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+    // const doctorCollection = await DOCTORS();
+    //
+    // const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+    //
+    //
+    // doctor.reviews.forEach(value => {
+    //   if (value._id.toString() == reviewID) {
+    //     value.comments.forEach(value1 => {
+    //       if (value1.commentID.toString() == commentID) {
+    //         value1.likes.push(userID);
+    //       }
+    //     })
+    //   }
+    //
+    // })
+    //
+    //
+    // const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
 
 
 
@@ -421,24 +421,24 @@ const exported = {
 
     }
 
-    const doctorCollection = await DOCTORS();
-
-    const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
-
-
-    doctor.reviews.forEach(value => {
-      if (value._id.toString() == reviewID) {
-        value.comments.forEach(value1 => {
-          if (value1.commentID.toString() == commentID) {
-            value1.dislikes.push(userID);
-          }
-        })
-      }
-
-    })
-
-
-    const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
+    // const doctorCollection = await DOCTORS();
+    //
+    // const doctor = await doctorCollection.findOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } });
+    //
+    //
+    // doctor.reviews.forEach(value => {
+    //   if (value._id.toString() == reviewID) {
+    //     value.comments.forEach(value1 => {
+    //       if (value1.commentID.toString() == commentID) {
+    //         value1.dislikes.push(userID);
+    //       }
+    //     })
+    //   }
+    //
+    // })
+    //
+    //
+    // const updateInfo2 = await doctorCollection.replaceOne({ "reviews": { $elemMatch: { "_id": ObjectId(reviewID) } } }, doctor);
 
 
 

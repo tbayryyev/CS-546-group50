@@ -95,12 +95,12 @@ const exported = {
 
     }
 
-    const updateInfo2 = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $addToSet: { reviews: newReview } });
+    // const updateInfo2 = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $addToSet: { reviews: newReview } });
 
-    if (updateInfo2.modifiedCount === 0) {
-      throw "could not add review to doctor";
-
-    }
+    // if (updateInfo2.modifiedCount === 0) {
+    //   throw "could not add review to doctor";
+    //
+    // }
 
 
     newReview._id = newReview._id.toString();
@@ -114,9 +114,9 @@ const exported = {
 
 
     const review = await reviewCollection.deleteOne({ doctorID: doctorID,userID:userID });
-    console.log(review);
+    // console.log(review);
 
-    if (review === null) {
+    if (review.modifiedCount === 0) {
       throw "no review exists with that id";
     }
 

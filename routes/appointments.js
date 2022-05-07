@@ -52,7 +52,8 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                         doctorId:doctorId,
                                         doctorName:doctorName,
                                         aptDate: aptDate, aptTime:aptTime,
-                                        authenticated:authenticateFlag
+                                        authenticated:authenticateFlag,
+                                        username:req.session.username
                                     });
         }
         catch(e){
@@ -67,7 +68,8 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
               doctorName:doctorName,
               aptDate: aptDate, aptTime:aptTime,
               authenticated:authenticateFlag,
-              hasError: true, errorMessage:errorMessage
+              hasError: true, errorMessage:errorMessage,
+              username:req.session.username
           });
             return;
         }
@@ -105,13 +107,15 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                         aptDate: aptDate, aptTime:aptTime,
                                         aptDatePrv:aptDatePrvRs,aptTimePrv:aptTimePrvRs,
                                         message:messagePrvRs, conditions:conditionsPrvRs,
-                                        authenticated:authenticateFlag});
+                                        authenticated:authenticateFlag,
+                                        username:req.session.username});
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
           //res.status(404).json(e.message);
           res.status(404).render('pages/appointmentReschedule',{hasError: true, 
-          errorMessage:errorMessage,authenticated:authenticateFlag});
+          errorMessage:errorMessage,authenticated:authenticateFlag,
+          username:req.session.username});
             return;
         }
     });
@@ -161,10 +165,19 @@ const userId = req.params.userId.trim();
 aptDateMod = '';
 aptTimeMod = '';
 conditionsMod = [];
+var authenticateFlag = false;
+
+if(!req.session.username ){
+  throw "No User Logged in";
+}
+else{
+  authenticateFlag = true;
+}
 
 const { userFullName,doctorName,doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
 console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
 " aptTime : "+aptTime+" message :"+message+" conditions : "+conditions)
+
   if (!doctorId || !aptDate || !aptTime || !message || !conditions ) {
 
     //res.status(400).json(JSON.stringify({ error: 'All fields need to have valid values' }));
@@ -172,7 +185,9 @@ console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
     res.status(400).render('pages/appointments',{hasError: true,userId:userId,
       userFullName:userFullName,doctorName:doctorName,
       doctorId:doctorId,aptDate:aptDate,aptTime:aptTime,message:message,conditions:conditions,
-       errorMessage : 'All fields need to have valid values'});
+       errorMessage : 'All fields need to have valid values',
+       authenticated:authenticateFlag,
+       username:req.session.username});
        
     return;
   }
@@ -264,24 +279,34 @@ router.route('/:id')
                                                   message:appointmentRSI.message,
                                                   conditions:appointmentRSI.conditions,
                                                   rescheduleFlag:true,
-                                                  authenticated:authenticateFlag});
+                                                  authenticated:authenticateFlag,
+                                                  username:req.session.username});
         }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
          // res.status(404).json(errorMessage);
           res.status(404).render('pages/appointmentReschedule',{hasError: true, 
             errorMessage:errorMessage,
-            authenticated:authenticateFlag});
+            authenticated:authenticateFlag,
+            username:req.session.username});
           return;
         }
     });
 
     router.route('/update/:id')
     .post(async (req,res) =>{
+
+      var authenticateFlag = false;
       const objId = req.params.id.trim();
       if (!ObjectId.isValid(objId)) {
         res.status(400).json({ error: 'Invalid ObjectId' });
         return;
+    }
+    if (!req.session.username) {
+      "No user logged in";
+    }
+    else{
+      authenticateFlag = true;
     }
 
     try{
@@ -301,7 +326,10 @@ router.route('/:id')
 
       if (!aptDate || !aptTime || !aptDatePrv || !aptTimePrv ) {
         //res.status(400).json({ error: 'All fields need to have valid values' });
-        res.status(404).render('pages/appointmentReschedule',{hasError: true, errorMessage : 'All fields need to have valid values'});
+        res.status(404).render('pages/appointmentReschedule',{hasError: true, 
+          errorMessage : 'All fields need to have valid values',
+          authenticated:authenticateFlag,
+          username:req.session.username});
         return;
       }
 
@@ -430,14 +458,16 @@ router.route('/:id')
                                             doctorId :doctorId,rescheduleFlag:true,aptDatePrv:aptDate,
                                             aptTimePrv:aptTime,
                                             messagePrv:message,conditionsPrv:conditions,doctorRSI,
-                                            authenticated:authenticateFlag});
+                                            authenticated:authenticateFlag,
+                                            username:req.session.username});
                                           }
         catch(e){
           const errorMessage = typeof e === 'string' ? e : e.message;
           //res.status(404).json(errorMessage);
           res.status(404).render('pages/indivDoctor',{hasError: true, 
             errorMessage:errorMessage,
-            authenticated:authenticateFlag});
+            authenticated:authenticateFlag,
+            username:req.session.username});
           //Commented below for integration of doc clendar with doc home page
           /* res.status(400).render('pages/doctorcalendar',{title:'Doctor Home Page',
                                           appointmentId:appointmentId,

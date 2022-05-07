@@ -52,16 +52,29 @@
 <div class="apt_error_span">
     {{#if hasError}}
     <label for="doctorId"></label>
+    {{#if doctorId}}
+    <input id="doctorId" type="text" name="doctorId" placeholder="" value={{doctorId}} hidden>
+    {{else}}
     <input id="doctorId" type="text" name="doctorId" placeholder="" value="" hidden>
+    {{/if}}
     <label for="userId"></label>
+    {{#if userId}}
+    <input id="userId" type="text" name="userId" placeholder="" value={{userId}} hidden>
+    {{else}}
     <input id="userId" type="text" name="userId" placeholder="" value="" hidden>
-
+    {{/if}}
+    {{#if appointmentId}}
+    <input id="appointmentId" type="text" name="appointmentId" placeholder={{appointmentId}} value="" hidden>
+    {{else}}
     <input id="appointmentId" type="text" name="appointmentId" placeholder="" value="" hidden>
-
+    {{/if}}
     <div>
         <label class="apointmentLable" for="doctorName">Doctor</label>
-
+        {{#if doctorName}}
+        <input id="doctorName" type="text" name="doctorName" placeholder="" value="{{doctorName}}" readonly>
+        {{else}}
         <input id="doctorName" type="text" name="doctorName" placeholder="" value="" readonly>
+        {{/if}}
     </div>
     <div>
         {{#if aptDatePrv}}
@@ -72,8 +85,16 @@
     </div>
     <div class="apointmentDiv">
         <label class="apointmentLable" for="aptDate">DateTime </label>
+        {{#if aptDate}}
+        <input id="aptDate" type="text" name="aptDate" value={{aptDate}} readonly>
+        {{else}}
         <input id="aptDate" type="text" name="aptDate" value="" readonly>
+        {{/if}}
+        {{#if aptTime}}
+        <input id="aptTime" type="text" name="aptTime" value={{aptTime}} readonly>
+        {{else}}
         <input id="aptTime" type="text" name="aptTime" value="" readonly>
+        {{/if}}
 
         {{#if rescheduleFlag}}
         <button class="btn btn-primary btn-sm" type="submit" formmethod="POST"
@@ -82,11 +103,19 @@
     </div>
     <div class="apointmentDiv">
         <label class="apointmentLable" for="message">Message </label>
+        {{#if message}}
+        <input id="message" type="text" name="message" placeholder="" value="{{message}}" readonly>
+        {{else}}
         <input id="message" type="text" name="message" placeholder="" value="" readonly>
+        {{/if}}
     </div>
     <div class="apointmentDiv">
         <label class="apointmentLable" for="conditions">Conditions </label>
+        {{#if conditions}}
+        <input id="conditions" type="text" name="conditions" placeholder="" value="{{conditions}}" readonly>
+        {{else}}
         <input id="conditions" type="text" name="conditions" placeholder="" value="" readonly>
+        {{/if}}
     </div>
 
     <span class="apt_error_class">Error:{{errorMessage}}</span>

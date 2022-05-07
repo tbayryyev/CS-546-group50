@@ -37,11 +37,11 @@
 
   $('.btn-primary-appointment-delete-button').click(function (event) {
     try{
-      //var button_id = $(this).attr('id');
+      
       var deleteButtonFormAction = $(this).attr('value');       
       //alert("deleteButtonFormAction : "+ deleteButtonFormAction);
 
-      if(confirm("Are you sure you want to delete")){
+      if(confirm("Are you sure you want to cancel")){
         var requestConfigSFS = {
           method: 'DELETE',
          url: deleteButtonFormAction

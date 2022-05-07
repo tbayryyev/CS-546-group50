@@ -10,9 +10,9 @@ router
     .route('/addComment/:reviewID/:doctorID')
     .post(async (req, res) => {
         try {
-            let reviewId = validation.checkId(req.params.reviewID, "reviewID");
-            let commentText = validation.checkString(req.body.commentText, "commentText");
-            let docID = validation.checkId(req.params.doctorID, "doctorID");
+            var reviewId = validation.checkId(req.params.reviewID, "reviewID");
+            var commentText = validation.checkString(req.body.commentText, "commentText");
+            var docID = validation.checkId(req.params.doctorID, "doctorID");
 
             if (req.session.username) {
                 const user = await userData.getUserByUsername(req.session.username);
@@ -27,7 +27,8 @@ router
 
 
             } else {
-                res.status(401).send("You must be logged in to post a comment");
+                res.render('pages/error_review', { authenticated: false, errorMessage: "You must be logged in to make a comment on the review", doctorID: docID })
+
                 return;
 
             }
@@ -35,7 +36,7 @@ router
 
 
         } catch (e) {
-            res.status(404).json({ error: e });
+            res.render('pages/error', { authenticated: false, errorMessage: e })
             return;
 
         }
@@ -64,7 +65,8 @@ router
 
 
             } else {
-                res.status(401).send("You must be logged in to like a comment");
+                res.render('pages/error_review', { authenticated: false, errorMessage: "You must be logged in to like a comment on the review", doctorID: docID })
+
                 return;
 
             }
@@ -72,7 +74,8 @@ router
 
 
         } catch (e) {
-            res.status(404).json({ error: e });
+            res.render('pages/error', { authenticated: false, errorMessage: e })
+
             return;
 
         }
@@ -101,7 +104,7 @@ router
 
 
             } else {
-                res.status(401).send("You must be logged in to dislike a comment");
+                res.render('pages/error_review', { authenticated: false, errorMessage: "You must be logged in to dislike a comment on the review", doctorID: docID })
                 return;
 
             }
@@ -109,7 +112,7 @@ router
 
 
         } catch (e) {
-            res.status(404).json({ error: e });
+            res.render('pages/error', { authenticated: false, errorMessage: e })
             return;
 
         }

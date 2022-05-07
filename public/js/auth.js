@@ -200,6 +200,15 @@ searchFrom.submit((event) => {
     searchTerm = searchTerm.trim();
     // Replaces spaces with _
     searchTerm =  searchTerm.replace(' ', "_");
+    // Converts searchTerm to lowercase to make search case insensitive
+    searchTerm = searchTerm.toLowerCase();
+    // Declares a variable named lastChar and sets it equal to the last char in searchTerm
+    let lastChar = searchTerm.charAt(searchTerm.length - 1).toLowerCase();
+    // Checks if last char is an s
+    if (lastChar === "s") {
+        // Removes s from searchTerm
+        searchTerm = searchTerm.slice(0, -1);
+    }
     // Check if searchTerm is not undefined
     if (searchTerm) {
         // Declares a variable called requestConfig and sets it to the request parameters

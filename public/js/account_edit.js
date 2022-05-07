@@ -102,6 +102,31 @@ function resetProfilePictureForm() {
 function resetEditAccountForm() {
     // Resets profilePictureForm
     editAccountForm.trigger('reset');
+    // Resets all edit account errors
+    resetEditAccountErrors();
+}
+
+function resetEditAccountErrors() {
+    // Resets first_name errors
+    resetFieldError("edit_first_name");
+    // Resets last_name errors
+    resetFieldError("edit_last_name");
+    // Resets email errors
+    resetFieldError("edit_email");
+    // Resets sign_up_username errors
+    resetFieldError("edit_username");
+    // Resets phone_number errors
+    resetFieldError("edit_phone_number");
+    // Resets date_of_birth errors
+    resetFieldError("edit_date_of_birth");
+    // Resets address errors
+    resetFieldError("edit_address");
+    // Resets city errors
+    resetFieldError("edit_city");
+    // Resets state errors
+    resetFieldError("edit_state");
+    // Resets zip errors
+    resetFieldError("edit_zip");
     // Hides request error
     editAccountRequestErrorDiv.hide();
 }

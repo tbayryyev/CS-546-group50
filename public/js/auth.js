@@ -856,7 +856,7 @@ loginForm.submit((event) => {
                     // Adds username to usernameBtn
                     usernameBtn.html(apiResponse.username);
                     // Adds url to patient item in dropdown
-                    $('#patient_page_link').attr("href", `/appointments/userappointmentlist/${apiResponse.userId}`)
+                    $('#patient_page_link').attr("href", `/appointments/userappointmentlist/${apiResponse.userId}`);
                 }
             }
         }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -893,10 +893,14 @@ logoutLink.click(function(e) {
             userDropdown.attr('hidden', true);
             // Show auth buttons
             authBtns.attr('hidden', false);
-            // authBtns.show();
             // Checks if user is on edit account page
             let pathname = window.location.pathname;
-            if (pathname == '/account/edit') {
+            // Splits the path based on /
+            let pathArr = pathname.split('/');
+            // Reconfigures the path
+            let basePath = `/${pathArr[1]}/${pathArr[2]}/`;
+            // Checks if user is on edit account page or patient page
+            if (pathname == '/account/edit' || basePath == '/appointments/userappointmentlist/') {
                 // Redirects to home page
                 window.location.replace("/");
             }

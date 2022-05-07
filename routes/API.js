@@ -10,7 +10,7 @@ router
             const specialities = await doctorData.getAllSpecialities();
             const topDoctors = await doctorData.highestRatedDoctor(specialities);
             if (req.session.username) {
-                res.render('pages/home_page', { docs: topDoctors, authenticated: true, username: req.session.username});
+                res.render('pages/home_page', { docs: topDoctors, authenticated: true, username: req.session.username, userId: req.session.userId});
             } else {
                 res.render('pages/home_page', { docs: topDoctors, authenticated: false});
             }

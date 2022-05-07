@@ -366,10 +366,12 @@ router.post('/login', async (req, res) => {
             let user = response.user
             // Saves the username
             req.session.username = user.username;
-
+            // Saves user id
+            req.session.userId = user._id.toString()
             // Declares a variable called returnJSON and sets it equal to the object that will be returned
             let returnJSON = {
                 username: user.username,
+                userId: user._id.toString(),
                 authenticated: true
             }
             // Return json {"username": username"authenticated": true} telling the front-end that the user was authenticated
@@ -458,13 +460,11 @@ router.get('/edit', async (req, res) => {
             let phoneNumber = user.phoneNumber;
             // Declares a variable named formattedPhoneNumber and sets it equal to user's phone number in the format (xxx) xxx-xxxx
             let formattedPhoneNumber = `(${phoneNumber.substring(0, 3)}) ${phoneNumber.substring(3, 6)}-${phoneNumber.substring(6, 10)}`;
-            let states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
             // Returns the edit_account handlebar with the users information
-            return res.render('pages/edit_account', { authenticated: true, username: user.username, states: states, user: userObj, formattedDateOfBirth: formattedDateOfBirth, formattedPhoneNumber: formattedPhoneNumber, jsURL: '/public/js/account_edit.js' });
+            return res.render('pages/edit_account', { authenticated: true, username: user.username, userId: req.session.userId, user: userObj, formattedDateOfBirth: formattedDateOfBirth, formattedPhoneNumber: formattedPhoneNumber, jsURL: '/public/js/account_edit.js' });
         } catch (e) {
-            // Handle error
-            console.log(e);
-
+            // Return status code 500
+            return res.status(500).json({ error: "Internal Server Error" });
         }
     } else {
         // Redirect to home page
@@ -753,7 +753,6 @@ router.post('/upload-profile-picture', upload.single('image'), async function (r
                 return res.status(500).json(JSON.stringify(response));
             }
         } catch (e) {
-            console.log(e);
             return res.status(500).json(JSON.stringify({ error: "Internal Server Error" }));
         }
     } else {

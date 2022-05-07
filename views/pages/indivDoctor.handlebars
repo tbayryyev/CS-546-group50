@@ -32,15 +32,21 @@
     <dd>Doctor has not been rated yet</dd>
     {{/if}}
     <dt>Reviews</dt>
-    {{#if doctor.reviews.length}}
+    {{#if reviews.length}}
     <ul>
-        {{#each doctor.reviews }}
+        {{#each reviews }}
         <li class="reviews">
             <h3 class="userName">Username: {{this.username}}</h3>
 
             <p class="Rating">Rating: {{this.rating}} Stars</p>
 
             <p class="reviewText">ReviewText: {{this.reviewText}}</p>
+
+            <form action="/doctor/deleteReview" method="POST" id="deleteReview">
+              <input type="hidden" name="doctorID" value={{this.doctorID}} />
+              <input type="hidden" name="userID" value={{this.userID}} />
+              <button type="submit" >Delete Review</button>
+            </form>
 
             {{#if this.comments.length}}
             <p class="commentLabel">Comments:</p>
@@ -64,6 +70,7 @@
                         method="POST" id="new-like">
                         <button type="submit" class="dislike">Dislike</button>
                     </form>
+
 
 
                 </li>

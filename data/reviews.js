@@ -108,12 +108,19 @@ const exported = {
 
 
   },
-  // addLikeReview: async (doctorID, userID) => {
-  //
-  // },
-  // addDislikeReview: async (doctorID, userID) => {
-  //
-  // }
+  deleteReview: async (doctorID,userID) => {
+    const reviewCollection = await REVIEWS();
+    const reviews = await reviewCollection.find({}).toArray();
+
+
+    const review = await reviewCollection.deleteOne({ doctorID: doctorID,userID:userID });
+    console.log(review);
+
+    if (review === null) {
+      throw "no review exists with that id";
+    }
+
+  }
 
 
 

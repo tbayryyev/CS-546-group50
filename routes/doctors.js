@@ -20,10 +20,11 @@ router.get('/:doctorId', async (req, res) => {
     return;
   }
   const info = await doctorData.getDoctor(doctorId);
+  const reviewInfo = await reviewData.getReviews(doctorId)
   if (req.session.username) {
-    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username, userId: req.session.userId });
+    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username, userId: req.session.userId,reviews:reviewInfo });
   } else {
-    res.render('pages/indivDoctor', { doctor: info, authenticated: false });
+    res.render('pages/indivDoctor', { doctor: info, authenticated: false,reviews:reviewInfo });
   }
   return;
 });
@@ -63,6 +64,39 @@ router.post('/addReview',async(req,res) => {
   }catch (e){
     res.status(404).json({ error: e });
   }
+})
+
+
+router.post("/deleteReview", async(req,res) => {
+  // try{
+    // console.log();
+    if (req.session.username) {
+      let userID = await userData.getUserByUsername(req.session.username)
+      let checkuserID = validation.checkId(req.body.userID,"userID");
+      let doctorID = validation.checkId(req.body.doctorID, "doctorID");
+      console.log("validated");
+      // console.log();
+      if (userID._id.toString() == checkuserID){
+          const review = await reviewData.deleteReview(doctorID, userID._id.toString());
+
+          let url = '/doctor/' + doctorID
+          res.redirect(url);
+          return;
+
+      }else{
+        res.status(401).send("You can not delete a comment that is not your own");
+        return;
+
+      }
+
+    } else {
+      res.status(401).send("You must be logged in to delete a review")
+      return;
+    }
+  // }catch (e){
+  //   console.log(req.body);
+  //   res.status(404).json({ error: e });
+  // }
 })
 
 

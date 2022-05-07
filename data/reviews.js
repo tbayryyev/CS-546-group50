@@ -87,7 +87,7 @@ const exported = {
       rating1 = rating1 / count;
       rating1 = rating1.toPrecision(2);
       const updateInfo = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $set: { rating: rating1 } });
-      if (updateInfo.modifiedCount === 0) {
+      if (updateInfo.matchedCount === 0) {
         throw "could not add rating to doctor";
 
       }

@@ -4,6 +4,7 @@ const USERS = mongoCollections.users;
 const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
+const moment = require('moment');
 
 
 
@@ -104,6 +105,18 @@ const exported = {
         if (!(/^\d+$/.test(zip)) || zip.length != 5) {
             throw "invalid zip";
         }
+//For doctor calender
+        timeSlots = [];
+        tm_val = ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00"]
+        
+        curDate =  new Date();
+        var startDate =  curDate.setDate(curDate.getDate() + 1);
+        const endDate =  curDate.setDate(curDate.getDate() + 7);
+        
+        while (startDate < endDate){
+            timeSlots.push({"dt":moment(startDate).format('MM-DD-YYYY'),"tm":tm_val});
+            startDate = startDate + 86400000
+        }
 
         const doctorCollection = await DOCTORS();
 
@@ -119,7 +132,8 @@ const exported = {
             city: city,
             state: state,
             zip: zip,
-            rating: 0
+            rating: 0,
+            timeSlots: timeSlots
 
         }
 

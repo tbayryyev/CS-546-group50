@@ -139,14 +139,16 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
                                     userEmail: userRS.email,
                                     userPhoneNumber:userRS.phoneNumber,
                                   userProfilePicture:userRS.profilePicture,
-                                  authenticated:authenticateFlag});
+                                  authenticated:authenticateFlag,username:req.session.username
+                                });
         }
         catch(e){
             const errorMessage = typeof e === 'string' ? e : e.message;
             //res.status(404).json(e.message);
             res.status(404).render('pages/patients',{hasError: true, 
               errorMessage:errorMessage,
-              authenticated:authenticateFlag});
+              authenticated:authenticateFlag,
+              username:req.session.username});
             return;
         }
     });
@@ -297,7 +299,7 @@ router.route('/:id')
 
     const { aptDatePrv,aptTimePrv,aptDate,aptTime } = putAppointmentData;
 
-      if (!aptDate || !aptTime  ) {
+      if (!aptDate || !aptTime || !aptDatePrv || !aptTimePrv ) {
         //res.status(400).json({ error: 'All fields need to have valid values' });
         res.status(404).render('pages/appointmentReschedule',{hasError: true, errorMessage : 'All fields need to have valid values'});
         return;

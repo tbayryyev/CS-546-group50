@@ -12,69 +12,92 @@
 
 <body>
     <main>
+        {{#if authenticated}}
         {{!-- Nav Bar --}}
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a id="nav_title" class="navbar-brand" href="/">Find a Doctor</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form id="search_form" class="d-flex">
-        <input id="search_term" class="form-control me-2" type="search" placeholder="Enter a speciality" aria-label="Search">
-        <button id="search_btn" class="btn btn-dark" type="submit" disabled>Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
-        {{#if authenticated}}
-        {{! Auth Buttons }}
-        <div id="auth_btns" class="top_corner" hidden>
-            <div class="container">
-                <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                    data-bs-target="#login-modal">Log In</button>
-                <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                    data-bs-target="#sign-up-modal">Sign
-                    Up</button>
+            <div class="container-fluid">
+                <a id="nav_title" class="navbar-brand" href="/">Find a Doctor</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form id="search_form" class="d-flex">
+                        <input id="search_term" class="form-control me-2" type="search" placeholder="Enter a speciality"
+                            aria-label="Search">
+                        <button id="search_btn" class="btn btn-dark" type="submit" disabled>Search</button>
+                    </form>
+                </div>
+                {{! Auth Buttons }}
+                <div id="auth_btns" class="nav-item" hidden>
+                    <div class="container">
+                        <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#login-modal">Log In</button>
+                        <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#sign-up-modal">Sign
+                            Up</button>
+                    </div>
+                </div>
+                {{! Username Dropdown }}
+                <div id="user_dropdown_div" class="nav-item">
+                    <div id="user_dropdown" class="dropdown">
+                        <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">{{username}}</button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
+                            <li><a id="patient_page_link" class="dropdown-item"
+                                    href="/appointments/userappointmentlist/{{userId}}">Patient Page</a></li>
+                            <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-        </div>
-        {{! Username Dropdown }}
-        <div id="user_dropdown_div" class="top_corner">
-            <div id="user_dropdown" class="dropdown">
-                <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">{{username}}</button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
-                    <li><a id="patient_page_link" class="dropdown-item" href="/appointments/userappointmentlist/{{userId}}">Patient Page</a></li>
-                    <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
-                </ul>
-            </div>
-        </div>
+        </nav>
         {{else}}
-        {{! Auth Buttons }}
-        <div id="auth_btns" class="top_corner">
-            <div class="container">
-                <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                    data-bs-target="#login-modal">Log In</button>
-                <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                    data-bs-target="#sign-up-modal">Sign
-                    Up</button>
+        {{!-- Nav Bar --}}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a id="nav_title" class="navbar-brand" href="/">Find a Doctor</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form id="search_form" class="d-flex">
+                        <input id="search_term" class="form-control me-2" type="search" placeholder="Enter a speciality"
+                            aria-label="Search">
+                        <button id="search_btn" class="btn btn-dark" type="submit" disabled>Search</button>
+                    </form>
+                </div>
+                {{! Auth Buttons }}
+                <div id="auth_btns">
+                    <div class="container">
+                        <button id="login_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#login-modal">Log In</button>
+                        <button id="sign_up_btn" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#sign-up-modal">Sign
+                            Up</button>
+                    </div>
+                </div>
+                {{!-- User Dropdown --}}
+                <div id="user_dropdown_div" hidden>
+                    <div id="user_dropdown" class="dropdown">
+                        <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false"></button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
+                            <li><a id="patient_page_link" class="dropdown-item" href="#">Patient Page</a></li>
+                            <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
-        </div>
-
-        {{!-- User Dropdown --}}
-        <div id="user_dropdown_div" class="top_corner" hidden>
-            <div id="user_dropdown" class="dropdown">
-                <button id="username_btn" class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"></button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/account/edit">Edit Account</a></li>
-                    <li><a id="patient_page_link" class="dropdown-item" href="#">Patient Page</a></li>
-                    <li><a id="logout_link" class="dropdown-item" href="/account/logout">Logout</a></li>
-                </ul>
-            </div>
-        </div>
+        </nav>
         {{/if}}
+
+        {{{body}}}
 
         {{!-- Loading Spinner --}}
         <div id="loading_spinner" class="overlay" style="display: none">
@@ -115,7 +138,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title w-100 text-center" id="loginModalLabel">Log In</h5>
+                        <h2 class="modal-title w-100 text-center" id="loginModalLabel">Log In</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -152,7 +175,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title w-100 text-center" id="sign_up_modal_label">Sign Up</h5>
+                        <h2 class="modal-title w-100 text-center" id="sign_up_modal_label">Sign Up</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -248,7 +271,6 @@
                 </div>
             </div>
         </div>
-        {{{body}}}
     </main>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

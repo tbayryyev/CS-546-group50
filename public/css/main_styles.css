@@ -95,6 +95,11 @@ background-color: hsl(226, 82%, 56%) !important;
     display: inline-block;
     width: 120px;
   }
+  #viewModalLabel,#docCalendarIndivPg{
+    font-size: 22px;
+    text-decoration: none; 
+    color: purple;
+  }
   .doc_calendar_li{
 
     color: red;
@@ -408,7 +413,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .heading {
-  color: orange;
+  color: #ce8400;
   text-decoration: wavy;
   font-size: 20pt;
 }

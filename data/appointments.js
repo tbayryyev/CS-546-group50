@@ -75,7 +75,24 @@ if(mode === "pull"){
       { returnDocument: "after" }
     );
   }
-
+  /*
+  for (let x of docUpdtOne.value.timeSlots){
+    var tmpTm = [];
+    if(x.dt > max_date){
+      max_date = x.dt;
+    }
+   if(x.dt >= curDateStr()){
+     for (let arrTmElement of x.tm){
+       if(new Date(x.dt+" "+arrTmElement) > new Date()) {
+        tmpTm.push(arrTmElement);
+       }
+     }
+     console.log("tmpTm : "+tmpTm);
+      resArray.push({"dt":x.dt,
+     "tm":sortDistinctArray(tmpTm)} );
+    }
+  }
+  */
   for (let x of docUpdtOne.value.timeSlots){
 
     if(x.dt > max_date){
@@ -360,5 +377,9 @@ module.exports = {
           return result;
     },
       errChkIsString,
-      errChkStringIsEmpty
+      errChkStringIsEmpty,
+      addDaysdateStr,
+      curDateStr,
+      sortDistinctArray
+      
 }

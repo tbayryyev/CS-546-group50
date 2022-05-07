@@ -23,6 +23,7 @@
     <div class="apointmentDiv">
         <label class="apointmentLable" for="aptDate">DateTime </label>
         <input id="aptDate" type="text" name="aptDate" value={{aptDate}} readonly>
+        <label  for="aptTime"></label>
         <input id="aptTime" type="text" name="aptTime" value={{aptTime}} readonly>
 
         {{#if rescheduleFlag}}
@@ -90,6 +91,7 @@
         {{else}}
         <input id="aptDate" type="text" name="aptDate" value="" readonly>
         {{/if}}
+        <label  for="aptTime"></label>
         {{#if aptTime}}
         <input id="aptTime" type="text" name="aptTime" value={{aptTime}} readonly>
         {{else}}

@@ -5,10 +5,38 @@ const DOCTORS = mongoCollections.doctors;
 let { ObjectId } = require('mongodb');
 const validation = require('../validation');
 const moment = require('moment');
+const appointmentData = require('../data/appointments');
 
+const refreshDoctorCalendar = function refreshDoctorCalendar  (docOne){
+resArray = [];
+max_date = "";
+for (let x of docOne.timeSlots){
+    var tmpTm = [];
+    if(x.dt > max_date){
+      max_date = x.dt;
+    }
+   if(x.dt >= appointmentData.curDateStr()){
+     for (let arrTmElement of x.tm){
+       if(new Date(x.dt+" "+arrTmElement) > new Date()) {
+        tmpTm.push(arrTmElement);
+       }
+     }
+     //console.log("tmpTm : "+tmpTm);
+      resArray.push({"dt":x.dt,
+     "tm":appointmentData.sortDistinctArray(tmpTm)} );
+    }
+  }
+  if(resArray.length < 7){
+    resArray.push({"dt":appointmentData.addDaysdateStr(max_date,1),"tm":["08:00","09:00","10:00",
+                                                          "11:00","12:00","13:00",
+                                                          "14:00","15:00","16:00"]})
+  }
+  return resArray;
 
+}
 
 const exported = {
+   /*
     getDoctor: async (doctorId) => {
         doctorId = validation.checkId(doctorId, "doctorId");
         const doctorCollection = await DOCTORS();
@@ -17,6 +45,25 @@ const exported = {
         doctor._id = doctor._id.toString();
         return doctor;
     },
+    */
+   //Commented the above getDoctor(doctorId) method, to accomodate the refresh of doctor calander 
+   //during the doctor fetch in the below method
+    getDoctor: async (doctorId) => {
+        doctorId = validation.checkId(doctorId, "doctorId");
+        const doctorCollection = await DOCTORS();
+        const doctorOne = await doctorCollection.findOne({ _id: ObjectId(doctorId) });
+        if (doctorOne === null || doctorOne === undefined) throw 'No doctor with that id';
+        const timeSlotArr = refreshDoctorCalendar(doctorOne);
+        const doctor = await doctorCollection.findOneAndUpdate(
+            { _id: ObjectId(doctorId)},
+            { $set: {"timeSlots" : timeSlotArr}},
+            { returnDocument: "after" }
+          );
+        //console.log("Refreshed Doctor calander : "+JSON.stringify(doctor))
+        doctor.value._id = doctor.value._id.toString();
+        return doctor.value;
+    },
+
     createDoctor: async (name, profilePicture, speciality, about, languages, address, city, state, zip) => {
 
         if (!name) {

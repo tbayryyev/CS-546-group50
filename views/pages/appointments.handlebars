@@ -13,6 +13,7 @@
 <div class="apointmentDiv">
 <label class = "apointmentLable" for="aptDate">DateTime  </label>
 <input id="aptDate" type="text" name="aptDate"  value = {{aptDate}} readonly>
+<label for="aptTime"></label>
 <input id="aptTime" type="text" name="aptTime"  value = {{aptTime}} readonly>
 
 {{#if rescheduleFlag}}
@@ -67,6 +68,7 @@
 {{else}}
 <input id="aptDate" type="text" name="aptDate"  value = "" readonly>
 {{/if}}
+<label for="aptTime"></label>
 {{#if aptTime}}
 <input id="aptTime" type="text" name="aptTime"  value = {{aptTime}} readonly>
 {{else}}
@@ -79,15 +81,21 @@
 </div>
 <div class="apointmentDiv">
 <label class = "apointmentLable" for="message">Message</label>
-
-<input id="message" type="text" name="message" placeholder=""   >
-
+{{#if message}}
+<input id="message" type="text" name="message" placeholder=""  value = "{{message}}"  >
+{{else}}
+<input id="message" type="text" name="message" placeholder=""   value ="" >
+{{/if}}
 </div>
 
 <div class="apointmentDiv">
 <label class = "apointmentLable" for="conditions">Conditions </label>
 
-<input id="conditions" type="text" name="conditions" placeholder=""   >
+{{#if conditions}}
+<input id="conditions" type="text" name="conditions" placeholder=""  value = "{{conditions}}"  >
+{{else}}
+<input id="conditions" type="text" name="conditions" placeholder=""   value ="" >
+{{/if}}
 
 </div>
 <button class="btn btn-primary btn-sm" type="submit">Book</button>

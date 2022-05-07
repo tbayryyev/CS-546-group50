@@ -50,8 +50,9 @@
 {{/unless}}
 
 <!-- Error Part-->
+ {{#if hasError}}
 <div class="apt_error_span">
-    {{#if hasError}}
+   
     <label for="doctorId"></label>
     {{#if doctorId}}
     <input id="doctorId" type="text" name="doctorId" placeholder="" value={{doctorId}} hidden>

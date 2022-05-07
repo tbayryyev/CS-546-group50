@@ -26,7 +26,7 @@ label.commentLabel{
 .speciality {
     text-decoration: none;
     background-color: white;
-    color: red;
+    color: #ee0000;
 }
 
 .name {
@@ -41,7 +41,7 @@ a:hover {
 }
 
 h2{
-    color: orange;
+    color: #ce8400;
     text-decoration: wavy;
     font-size: 20pt;
 }
@@ -66,7 +66,7 @@ p{
 
 button{
     color: white;
-    background: red;
+    background: #ee0000;
 }
 .btn-primary-appointment-view-button,
 .btn-primary-appointment-delete-button,
@@ -85,7 +85,7 @@ background-color: hsl(226, 82%, 56%) !important;
 .apt_error_class {
     font-family: Georgia, "Times New Roman", Times, serif;
     font-size: 14px;
-    color: rgb(241, 8, 8);
+    color: #ee0000;
    }
    div.apointmentDiv {
     margin-bottom: 15px;
@@ -132,6 +132,9 @@ background-color: hsl(226, 82%, 56%) !important;
   #patientPic {
     width: 50%;
     height: auto;
+  }
+  #aptPatientHomeTitle{
+    color:#ce8400;
   }
 li{
     list-style-type:square;

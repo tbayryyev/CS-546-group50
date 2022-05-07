@@ -51,7 +51,7 @@
 </div>
 
 
-<h1><small>{{title}}</small></h1>
+<h2 id="aptPatientHomeTitle"><small>{{title}}</small></h2>
 
 {{#if success}}
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -89,7 +89,7 @@
 <form id="appointmentListForm">
     {{#if appointmentResultSet.length}}
     
-    <h2 class="furtureApt"><strong> Future Appointments</strong></h2>
+    <h3 class="furtureApt"> Future Appointments</h3>
      <table class="patientAppointmentTable">
          <tr>
            <th>Date</th>
@@ -113,7 +113,7 @@
         {{/ifDateCompare}}
         {{/each}}
         </table>
-        <h2 class="pastApt"><strong> Past Appointments</strong></h2>
+        <h3 class="pastApt"> Past Appointments</h3>
         <table class="patientAppointmentTable">
          <tr>
            <th>Date</th>

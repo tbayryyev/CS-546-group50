@@ -1,4 +1,6 @@
-<a class="speciality" href="/doctor/speciality/{{doctor.speciality}}">{{doctor.speciality}}</a>
+<h1>
+    <a class="speciality" href="/doctor/speciality/{{doctor.speciality}}">{{doctor.speciality}}</a>
+</h1>
 <dl>
     <dt class="name">{{doctor.name}}</dt>
     <dd>
@@ -41,7 +43,7 @@
         <ul>
             {{#each reviews }}
             <li class="reviews">
-                <h3 class="userName">Username: {{this.username}}</h3>
+                <p class="userName">Username: {{this.username}}</p>
 
                 <p class="Rating">Rating: {{this.rating}} Stars</p>
 
@@ -114,7 +116,7 @@
     </div>
 </dl>
 <!--- Doc calendar integrated with doctor hompage-->
-<h4 id="docCalendarIndivPg">Doctor calendar</h4>
+<h2 id="docCalendarIndivPg">Doctor calendar</h2>
 
     <form>
 

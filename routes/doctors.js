@@ -85,7 +85,7 @@ router.post("/deleteReview", async (req, res) => {
       return;
 
     } else {
-      res.status(401).send("You can not delete a comment that is not your own");
+      res.status(401).send("You can not delete a review that is not your own");
       return;
 
     }

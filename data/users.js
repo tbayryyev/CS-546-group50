@@ -100,10 +100,7 @@ module.exports = {
             state: state,
             zip: zip,
             phoneNumber: phoneNumber,
-            hashedPassword: hashedPassword,
-            appointments: [],
-            reviews: [],
-            comment: []
+            hashedPassword: hashedPassword
         }
         
         // Adds newUser to the user collection

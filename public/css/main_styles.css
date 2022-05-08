@@ -27,6 +27,8 @@ label.commentLabel{
     text-decoration: none;
     background-color: white;
     color: #ee0000;
+    text-transform: capitalize;
+    font-size: 18pt;
 }
 
 .name {

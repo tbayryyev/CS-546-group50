@@ -23,9 +23,9 @@ router.get('/:doctorId', async (req, res) => {
   const info = await doctorData.getDoctor(doctorId);
   const reviewInfo = await reviewData.getReviews(doctorId)
   if (req.session.username) {
-    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username, userId: req.session.userId,reviews:reviewInfo });
+    res.render('pages/indivDoctor', { doctor: info, authenticated: true, username: req.session.username, userId: req.session.userId, reviews: reviewInfo });
   } else {
-    res.render('pages/indivDoctor', { doctor: info, authenticated: false,reviews:reviewInfo });
+    res.render('pages/indivDoctor', { doctor: info, authenticated: false, reviews: reviewInfo });
   }
   return;
 });
@@ -44,14 +44,14 @@ router.get('/speciality/:speciality', async (req, res) => {
   }
 });
 
-router.post('/addReview',async(req,res) => {
-  try{
+router.post('/addReview', async (req, res) => {
+  try {
     if (req.session.username) {
       let doctorID = validation.checkId(xss(req.body.doctorID), "doctorID");
       let reviewText = validation.checkString(xss(req.body.reviewText), "reviewText");
       let userID = await userData.getUserByUsername(req.session.username)
       // console.log(userID._id.toString());
-      let rating = validation.errorCheckingFunc("rating",Number(xss(req.body.rating)),'number');
+      let rating = validation.errorCheckingFunc("rating", Number(xss(req.body.rating)), 'number');
       // console.log(userID);
       const review = await reviewData.createReview(doctorID, reviewText, userID._id.toString(), rating);
 
@@ -62,38 +62,38 @@ router.post('/addReview',async(req,res) => {
       res.status(401).send("You must be logged in to post a review")
       return;
     }
-  }catch (e){
+  } catch (e) {
     res.status(404).json({ error: e });
   }
 })
 
 
-router.post("/deleteReview", async(req,res) => {
+router.post("/deleteReview", async (req, res) => {
   // try{
+  // console.log();
+  if (req.session.username) {
+    let userID = await userData.getUserByUsername(req.session.username)
+    let checkuserID = validation.checkId(xss(req.body.userID), "userID");
+    let doctorID = validation.checkId(xss(req.body.doctorID), "doctorID");
+    console.log("validated");
     // console.log();
-    if (req.session.username) {
-      let userID = await userData.getUserByUsername(req.session.username)
-      let checkuserID = validation.checkId(xss(req.body.userID),"userID");
-      let doctorID = validation.checkId(xss(req.body.doctorID), "doctorID");
-      console.log("validated");
-      // console.log();
-      if (userID._id.toString() == checkuserID){
-          const review = await reviewData.deleteReview(doctorID, userID._id.toString());
+    if (userID._id.toString() == checkuserID) {
+      const review = await reviewData.deleteReview(doctorID, userID._id.toString());
 
-          let url = '/doctor/' + doctorID
-          res.redirect(url);
-          return;
-
-      }else{
-        res.status(401).send("You can not delete a comment that is not your own");
-        return;
-
-      }
+      let url = '/doctor/' + doctorID
+      res.redirect(url);
+      return;
 
     } else {
-      res.status(401).send("You must be logged in to delete a review")
+      res.status(401).send("You can not delete a comment that is not your own");
       return;
+
     }
+
+  } else {
+    res.status(401).send("You must be logged in to delete a review")
+    return;
+  }
   // }catch (e){
   //   console.log(req.body);
   //   res.status(404).json({ error: e });
@@ -101,31 +101,6 @@ router.post("/deleteReview", async(req,res) => {
 })
 
 
-
-router
-  .route('/addComment/:reviewID')
-  .post(async (req, res) => {
-    try {
-      let reviewId = validation.checkId(req.params.reviewID, "reviewID");
-      let commentText = validation.checkString(xss(req.body.commentText), "commentText");
-
-      if (req.session.username) {
-
-
-      } else {
-        res.status(401).send("You must be logged in to post a comment")
-        return;
-
-      }
-
-
-
-    } catch (e) {
-      res.status(404).json({ error: e });
-      return;
-
-    }
-  });
 
 
 

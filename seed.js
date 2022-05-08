@@ -20,6 +20,9 @@ async function main() {
     let doctor8Id;
     let doctor9Id;
     let doctor10Id;
+    let doctor11Id;
+    let doctor12Id;
+
 
     let review1Id;
     let review2Id;
@@ -251,6 +254,7 @@ async function main() {
 
     try {
         const doc = await doctors.createDoctor("Darryl Watkins", "/public/images/DarrylWatkins.jpeg", "Pediatrician", "Graduated from Johns Hopkins University School of Medicine.", ["English"], "9720 Gonzales Drive", "Cumberland", "RI", "02864");
+        doctor12Id = doc._id;
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -259,6 +263,7 @@ async function main() {
 
     try {
         const doc = await doctors.createDoctor("Wilbert Parsons", "/public/images/WilbertParsons.jpeg", "Pediatrician", "Graduated from Louisiana State University School of Medicine.", ["English"], "129 Main Street", "Parlin", "NJ", "08859");
+        doctor11Id = doc._id;
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -294,6 +299,7 @@ async function main() {
 
     try {
         const doc = await doctors.createDoctor("Sarah Price", "/public/images/SarahPrice.jpeg", "Dermatologists", "Graduated from Louisiana State University School of Medicine.", ["English"], "45 Race Street", "Buffalo Grove", "IL", "60089");
+        doctor12Id = doc._id;
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -423,7 +429,40 @@ async function main() {
     try {
         const user = await users.getUserByUsername("Kevin12");
         let userId = user._id.toString();
-        const review = await reviews.createReview(doctor7Id, "The wait was too long.", userId, 1);
+        const review = await reviews.createReview(doctor1Id, "This office was nice.", userId, 4);
+        console.log(review);
+        review3Id = review._id.toString();
+    } catch (e) {
+        console.log("Got an error!");
+        console.log(e);
+    }
+
+    try {
+        const user = await users.getUserByUsername("JNichols");
+        let userId = user._id.toString();
+        const review = await reviews.createReview(doctor11Id, "This doctor was so friendly.", userId, 5);
+        console.log(review);
+        review3Id = review._id.toString();
+    } catch (e) {
+        console.log("Got an error!");
+        console.log(e);
+    }
+
+    try {
+        const user = await users.getUserByUsername("Mary");
+        let userId = user._id.toString();
+        const review = await reviews.createReview(doctor12Id, "The doctor was so nice.", userId, 4);
+        console.log(review);
+        review7Id = review._id.toString();
+    } catch (e) {
+        console.log("Got an error!");
+        console.log(e);
+    }
+
+    try {
+        const user = await users.getUserByUsername("Kevin12");
+        let userId = user._id.toString();
+        const review = await reviews.createReview(doctor10Id, "The wait was too long.", userId, 1);
         console.log(review);
         review7Id = review._id.toString();
     } catch (e) {

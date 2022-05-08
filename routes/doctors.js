@@ -5,6 +5,7 @@ const doctorData = Data.doctors;
 const reviewData = Data.reviews
 const userData = Data.users;
 const validation = require('../validation');
+const xss = require("xss");
 
 
 
@@ -46,11 +47,11 @@ router.get('/speciality/:speciality', async (req, res) => {
 router.post('/addReview',async(req,res) => {
   try{
     if (req.session.username) {
-      let doctorID = validation.checkId(req.body.doctorID, "doctorID");
-      let reviewText = validation.checkString(req.body.reviewText, "reviewText");
+      let doctorID = validation.checkId(xss(req.body.doctorID), "doctorID");
+      let reviewText = validation.checkString(xss(req.body.reviewText), "reviewText");
       let userID = await userData.getUserByUsername(req.session.username)
       // console.log(userID._id.toString());
-      let rating = validation.errorCheckingFunc("rating",Number(req.body.rating),'number');
+      let rating = validation.errorCheckingFunc("rating",Number(xss(req.body.rating)),'number');
       // console.log(userID);
       const review = await reviewData.createReview(doctorID, reviewText, userID._id.toString(), rating);
 
@@ -72,8 +73,8 @@ router.post("/deleteReview", async(req,res) => {
     // console.log();
     if (req.session.username) {
       let userID = await userData.getUserByUsername(req.session.username)
-      let checkuserID = validation.checkId(req.body.userID,"userID");
-      let doctorID = validation.checkId(req.body.doctorID, "doctorID");
+      let checkuserID = validation.checkId(xss(req.body.userID),"userID");
+      let doctorID = validation.checkId(xss(req.body.doctorID), "doctorID");
       console.log("validated");
       // console.log();
       if (userID._id.toString() == checkuserID){
@@ -106,7 +107,7 @@ router
   .post(async (req, res) => {
     try {
       let reviewId = validation.checkId(req.params.reviewID, "reviewID");
-      let commentText = validation.checkString(req.body.commentText, "commentText");
+      let commentText = validation.checkString(xss(req.body.commentText), "commentText");
 
       if (req.session.username) {
 

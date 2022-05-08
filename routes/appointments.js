@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const appointmentData = require('../data/appointments');
@@ -6,6 +5,7 @@ const flash = require('connect-flash');
 const Data = require('../data');
 const doctorData = Data.doctors;
 const userData = Data.users;
+const xss = require("xss");
 
 
 let { ObjectId, ConnectionClosedEvent } = require('mongodb');
@@ -89,8 +89,15 @@ router.route('/schedule/:doctorId/:aptDate/:aptTime')
       
 
         const postResAppointmentData = req.body;
-        const { appointmentId,aptDatePrvRs,aptTimePrvRs,messagePrvRs,conditionsPrvRs} = postResAppointmentData;
+        var { appointmentId,aptDatePrvRs,aptTimePrvRs,messagePrvRs,conditionsPrvRs} = postResAppointmentData;
         console.log("req.username : "+req.session.username);
+
+        // XSS Protection
+        appointmentId = xss(appointmentId);
+        aptDatePrvRs = xss(aptDatePrvRs);
+        aptTimePrvRs = xss(aptTimePrvRs);
+        messagePrvRs = xss(messagePrvRs);
+        conditionsPrvRs = xss(conditionsPrvRs);
 
         if(!req.session.username ){
           throw "No User Logged in";
@@ -182,7 +189,18 @@ else{
   authenticateFlag = true;
 }
 
-const { userFullName,doctorName,doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
+var { userFullName,doctorName,doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
+
+// XSS Protection
+userFullName = xss(userFullName);
+doctorName = xss(doctorName);
+doctorId = xss(doctorId);
+aptDate = xss(aptDate);
+aptTime = xss(aptTime);
+message = xss(message);
+conditions = xss(conditions);
+
+
 console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
 " aptTime : "+aptTime+" message :"+message+" conditions : "+conditions)
 
@@ -333,7 +351,14 @@ router.route('/:id')
     const putAppointmentData = req.body;
 
 
-    const { aptDatePrv,aptTimePrv,aptDate,aptTime } = putAppointmentData;
+    var { aptDatePrv,aptTimePrv,aptDate,aptTime } = putAppointmentData;
+
+    //XSS Protection
+    aptDatePrv = xss(aptDatePrv);
+    aptTimePrv = xss(aptTimePrv);
+    aptDate = xss(aptDate);
+    aptTime = xss(aptTime);
+
 
       if (!aptDate || !aptTime || !aptDatePrv || !aptTimePrv ) {
         //res.status(400).json({ error: 'All fields need to have valid values' });
@@ -455,7 +480,17 @@ router.route('/:id')
         //const doctorRSI = await appointmentData.getdocCalender(req.params.id.trim());
         const doctorRSI = await doctorData.getDoctor(req.params.id.trim());
         const postAppointmentData = req.body;
-        const { appointmentId,doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
+        var { appointmentId,doctorId,aptDate,aptTime,message,conditions } = postAppointmentData;
+
+        //XSS Protection
+        appointmentId = xss(appointmentId);
+        doctorId = xss(doctorId);
+        aptDate = xss(aptDate);
+        aptTime = xss(aptTime);
+        message = xss(message);
+        conditions = xss(conditions);
+
+
         console.log("From reschedule => "+" appointmentId: "+appointmentId+" doctorId : "+doctorId +" aptDate : "+aptDate+
     " aptTime : "+aptTime+" message :"+message+" conditions : "+conditions)
 //Commented below for integration of doc clendar with doc home page

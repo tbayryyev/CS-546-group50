@@ -5,13 +5,14 @@ const doctorData = Data.doctors;
 const userData = Data.users;
 const commentData = Data.comments;
 const validation = require('../validation');
+const xss = require("xss");
 
 router
     .route('/addComment/:reviewID/:doctorID')
     .post(async (req, res) => {
         try {
             var reviewId = validation.checkId(req.params.reviewID, "reviewID");
-            var commentText = validation.checkString(req.body.commentText, "commentText");
+            var commentText = validation.checkString(xss(req.body.commentText), "commentText");
             var docID = validation.checkId(req.params.doctorID, "doctorID");
 
             if (req.session.username) {

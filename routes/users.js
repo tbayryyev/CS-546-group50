@@ -7,6 +7,7 @@ const upload = require('../helpers/upload');
 const resize = require('../helpers/fileSaver');
 const path = require('path');
 const moment = require('moment');
+const xss = require("xss");
 
 router.post('/signup', async (req, res) => {
     // Declares a variable named userInfo and sets it equal to the request body
@@ -27,27 +28,27 @@ router.post('/signup', async (req, res) => {
     }
 
     // Declares a variable named firstName and sets it equal to the userInfo.firstName
-    let firstName = userInfo.firstName;
+    let firstName = xss(userInfo.firstName);
     // Declares a variable named lastName and sets it equal to the userInfo.lastName
-    let lastName = userInfo.lastName;
+    let lastName = xss(userInfo.lastName);
     // Declares a variable named email and sets it equal to the userInfo.email
-    let email = userInfo.email;
+    let email = xss(userInfo.email);
     // Declares a variable named username and sets it equal to the userInfo.username
-    let username = userInfo.username;
+    let username = xss(userInfo.username);
     // Declares a variable named dateOfBirth and sets it equal to the userInfo.dateOfBirth
-    let dateOfBirth = userInfo.dateOfBirth;
+    let dateOfBirth = xss(userInfo.dateOfBirth);
     // Declares a variable named address and sets it equal to the userInfo.address
-    let address = userInfo.address;
+    let address = xss(userInfo.address);
     // Declares a variable named city and sets it equal to the userInfo.city
-    let city = userInfo.city;
+    let city = xss(userInfo.city);
     // Declares a variable named state and sets it equal to the userInfo.state
-    let state = userInfo.state;
+    let state = xss(userInfo.state);
     // Declares a variable named zip and sets it equal to the userInfo.zip
-    let zip = userInfo.zip;
+    let zip = xss(userInfo.zip);
     // Declares a variable named phoneNumber and sets it equal to the userInfo.phoneNumber
-    let phoneNumber = userInfo.phoneNumber;
+    let phoneNumber = xss(userInfo.phoneNumber);
     // Declares a variable named password and sets it equal to the userInfo.password
-    let password = userInfo.password;
+    let password = xss(userInfo.password);
 
     // Checks if firstName is undefined
     if (!firstName) {
@@ -297,9 +298,9 @@ router.post('/login', async (req, res) => {
     }
 
     // Declares a variable named username and sets it equal to the userInfo.username
-    let username = userInfo.username;
+    let username = xss(userInfo.username);
     // Declares a variable named password and sets it equal to the userInfo.password
-    let password = userInfo.password;
+    let password = xss(userInfo.password);
 
     // Checks if username is undefined
     if (!username) {
@@ -491,25 +492,25 @@ router.post('/edit', async (req, res) => {
     }
 
     // Declares a variable named firstName and sets it equal to the userInfo.firstName
-    let firstName = userInfo.firstName;
+    let firstName = xss(userInfo.firstName);
     // Declares a variable named lastName and sets it equal to the userInfo.lastName
-    let lastName = userInfo.lastName;
+    let lastName = xss(userInfo.lastName);
     // Declares a variable named email and sets it equal to the userInfo.email
-    let email = userInfo.email;
+    let email = xss(userInfo.email);
     // Declares a variable named username and sets it equal to the userInfo.username
-    let username = userInfo.username;
+    let username = xss(userInfo.username);
     // Declares a variable named dateOfBirth and sets it equal to the userInfo.dateOfBirth
-    let dateOfBirth = userInfo.dateOfBirth;
+    let dateOfBirth = xss(userInfo.dateOfBirth);
     // Declares a variable named address and sets it equal to the userInfo.address
-    let address = userInfo.address;
+    let address = xss(userInfo.address);
     // Declares a variable named city and sets it equal to the userInfo.city
-    let city = userInfo.city;
+    let city = xss(userInfo.city);
     // Declares a variable named state and sets it equal to the userInfo.state
-    let state = userInfo.state;
+    let state = xss(userInfo.state);
     // Declares a variable named zip and sets it equal to the userInfo.zip
-    let zip = userInfo.zip;
+    let zip = xss(userInfo.zip);
     // Declares a variable named phoneNumber and sets it equal to the userInfo.phoneNumber
-    let phoneNumber = userInfo.phoneNumber;
+    let phoneNumber = xss(userInfo.phoneNumber);
 
     // Checks if firstName is undefined
     if (!firstName) {

@@ -47,7 +47,7 @@ async function main() {
 
     // Users
     try {
-        await users.createUser("James", "Mills", "JMills@gmail.com", "JMills", "12/10/1978", "4112 Ernestine Way", "North Highlands", "CA", "95660", "9163364525", "Password123");    
+        await users.createUser("James", "Mills", "JMills@gmail.com", "JMills", "12/10/1978", "4112 Ernestine Way", "North Highlands", "CA", "95660", "9163364525", "Password123");
         const newUser = await users.getUserByUsername("JMills");
         console.log(newUser);
     } catch (e) {
@@ -267,7 +267,7 @@ async function main() {
 
     // Dermatologists
     try {
-        const doc = await doctors.createDoctor("Scott Clark", "/public/images/ScottClark.jpeg", "Dermatologists", "Graduated from Harvard Medical School.", ["English", "Spanish", "French"], "382 Mechanic Road", "Mount Laurel", "NJ", "08054");
+        const doc = await doctors.createDoctor("Scott Clark", "/public/images/ScottClark.jpeg", "Dermatologist", "Graduated from Harvard Medical School.", ["English", "Spanish", "French"], "382 Mechanic Road", "Mount Laurel", "NJ", "08054");
         console.log(doc);
         doctor6Id = doc._id;
     } catch (e) {
@@ -276,7 +276,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Blake Turner", "/public/images/BlakeTurner.jpeg", "Dermatologists", "Graduated from Harvard Medical School.", ["English", "Spanish"], "931 Lake View Street", "Winona", "MN", "55987");
+        const doc = await doctors.createDoctor("Blake Turner", "/public/images/BlakeTurner.jpeg", "Dermatologist", "Graduated from Harvard Medical School.", ["English", "Spanish"], "931 Lake View Street", "Winona", "MN", "55987");
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -284,7 +284,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Yi Wang", "/public/images/YiWang.jpeg", "Dermatologists", "Graduated from Eastern Virginia School of Medicine.", ["English", "Chinese"], "96 Mayfair Street", "Garfield", "NJ", "07026");
+        const doc = await doctors.createDoctor("Yi Wang", "/public/images/YiWang.jpeg", "Dermatologist", "Graduated from Eastern Virginia School of Medicine.", ["English", "Chinese"], "96 Mayfair Street", "Garfield", "NJ", "07026");
         console.log(doc);
         doctor7Id = doc._id;
     } catch (e) {
@@ -293,7 +293,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Sarah Price", "/public/images/SarahPrice.jpeg", "Dermatologists", "Graduated from Louisiana State University School of Medicine.", ["English"], "45 Race Street", "Buffalo Grove", "IL", "60089");
+        const doc = await doctors.createDoctor("Sarah Price", "/public/images/SarahPrice.jpeg", "Dermatologist", "Graduated from Louisiana State University School of Medicine.", ["English"], "45 Race Street", "Buffalo Grove", "IL", "60089");
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -301,7 +301,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Mike Hoffman", "/public/images/MikeHoffman.jpeg", "Dermatologists", "Graduated from Columbia University College of Physicians and Surgeons.", ["English", "French"], "70 James Street", "Troy", "NY", "12180");
+        const doc = await doctors.createDoctor("Mike Hoffman", "/public/images/MikeHoffman.jpeg", "Dermatologist", "Graduated from Columbia University College of Physicians and Surgeons.", ["English", "French"], "70 James Street", "Troy", "NY", "12180");
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -310,7 +310,7 @@ async function main() {
 
     // Neurologists
     try {
-        const doc = await doctors.createDoctor("Jennifer Bossel", "/public/images/JenniferBossel.jpeg", "Neurologists", "Graduated from Louisiana State University School of Medicine.", ["English", "Spanish"], "8867 Shirley Avenue", "Dover", "NH", "03820");
+        const doc = await doctors.createDoctor("Jennifer Bossel", "/public/images/JenniferBossel.jpeg", "Neurologist", "Graduated from Louisiana State University School of Medicine.", ["English", "Spanish"], "8867 Shirley Avenue", "Dover", "NH", "03820");
         console.log(doc);
         doctor8Id = doc._id;
     } catch (e) {
@@ -319,7 +319,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Salvatore Greene", "/public/images/SalvatoreGreene.jpeg", "Neurologists", "Graduated from Albert Einstein College of Medicine.", ["English"], "806 York Drive", "Chapel Hill", "NC", "27516");
+        const doc = await doctors.createDoctor("Salvatore Greene", "/public/images/SalvatoreGreene.jpeg", "Neurologist", "Graduated from Albert Einstein College of Medicine.", ["English"], "806 York Drive", "Chapel Hill", "NC", "27516");
         console.log(doc);
         doc2ID = doc._id;
     } catch (e) {
@@ -328,7 +328,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Jesse Lane", "/public/images/JesseLane.jpeg", "Neurologists", "Graduated from Boston University School of Medicine.", ["English", "French"], "65 Thomas Avenue", "Duarte", "CA", "91010");
+        const doc = await doctors.createDoctor("Jesse Lane", "/public/images/JesseLane.jpeg", "Neurologist", "Graduated from Boston University School of Medicine.", ["English", "French"], "65 Thomas Avenue", "Duarte", "CA", "91010");
         console.log(doc);
         doctor9Id = doc._id;
     } catch (e) {
@@ -337,7 +337,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Ashley Morton", "/public/images/AshleyMorton.jpeg", "Neurologists", "Graduated from George Washington University School of Medicine.", ["English"], "301 Trusel Street", "Wilkes Barre", "PA", "18702");
+        const doc = await doctors.createDoctor("Ashley Morton", "/public/images/AshleyMorton.jpeg", "Neurologist", "Graduated from George Washington University School of Medicine.", ["English"], "301 Trusel Street", "Wilkes Barre", "PA", "18702");
         console.log(doc);
     } catch (e) {
         console.log("Got an error!");
@@ -345,7 +345,7 @@ async function main() {
     }
 
     try {
-        const doc = await doctors.createDoctor("Ivan Frazier", "/public/images/IvanFrazier.jpeg", "Neurologists", "Graduated from Medical University of South Carolina.", ["English", "Spanish"], "96 Bay Meadows Lane", "Houston", "TX", "77016");
+        const doc = await doctors.createDoctor("Ivan Frazier", "/public/images/IvanFrazier.jpeg", "Neurologist", "Graduated from Medical University of South Carolina.", ["English", "Spanish"], "96 Bay Meadows Lane", "Houston", "TX", "77016");
         console.log(doc);
         doctor10Id = doc._id;
     } catch (e) {
@@ -621,7 +621,7 @@ async function main() {
         let userId = user._id.toString();
         const commentLike = await comments.addLikeComment(comment1Id, review2Id, userId);
         console.log(commentLike);
-    } catch (e){
+    } catch (e) {
         console.log("Got an error!");
         console.log(e);
     }
@@ -631,7 +631,7 @@ async function main() {
         let userId = user._id.toString();
         const commentLike = await comments.addLikeComment(comment1Id, review2Id, userId);
         console.log(commentLike);
-    } catch (e){
+    } catch (e) {
         console.log("Got an error!");
         console.log(e);
     }
@@ -641,7 +641,7 @@ async function main() {
         let userId = user._id.toString();
         const commentLike = await comments.addLikeComment(comment3Id, review7Id, userId);
         console.log(commentLike);
-    } catch (e){
+    } catch (e) {
         console.log("Got an error!");
         console.log(e);
     }
@@ -651,7 +651,7 @@ async function main() {
         let userId = user._id.toString();
         const commentLike = await comments.addLikeComment(comment3Id, review7Id, userId);
         console.log(commentLike);
-    } catch (e){
+    } catch (e) {
         console.log("Got an error!");
         console.log(e);
     }
@@ -661,7 +661,7 @@ async function main() {
         let userId = user._id.toString();
         const commentLike = await comments.addLikeComment(comment4Id, review7Id, userId);
         console.log(commentLike);
-    } catch (e){
+    } catch (e) {
         console.log("Got an error!");
         console.log(e);
     }

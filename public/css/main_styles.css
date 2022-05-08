@@ -15,7 +15,7 @@ label.commentLabel{
   font-size: 17pt;
 }
 
-#new-commentText {
+.new-commentText {
   height:40px;
   width: 800px;
   font-size:14pt;

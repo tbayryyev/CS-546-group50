@@ -1,23 +1,27 @@
 <a class="speciality" href="/doctor/speciality/{{doctor.speciality}}">{{doctor.speciality}}</a>
 <dl>
-    <dd class="name">{{doctor.name}}</dd>
-    {{#if doctor.profilePicture}}
-    <img alt="image" src={{doctor.profilePicture}} />
-    {{else}}
-    <img alt="image"
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png" />
-    {{/if}}
+    <dt class="name">{{doctor.name}}</dt>
+    <dd>
+        {{#if doctor.profilePicture}}
+        <img alt="image" src={{doctor.profilePicture}} />
+        {{else}}
+        <img alt="image"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/450px-No_image_available.svg.png" />
+        {{/if}}
+    </dd>
 
     <dt>About</dt>
     <dd>{{doctor.about}}</dd>
     <dt>Languages</dt>
     {{#if doctor.languages.length}}
-    <ul>
-        {{#each doctor.languages}}
-        <li class="language">{{this}}</li>
+    <dd>
+        <ul>
+            {{#each doctor.languages}}
+            <li class="language">{{this}}</li>
 
-        {{/each}}
-    </ul>
+            {{/each}}
+        </ul>
+    </dd>
     {{else}}
     <dd>N/A</dd>
     {{/if}}
@@ -33,62 +37,59 @@
     {{/if}}
     <dt>Reviews</dt>
     {{#if reviews.length}}
-    <ul>
-        {{#each reviews }}
-        <li class="reviews">
-            <h3 class="userName">Username: {{this.username}}</h3>
+    <dd>
+        <ul>
+            {{#each reviews }}
+            <li class="reviews">
+                <h3 class="userName">Username: {{this.username}}</h3>
 
-            <p class="Rating">Rating: {{this.rating}} Stars</p>
+                <p class="Rating">Rating: {{this.rating}} Stars</p>
 
-            <p class="reviewText">ReviewText: {{this.reviewText}}</p>
+                <p class="reviewText">ReviewText: {{this.reviewText}}</p>
 
-            <form action="/doctor/deleteReview" method="POST" id="deleteReview">
-              <input type="hidden" name="doctorID" value={{this.doctorID}} />
-              <input type="hidden" name="userID" value={{this.userID}} />
-              <button type="submit" >Delete Review</button>
-            </form>
+                <form action="/doctor/deleteReview" method="POST">
+                    <input type="hidden" name="doctorID" value={{this.doctorID}} />
+                    <input type="hidden" name="userID" value={{this.userID}} />
+                    <button type="submit">Delete Review</button>
+                </form>
 
-            {{#if this.comments.length}}
-            <p class="commentLabel">Comments:</p>
-            <ul>
-                {{#each this.comments}}
-                <li class="comments">
-                    <p class="userName">Username: {{this.username}}</p>
+                {{#if this.comments.length}}
+                <p class="commentLabel">Comments:</p>
+                <ul>
+                    {{#each this.comments}}
+                    <li class="comments">
+                        <p class="userName">Username: {{this.username}}</p>
 
-                    <p class="commentText">Comment: {{this.commentText}}</p>
-
-
-                    <p class="likes">Likes: {{this.likes.length}}</p>
-                    <p class="dislikes">Dislikes: {{this.dislikes.length}}</p>
-
-                    <form action="/comment/addLike/{{../this._id}}/{{../this.doctorID}}/{{this.commentID}}"
-                        method="POST" id="new-like">
-                        <button type="submit" class="like">Like</button>
-                    </form>
-
-                    <form action="/comment/addDislike/{{../this._id}}/{{../this.doctorID}}/{{this.commentID}}"
-                        method="POST" id="new-like">
-                        <button type="submit" class="dislike">Dislike</button>
-                    </form>
+                        <p class="commentText">Comment: {{this.commentText}}</p>
 
 
+                        <p class="likes">Likes: {{this.likes.length}}</p>
+                        <p class="dislikes">Dislikes: {{this.dislikes.length}}</p>
 
-                </li>
-                {{/each}}
-            </ul>
-            {{/if}}
+                        <form action="/comment/addLike/{{../this._id}}/{{../this.doctorID}}/{{this.commentID}}"
+                            method="POST">
+                            <button type="submit" class="like">Like</button>
+                        </form>
 
-        </li>
-
-        <form action="/comment/addComment/{{this._id}}/{{this.doctorID}}" method="POST" id="new-comment">
-            <label for="new-commentText" class="commentLabel">Add a comment to this review</label>
-            <input type="text" id="new-commentText" name="commentText" />
-            <button type="submit">Post Comment</button>
-        </form>
+                        <form action="/comment/addDislike/{{../this._id}}/{{../this.doctorID}}/{{this.commentID}}"
+                            method="POST">
+                            <button type="submit" class="dislike">Dislike</button>
+                        </form>
+                    </li>
+                    {{/each}}
+                </ul>
+    {{/if}}
+    <li>
+    <form action="/comment/addComment/{{this._id}}/{{this.doctorID}}" method="POST">
+        <label for="new-comment-{{this._id}}" class="commentLabel">Add a comment to this review</label>
+        <input type="text" id="new-comment-{{this._id}}" name="commentText" class="new-commentText" />
+        <button type="submit">Post Comment</button>
+    </form>
+   </li>
 
 
 
-        {{/each }}
+    {{/each }}
     </ul>
 
 
@@ -113,43 +114,43 @@
     </div>
 </dl>
 <!--- Doc calendar integrated with doctor hompage-->
-<h1 id="docCalendarIndivPg">Doctor calendar</h4>
+<h4 id="docCalendarIndivPg">Doctor calendar</h4>
 
-<form>
+    <form>
 
-    {{#if doctor.timeSlots.length}}
-    <ul class="doc_calendar_ul">
-        {{#each doctor.timeSlots}}
+        {{#if doctor.timeSlots.length}}
+        <ul class="doc_calendar_ul">
+            {{#each doctor.timeSlots}}
 
-        <li class="doc_calendar_li"> {{dt}}
-            <div>
-                {{#each tm}}
-                {{#if ../../rescheduleFlag}}
-                <button class="btn btn-success btn-xs" type="submit" formmethod="POST"
-                    formaction="/appointments/reschedule/{{toString ../../doctor._id}}/{{../dt}}/{{this}}">{{this}}</button>
-                {{else}}
-                <button class="btn btn-success btn-xs" type="submit" formmethod="GET"
-                    formaction="/appointments/schedule/{{toString ../../doctor._id}}/{{../dt}}/{{this}}">{{this}}</button>
-                {{/if}}
-                {{/each}}
-            </div>
-        </li>
+            <li class="doc_calendar_li"> {{dt}}
+                <div>
+                    {{#each tm}}
+                    {{#if ../../rescheduleFlag}}
+                    <button class="btn btn-success btn-xs" type="submit" formmethod="POST"
+                        formaction="/appointments/reschedule/{{toString ../../doctor._id}}/{{../dt}}/{{this}}">{{this}}</button>
+                    {{else}}
+                    <button class="btn btn-success btn-xs" type="submit" formmethod="GET"
+                        formaction="/appointments/schedule/{{toString ../../doctor._id}}/{{../dt}}/{{this}}">{{this}}</button>
+                    {{/if}}
+                    {{/each}}
+                </div>
+            </li>
 
-        {{/each}}
-    </ul>
-    {{else}}
-    <p class="not-found">We're sorry, but no results were found for {{doctorId}}.</p>
+            {{/each}}
+        </ul>
+        {{else}}
+        <p class="not-found">We're sorry, but no results were found for {{doctorId}}.</p>
+        {{/if}}
+        {{#if rescheduleFlag}}
+        <input name='appointmentId' value={{appointmentId}} hidden>
+        <input name='aptDatePrvRs' value={{aptDatePrv}} hidden>
+        <input name='aptTimePrvRs' value={{aptTimePrv}} hidden>
+        <input name='messagePrvRs' value="{{messagePrv}}" hidden>
+        <input name='conditionsPrvRs' value="{{conditionsPrv}}" hidden>
+        {{/if}}
+    </form>
+
+
+    {{#if hasError}}
+    <p>Error:{{errorMessage}}</p>
     {{/if}}
-    {{#if rescheduleFlag}}
-    <input name='appointmentId' value={{appointmentId}} hidden>
-    <input name='aptDatePrvRs' value={{aptDatePrv}} hidden>
-    <input name='aptTimePrvRs' value={{aptTimePrv}} hidden>
-    <input name='messagePrvRs' value="{{messagePrv}}" hidden>
-    <input name='conditionsPrvRs' value="{{conditionsPrv}}" hidden>
-    {{/if}}
-</form>
-
-
-{{#if hasError}}
-<p>Error:{{errorMessage}}</p>
-{{/if}}

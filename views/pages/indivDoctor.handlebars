@@ -98,7 +98,8 @@
     {{else}}
     <dd>Currently there are no reviews for this doctor</dd>
     {{/if}}
-    <div class=addingReview>
+    <dd>
+    <div id="addReview" class=addingReview>
         <form action="/doctor/addReview" method="POST">
             <label class="rating-label">Stars
                 <input name="rating" class="rating" max="5"
@@ -114,6 +115,7 @@
             <button type="submit">Post review</button>
         </form>
     </div>
+    </dd>
 </dl>
 <!--- Doc calendar integrated with doctor hompage-->
 <h2 id="docCalendarIndivPg">Doctor calendar</h2>

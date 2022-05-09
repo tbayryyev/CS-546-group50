@@ -383,6 +383,12 @@ a.home_page{
 	border-style: solid;
 }
 
+#addReview {
+  border-color: black;
+  color: black;
+
+}
+
 #nav_title {
   color: black;
 	text-decoration: none;

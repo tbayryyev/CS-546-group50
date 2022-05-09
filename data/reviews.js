@@ -147,6 +147,14 @@ const exported = {
 
 
     }
+    else{
+      const doctorCollection = await DOCTORS();
+      const updateInfo = await doctorCollection.updateOne({ _id: ObjectId(doctorID) }, { $set: { rating: 0 } });
+      if (updateInfo.matchedCount === 0) {
+        throw "could not add rating to doctor";
+
+      }
+    }
 
   }
 

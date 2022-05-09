@@ -235,7 +235,14 @@ console.log("doctorId : "+doctorId +" aptDate : "+aptDate+
   }
   catch (e) {
     const errorMessage = typeof e === 'string' ? e : e.message;
-    res.status(400).json({ error: errorMessage });
+    //res.status(400).json({ error: errorMessage });
+    res.status(400).render('pages/appointments',{hasError: true,userId:userId,
+      userFullName:userFullName,doctorName:doctorName,
+      doctorId:doctorId,aptDate:aptDate,aptTime:aptTime,message:message,conditions:conditions,
+       errorMessage : errorMessage,
+       authenticated:authenticateFlag,
+       username:req.session.username,
+       userId: req.session.userId});
     return;
   }
 
